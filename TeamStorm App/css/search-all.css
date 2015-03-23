@@ -1,0 +1,142 @@
+.ui-menu-item
+{
+padding:0px!important;
+margin:0px!important;
+text-decoration:none!important;
+}
+
+.ui-corner-all,
+.ui-corner-all:hover
+{
+padding:0px!important;
+margin:0px!important;
+text-decoration:none!important;
+}
+.ui-corner-all
+{
+border:1px solid transparent;
+display:block;
+border-radius:1px!important;
+-webkit-border-radius:1px!important;
+-moz-border-radius:1px!important;
+}
+
+
+.dv-search-list
+{
+display:table;
+width:100%;
+height:40px;
+padding:0px;
+margin:0px;
+transition:0.2s;
+-webkit-transition:0.2s;
+-moz-transition:0.2s;
+}
+.dv-search-list:hover
+{
+background:#1BA4D4
+}
+.search-hashtag:hover .dv-search-list
+{
+background:none;
+text-decoration:none;
+
+}
+.search-hashtag:hover .name,
+.search-hashtag:hover .email
+{
+color:#137294!important;
+}
+.dv-search-list:hover .info .name,
+.dv-search-list:hover .info .email
+{
+color:#fff;
+}
+.dv-search-list:hover .info .email
+{
+color:#ddd;
+}
+
+.dv-search-list .image,
+.dv-search-list .info
+{
+display:table-cell;
+vertical-align:middle;
+}
+.dv-search-list .image
+{
+width:65px;
+padding:5px;
+}
+
+.dv-search-list .image img
+{
+width:50px;
+height:50px;
+box-shadow:0 0 0 1px white, 0 0 0 2px #ccc;
+border-radius:100%;
+-webkit-border-radius:100%;
+-moz-border-radius:100%;
+}
+
+.dv-search-list .info .name,
+.dv-search-list .info .email
+{
+font-size:14px;
+font-weight:bold;
+color:#333;
+display:block;
+}
+.dv-search-list .info .email
+{
+font-size:11px;
+font-weight:normal;
+color:#777;
+display:block;
+}
+.dv-search-cell-row
+{
+position:relative;
+}
+.dv-search-cell-row .search-all-loading
+{
+top:5px;
+right:8px;
+position:absolute;
+transition:0.2s;
+-webkit-transition:0.2s;
+-moz-transition:0.2s;
+display:none;
+}
+.dv-search-cell-row .search-all-loading.show
+{
+display:block;
+}
+
+.ui-autocomplete .no-result
+{
+text-align:center;
+display:block;
+text-decoration:none;
+padding:5px;
+transition:0.4s;
+-webkit-transition:0.4s;
+-moz-transition:0.4s;
+font-size:12px;
+font-weight:bold;
+color:#555;
+}
+
+.ui-autocomplete .no-result:hover
+{
+color:#137294!important;
+}
+.ui-autocomplete-mobile
+{
+position:absolute!important;
+}
+.search-hashtag
+{
+text-decoration:none!important;
+}

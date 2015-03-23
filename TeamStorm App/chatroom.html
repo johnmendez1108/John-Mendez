@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Chatroom - TeamStorm</title>
+
+    <!-- Sets initial viewport load and disables zooming    -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/site.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Advent+Pro:400,100,200,500,700,300,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500italic,500,700,700italic' rel='stylesheet' type='text/css'>
+    <!-- Include the base Snap.js CSS -->
+    <link rel="stylesheet" href="css/snap.css">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap-mod.css">
+    <!-- Include the compiled Ratchet CSS -->
+    <link rel="stylesheet" href="css/ratchet.css">
+
+    <!-- Include the compiled Ratchet JS -->
+    <script src="js/ratchet.js"></script>
+
+    <!--[if lt IE 9]><script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script><![endif]-->
+    <script type="text/javascript" src="js/site.min.js"></script>
+</head>
+
+<body>
+
+
+    <div id="content" class="snap-content">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <a href="activity-stream.html"><i class="flaticon-arrow-left"></i></a>
+            </div>
+            <div class="title">Chatroom</div>
+
+        </div>
+        <div class="bottom-controls bar-footer">
+            <div class="chat-write-message">
+                <!-- <ul class="btn-list-bottom message-chat clearfix">
+                    <li>
+                        <button class="btn btn-info"><i class="flaticon-attachement"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-info"><i class="flaticon-camera"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <textarea class="form-control"></textarea>
+                    </li>
+                </ul> -->
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn" tabindex="-1"><i class="flaticon-attachement"></i></button>
+                        <button type="button" class="btn" tabindex="-1"><i class="flaticon-camera"></i></button>
+                    </div>
+                    <input class="form-control">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn" tabindex="-1"><i class="flaticon-comment"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="main-wrapper">
+
+                <div class="inner-wrapper">
+                    <div class="chat-box-wrapper">
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="">Willem den Toom</a></h4>
+                                <p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum.</p>
+                                <small>Just now</small>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">Me</h4>
+                                <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
+                                <small>Just now</small>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="">Jay Quinto</a></h4>
+                                <p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum.</p>
+                                <small>Just now</small>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="">Jahn Richards</a></h4>
+                                <p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum.</p>
+                                <small>Just now</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div id="content" class="snap-content">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <a href="activity-stream.html"><i class="flaticon-arrow-left"></i></a>
+            </div>
+            <div class="title">Chatroom</div>
+
+        </div>
+        <div class="bottom-controls bar-footer">
+            <div class="chat-write-message">
+                <!-- <ul class="btn-list-bottom message-chat clearfix">
+                    <li>
+                        <button class="btn btn-info"><i class="flaticon-attachement"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-info"><i class="flaticon-camera"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <textarea class="form-control"></textarea>
+                    </li>
+                </ul> -->
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn" tabindex="-1"><i class="flaticon-attachement"></i></button>
+                        <button type="button" class="btn" tabindex="-1"><i class="flaticon-camera"></i></button>
+                    </div>
+                    <input class="form-control">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn" tabindex="-1"><i class="flaticon-comment"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="main-wrapper">
+
+                <div class="inner-wrapper">
+                    <div class="chat-box-wrapper">
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="">Willem den Toom</a></h4>
+                                <p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum.</p>
+                                <small>Just now</small>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">Me</h4>
+                                <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
+                                <small>Just now</small>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="">Jay Quinto</a></h4>
+                                <p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum.</p>
+                                <small>Just now</small>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="">Jahn Richards</a></h4>
+                                <p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum.</p>
+                                <small>Just now</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	
+	
+
+    <!-- SNAP -->
+    <script type="text/javascript" src="js/snap.js"></script>
+
+
+    <script type="text/javascript">
+    var
+
+    // Helper
+        $ = function(id) {
+            return document.getElementById(id);
+        },
+
+        // Instance
+        snapper = new Snap({
+            element: document.getElementById('content')
+        }),
+
+        // 
+        UpdateDrawers = function() {
+            var state = snapper.state(),
+                towards = state.info.towards,
+                opening = state.info.opening;
+            if (opening == 'right' && towards == 'left') {
+                $('right-drawer').classList.add('active-drawer');
+                $('left-drawer').classList.remove('active-drawer');
+            } else if (opening == 'left' && towards == 'right') {
+                $('right-drawer').classList.remove('active-drawer');
+                $('left-drawer').classList.add('active-drawer');
+            }
+        };
+
+    snapper.on('drag', UpdateDrawers);
+    snapper.on('animating', UpdateDrawers);
+    snapper.on('animated', UpdateDrawers);
+
+    $('toggle-left').addEventListener('click', function() {
+        snapper.open('left');
+    });
+
+    $('toggle-right').addEventListener('click', function() {
+        snapper.open('right');
+    });
+    </script>
+
+    <!-- ENDSNAP -->
+
+    <!-- FONTS-->
+    <script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Advent+Pro:400,100,200,500,700,300,600:latin']
+        }
+    };
+    (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+    </script>
+    <script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Roboto:400,400italic,500italic,500,700,700italic:latin']
+        }
+    };
+    (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+    </script>
+    <!-- END FONTS-->
+
+
+    <script src="js/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        spaceBetween: 0,
+        grabCursor: true
+    });
+    </script>
+</body>
+
+</html>

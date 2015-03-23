@@ -1,0 +1,130 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}.flaticon-add184:before {
+	content: "\e000";
+}
+.flaticon-address-book3:before {
+	content: "\e001";
+}
+.flaticon-amplifier4:before {
+	content: "\e002";
+}
+.flaticon-arrow395:before {
+	content: "\e003";
+}
+.flaticon-arrow414:before {
+	content: "\e004";
+}
+.flaticon-calendar137:before {
+	content: "\e005";
+}
+.flaticon-camera3:before {
+	content: "\e006";
+}
+.flaticon-checkboxmark:before {
+	content: "\e007";
+}
+.flaticon-clip14:before {
+	content: "\e008";
+}
+.flaticon-comments16:before {
+	content: "\e009";
+}
+.flaticon-edit45:before {
+	content: "\e00a";
+}
+.flaticon-email20:before {
+	content: "\e00b";
+}
+.flaticon-expand22:before {
+	content: "\e00c";
+}
+.flaticon-folder11:before {
+	content: "\e00d";
+}
+.flaticon-folder187:before {
+	content: "\e00e";
+}
+.flaticon-folder227:before {
+	content: "\e00f";
+}
+.flaticon-folder228:before {
+	content: "\e010";
+}
+.flaticon-hand226:before {
+	content: "\e011";
+}
+.flaticon-happy48:before {
+	content: "\e012";
+}
+.flaticon-idea13:before {
+	content: "\e013";
+}
+.flaticon-important2:before {
+	content: "\e014";
+}
+.flaticon-kitchen-tools1:before {
+	content: "\e015";
+}
+.flaticon-menu48:before {
+	content: "\e016";
+}
+.flaticon-message31:before {
+	content: "\e017";
+}
+.flaticon-next15:before {
+	content: "\e018";
+}
+.flaticon-note35:before {
+	content: "\e019";
+}
+.flaticon-open131:before {
+	content: "\e01a";
+}
+.flaticon-projection3:before {
+	content: "\e01b";
+}
+.flaticon-rectangular46:before {
+	content: "\e01c";
+}
+.flaticon-settings38:before {
+	content: "\e01d";
+}
+.flaticon-smart:before {
+	content: "\e01e";
+}
+.flaticon-speech42:before {
+	content: "\e01f";
+}
+.flaticon-task1:before {
+	content: "\e020";
+}
+.flaticon-task2:before {
+	content: "\e021";
+}
+.flaticon-upload122:before {
+	content: "\e022";
+}
+.flaticon-user146:before {
+	content: "\e023";
+}
+.flaticon-user184:before {
+	content: "\e024";
+}
+.flaticon-write13:before {
+	content: "\e025";
+}

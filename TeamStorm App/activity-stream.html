@@ -1,0 +1,994 @@
+
+<html>
+
+<head>
+ <meta charset="utf-8">
+    <title>Activity Stream - TeamStorm</title>
+
+   
+	 <!-- Sets initial viewport load and disables zooming    -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.png">
+	
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/site.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Advent+Pro:400,100,200,500,700,300,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500italic,500,700,700italic' rel='stylesheet' type='text/css'>
+    <!-- Include the base Snap.js CSS -->
+    <link rel="stylesheet" href="css/snap.css">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap-mod.css">
+    <!-- Include the compiled Ratchet CSS -->
+    <link rel="stylesheet" href="css/ratchet.css">
+
+    <!-- Include the compiled Ratchet JS -->
+    <script src="js/ratchet.js"></script>
+
+    <!--[if lt IE 9]><script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script><![endif]-->
+    <script type="text/javascript" src="js/site.min.js"></script>
+	
+	
+	<link rel="stylesheet" href="css/ddown.css">
+	
+	<link rel="stylesheet" href="css/search-all.css">
+	
+	<script type="text/javascript" src="scroll/iscroll.js"></script>
+	<script type="text/javascript" charset="utf-8" src="functions/activity-stream.js"></script>
+	<script type="text/javascript" charset="utf-8" src="functions/post.js"></script>
+	<script type="text/javascript" charset="utf-8" src="functions/getlocation.js"></script>
+	<script type="text/javascript" charset="utf-8" src="functions/camera.js"></script>
+	<!-- <script type="text/javascript" charset="utf-8" src="cordova.js"></script> -->
+
+	
+
+<script type="text/javascript">
+	
+	
+      function startActivity(className) {
+          cordova.exec(function() {console.log("Success");}, function(e) {console.log("Error: "+e);}, "Activity", "start", [className]);
+      };    
+      localStorage.lifecyclestatus = "";
+      localStorage.backgroundstatus = "";		
+		document.addEventListener("deviceready", onDeviceReady, true);
+		function onDeviceReady()
+             {     
+                   document.addEventListener("backbutton", BackKeyDown, true);
+             }
+             function BackKeyDown()
+             { 
+				//window.history.back();
+                 navigator.notification.alert();
+                 navigator.app.exitApp();  // For Exit Application
+             }		
+	var myScroll,leftScroll,rightScroll,commentScroll,postScroll,
+	pullDownEl, pullDownOffset,
+	pullUpEl, pullUpOffset,
+	generatedCount = 0;
+
+	function pullDownAction () {
+	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+		var el, li, i;
+		//el = document.getElementById('streamlist');
+		var newpost = "<div class='inner-wrapper'>"+
+                    "<div class='main-user-post'>"+
+                        "<div class='media'>"+
+                            "<a class='pull-left' a href='user-profile.html'>"+
+                                "<img class='media-object img-circle' src='img/user/thumb-user-medium.jpg' width='50' alt='Image'>"+
+                            "</a>"+
+                            "<div class='media-body'>"+
+							
+								"<div class='btn-group pull-right' ><span class='ico flaticon-arrow-bottom' data-toggle='modal' href='#postsettings'></span></div>"+
+								
+								
+                                "<h4 class='media-heading'><a href='user-profile.html'>Jay Quinto</a> </h4>"+
+                                "<small>4 hours ago via public</small>"+
+								" <span class='ico flaticon-lamp'></span>"+
+                            "</div>"+
+
+                        "</div>"+
+                        "<div class='emojis-plain'><p class='post emojis-wysiwyg'>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. :grin:</p></div>"+
+                        "<ul class='half-2 clearfix'>"+
+                            "<li>"+
+                                "<button type='button' class='btn btn-default btn-block'><i class='flaticon-check-circle'></i> Agree (5)</button>"+
+                            "</li>"+
+                            "<li>"+
+                                "<button type='button' class='btn btn-default btn-block' data-toggle='modal' href='#comments' ><i class='flaticon-comment-more'></i> Comments (23)</button>"+
+                            "</li>"+
+                        "</ul>"+
+                    "</div>"+
+                "</div>";	
+		for (i=0; i<1; i++) {	
+				//li = document.createElement('div');
+				//li.innerHTML  =newpost;
+				//el.insertBefore(li, el.childNodes[0]);
+				loadnewsfeed();
+		}
+		
+		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+		}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
+	}
+	
+	function pullUpAction () {
+	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+		var el, li, i;
+		//el = document.getElementById('streamlist');
+		var newpost = "";
+		//for (i=0; i<1; i++) {
+			//li = document.createElement('div');
+			//li.innerHTML  =newpost;
+			//el.appendChild(li, el.childNodes[0]);
+			loadnewsfeed();
+		//}
+		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+		}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+	 }
+	
+	function loaded() {
+	pullDownEl = document.getElementById('pullDown');
+	pullDownOffset = pullDownEl.offsetHeight;
+	pullUpEl = document.getElementById('pullUp');		
+	pullUpOffset = pullUpEl.offsetHeight;
+	
+	myScroll = new iScroll('wrapper', {
+		useTransition: true,
+		topOffset: pullDownOffset,
+		onRefresh: function () {
+			if (pullDownEl.className.match('loading')) {
+				pullDownEl.className = '';
+				//pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+			} else if (pullUpEl.className.match('loading')) {
+				pullUpEl.className = '';
+				//pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+			}
+		},
+		onScrollMove: function () {
+			if (this.y > 5 && !pullDownEl.className.match('flip')) {
+				pullDownEl.className = 'flip';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
+				this.minScrollY = 0;
+			} else if (this.y < 5 && pullDownEl.className.match('flip')) {
+				pullDownEl.className = '';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+				this.minScrollY = -pullDownOffset;
+			} else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'flip';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
+				this.maxScrollY = this.maxScrollY;
+			} else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+				this.maxScrollY = pullUpOffset;
+			}
+		},
+		onScrollEnd: function () {
+			if (pullDownEl.className.match('flip')) {
+				pullDownEl.className = 'loading';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';				
+				pullDownAction();	// Execute custom function (ajax call?)
+				//loadnewsfeed();
+			} else if (pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'loading';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
+				pullUpAction();	// Execute custom function (ajax call?)
+				//loadnewsfeed();
+			}
+		}
+	});
+	
+	leftScroll = new iScroll('leftwrapper');
+	rightScroll = new iScroll('rightwrapper');
+	commentScroll= new iScroll('commentwrapper');
+	postScroll= new iScroll('postwrapper');
+	
+	postScroll.options.onBeforeScrollStart = function(e) {                
+        var target = e.target;
+
+        while (target.nodeType != 1) target = target.parentNode;
+        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+            e.preventDefault();
+        }
+   }
+	
+	
+	setTimeout(function () { 
+	document.getElementById('wrapper').style.left = '0';
+	document.getElementById('commentwrapper').style.left = '0';
+	document.getElementById('postwrapper').style.left = '0';
+	}, 800);
+}	
+		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);			 
+     
+
+
+ </script>		
+
+	  
+	  
+
+<style type="text/css" media="all">
+ body,ul,li {
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+body {
+	font-size:12px;
+	-webkit-user-select:none;
+    -webkit-text-size-adjust:none;
+	font-family: 'Roboto', sans-serif !important;
+}
+ 
+#wrapper, #commentwrapper,#postwrapper  {
+	position:absolute; z-index:1;
+	top: 0px; bottom:0px; left:-9999px;
+	width:100%;
+	/*background:#fff;*/
+	overflow:auto;
+}	  
+
+/**
+ *
+ * Scroller
+ *
+ */	  	  
+#scroller,#commentscroller,#postscroller {
+	position:absolute; z-index:1;
+/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	width:100%;
+	padding:0;
+}
+
+#scroller ul {
+	list-style:none;
+	padding:0;
+	/**margin:0;
+	width:100%;**/
+	text-align:left;
+}
+
+#scroller li {
+	/**padding:0 10px;
+	height:40px;**/
+	line-height:40px;
+	/**border-bottom:1px solid #ccc;**/	
+	/**border-top:1px solid #fff;**/	
+	background-color:#fafafa;
+	font-size:14px;
+	
+}
+
+/**
+ *
+ * Pull down styles
+ *
+ */	  
+#pullDown, #pullUp {
+	/**background:#fff; **/	
+	height:40px;
+	line-height:40px;
+	padding:5px 10px;
+	/**border-bottom:1px solid #ccc;**/	
+	font-weight:bold;
+	font-size:14px;
+	color:#888;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+	display:block; float:left;
+	width:40px; height:40px;
+	margin-left: auto;
+    margin-right: auto;
+	background:url(img/pull-icon@2x.png) 0 0 no-repeat;
+	-webkit-background-size:40px 80px; background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:250ms;	
+}
+#pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+	background-position:0 100%;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+
+
+
+</style>
+
+<style>
+#leftwrapper,#rightwrapper, {
+	
+	
+	top:61px;
+	/* Prevent native touch events on Windows */
+	-ms-touch-action: none;
+
+	/* Prevent the callout on tap-hold and text selection */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	/* Prevent text resize on orientation change, useful for web-apps */
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+
+#leftscroller {
+	position: fixed;
+	width:90%;
+	height:70%;
+	top:60px;
+	/* Prevent elements to be highlighted on tap */
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+	/* Put the scroller into the HW Compositing layer right from the start */
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+}
+
+#rightscroller{
+	position: fixed;
+	width:70%;
+	height:60%;
+	top:50px;
+	/* Prevent elements to be highlighted on tap */
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+	/* Put the scroller into the HW Compositing layer right from the start */
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+}
+
+</style>	
+</head>
+
+<body>
+    <div class="snap-drawers">
+     <div class="snap-drawer snap-drawer-left" id="left-drawer">
+			
+            <div class="left-top-head user-menu">
+			
+                <div class="media">
+                    <a class="pull-right" onclick="myprofile();" data-role="button" type="button">
+                        <img id="user_menu_profpic" class="media-object img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
+                    </a>
+                    <div class="media-body text-right">
+                        <h4 class="media-heading"><a id="main_prof_fullname" onclick="myprofile();" data-role="button" type="button">Willem den Toom</a></h4>
+                        <!-- <p>Administrator</p> -->
+                    </div>
+                </div>
+            </div>
+			
+			
+			<div style="top:60px;">
+			<div id="leftwrapper">
+			<div id="leftscroller" >
+			<div class="user-links">
+			
+                <ul class="main">
+
+                    <li><a onclick="userprofile();" data-role="button" type="button"><i class="flaticon-user-profile"></i> Profile</a>
+                    </li>
+                    <li><a onclick="appsettings();" data-role="button" type="button"><i class="flaticon-settings"></i> Settings</a>
+                    </li>
+                </ul>
+                <ul class="sub" id="accordion1">
+                    <li>
+                        <a data-toggle="collapse" data-parent="#accordion1" href="#collapse-tasks"><i class="flaticon-task"></i> My Tasks  <i class="flaticon-menu pull-right"></i></a>
+                        <ul id="collapse-tasks" class="panel-collapse collapse">
+                            <li><a href=""><i class="flaticon-filter"></i> Filtered Tasks</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" data-parent="#accordion1" href="#collapse-projects-lists"><i class="flaticon-project"></i> Projects Lists <i class="flaticon-menu pull-right"></i></a>
+                        <ul id="collapse-projects-lists" class="panel-collapse collapse">
+                            <li><a href=""><i class="flaticon-folder-plus"></i> Create New Project</a>
+                            </li>
+                            <li><a href=""><i class="flaticon-upload"></i> Project Stream</a>
+                            </li>
+                            <li><a href=""><i class="flaticon-folder-open"></i> Project Info</a>
+                            </li>
+                            <li>
+                                <a data-toggle="collapse" data-parent="#accordion1" href="#collapse-projects-task-lists"><i class="flaticon-folder-check"></i>  Project Task List <i class="flaticon-menu pull-right"></i></a>
+                                <ul id="collapse-projects-task-lists" class="panel-collapse collapse">
+                                    <li><a href="">Create New Task</a>
+                                    </li>
+                                    <li><a href="">Task Stream</a>
+                                    </li>
+                                    <li><a href="">Task Info</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <hr>
+                <ul class="additional-menu">
+                    <li><a onclick="calendar();" data-role="button" type="button"><i class="flaticon-calendar"></i> Calendar</a>
+                    </li>
+                    <li><a onclick="memopad();" data-role="button" type="button"><i class="flaticon-memo-pad"></i> Memo Pad</a>
+                    </li>
+                    <li><a onclick="todo();" data-role="button" type="button"><i class="flaticon-to-do"></i> To-Do</a>
+                    </li>
+                    <li><a href=""><i class="flaticon-address-book"></i> Address Book</a>
+                    </li>
+                </ul>
+            </div>
+		</div>
+		</div>
+			</div>
+		
+		</div>
+      <div class="snap-drawer snap-drawer-right" id="right-drawer">
+            <div class="panel">
+
+                <div class="swiper-container">
+				
+                    <ul id="tab-address-book" class="swiper-wrapper">
+                        <li class="active swiper-slide"><a href="#all" data-toggle="tab">All</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#a" data-toggle="tab">A</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#b" data-toggle="tab">B</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#c" data-toggle="tab">C</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#d" data-toggle="tab">D</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#e" data-toggle="tab">E</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#f" data-toggle="tab">F</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#g" data-toggle="tab">G</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#h" data-toggle="tab">H</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#i" data-toggle="tab">I</a>
+                        </li>
+						 <li class="swiper-slide"><a href="#j" data-toggle="tab">J</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#k" data-toggle="tab">K</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#l" data-toggle="tab">L</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#m" data-toggle="tab">M</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#n" data-toggle="tab">N</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#o" data-toggle="tab">O</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#p" data-toggle="tab">P</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#q" data-toggle="tab">Q</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#r" data-toggle="tab">R</a>
+						</li>
+						<li class="swiper-slide"><a href="#s" data-toggle="tab">S</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#t" data-toggle="tab">T</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#u" data-toggle="tab">U</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#v" data-toggle="tab">V</a>
+						</li>
+						<li class="swiper-slide"><a href="#w" data-toggle="tab">W</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#x" data-toggle="tab">X</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#y" data-toggle="tab">Y</a>
+                        </li>
+                        <li class="swiper-slide"><a href="#z" data-toggle="tab">Z</a>
+						</li>
+                    </ul>
+
+                    <!-- <div class="swiper-scrollbar"></div> -->
+                </div>
+                
+				
+				<div id="address-book-list" class="tab-content">
+				<div style="top:60px;">
+				<div id="rightwrapper">
+				<div id="rightscroller" >
+                    <div class="tab-pane fade active in" id="all">
+						<div class="tab-pane fade active in" id="all">
+							
+						 </div>
+					</div>
+                    <div class="tab-pane fade" id="a">
+                        <table class="table table-responsive">
+                            <tbody>
+                              <tr>
+                                    <td>
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="flat-checkbox-1">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="portrait-status chat">
+                                            <img class="status" src="img/status/online.png" alt="Image">
+                                            <img src="img/user/thumb-user-small.jpg" height="35" class="img-circle" </td>
+                                        </div>
+                                        <td><a href="">Anthony Perks</a>
+                                        </td>
+                                </tr>
+								
+                            </tbody>
+                        </table>
+                    
+					</div>
+                    <div class="tab-pane fade" id="b">
+                        Contacts Starts at "B"
+                    </div>
+                    <div class="tab-pane fade" id="c">
+                        Contacts Starts at "C" and so on...
+                    </div>
+                </div>
+				</div>
+				</div>
+				</div>
+
+            <div class="bottom-controls sidebar-footer">
+                <ul class="half-control-3 clearfix">
+                    <li><a href="" class="btn btn-block btn-primary"><i class="flaticon-chat"></i> Chat</a>
+                    </li>
+                    <li><a href="" class="btn btn-block btn-primary"><i class="flaticon-task"></i> Task</a>
+                    </li>
+                    <li><a href="" class="btn btn-block btn-primary"><i class="flaticon-project"></i> Project</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+		</div>
+    </div>
+	</div>
+    <div id="content" class="snap-content">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <button class="" id="toggle-left"><i class="flaticon-menu"></i>
+                </button>
+                <a href="activity-stream.html"><img src="img/logo-teamstorm.png" height="31">
+                </a>
+            </div>
+            <div class="title">Activity Stream</div>
+            <div class="right-top-head pull-right">
+                <button class="" id="toggle-right"><i class="flaticon-address-book"></i>
+                </button>
+            </div>
+
+        </div>
+        <div class="bottom-controls bar-footer">
+            <ul class="half-control-2 clearfix">
+                <li><a data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" onclick="" ><i class="flaticon-post"></i> Post</a>
+                </li>
+                <li><a data-toggle="modal" href="#chat" class="btn btn-block btn-primary btn-lg"  ><i class="flaticon-chat"></i> Chat</a>
+		
+                </li>
+            </ul>
+        </div>
+        <div class="content">
+            <div id="wrapper"  class="main-wrapper" style="overflow: hidden; left: 0px; top:15px;">
+			<div id="scroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">	
+				
+				<div id="pullDown" class="">
+						<span class="pullDownIcon"></span> <center><span class="pullDownLabel">Pull down to refresh...</span></center>
+				</div>
+						<div id="streamlist">
+						
+                <!-- <div class="inner-wrapper">
+
+                    <div class="main-user-post">
+                        <div class="media">
+                            <a class="pull-left" a href="my-profile.html">
+                                <img class="media-object img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="my-profile.html">Willem den Toom</a></h4>
+                                <small>Just now via public</small>
+                            </div>
+
+                        </div>
+                        <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin. This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin. This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.</p>
+                        <ul class="half-2 clearfix">
+                            <li>
+                                <button type="button" class="btn btn-default btn-block"><i class="flaticon-check-circle"></i> Agree (8)</button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn btn-default btn-block"><i class="flaticon-comment-more"></i> Comments (23)</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="comment-user-post">
+                        <div class="media">
+                            <a class="pull-left" a href="user-profile.html">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="user-profile.html">Jay Quinto</a> <small>2 minutes</small></h4>
+                                <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <a class="pull-left" a href="user-profile.html">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="user-profile.html">Jay Quinto</a> <small>1 minute</small></h4>
+                                <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
+                                <img class="img-responsive" src="img/post-images/image1.jpg" alt="Image">
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+				<!--  <div class="inner-wrapper">
+                    <div class="main-user-post">
+                        <div class="media">
+                            <a class="pull-left" a href="user-profile.html">
+                                <img class="media-object img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="user-profile.html">Jay Quinto</a></h4>
+                                <small>4 hours ago via public</small>
+                            </div>
+
+                        </div>
+                        <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.</p>
+                        <ul class="half-2 clearfix">
+                            <li>
+                                <button type="button" class="btn btn-default btn-block"><i class="flaticon-check-circle"></i> Agree (5)</button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn btn-default btn-block"><i class="flaticon-comment-more"></i> Comments (23)</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div> -->
+							<div class="inner-wrapper">
+							<div class="main-user-post">
+								<div class="media">
+								 </div>
+								  <p class="post">No More Post to show</p>
+							</div>
+							</div>
+						</div>
+					<div id="pullUp">
+						<span class="pullUpIcon"></span> <center><span class="pullUpLabel">Pull up to refresh...</span></center>
+					</div>
+				
+			</div>
+				<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+				</div>
+				<div id = "feednotif" style="display:none;position: absolute; z-index: 100; border: 1px solid rgba(255, 255, 255, 0.901961); box-sizing: border-box; width: 100%; border-radius: 3px; pointer-events: none; transition: transform 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: transform 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform: translate(0px, 7.14492753623189px) translateZ(0px); height: 30px; background: padding-box padding-box rgba(0, 0, 0, 0.498039);">
+				<center><strong><p style="color:white;font-weight: 900;font-size: 18px;text-align: center">No Internet Connection</p></strong></center>
+				</div>
+            </div>
+        </div>
+    </div>
+	
+	<!--Comments-->
+	<div id="comments" class="modal-content modal fade">
+        <div class="top-head-modal bar-title">
+            <div class="left-top-head pull-left">
+                <a data-toggle="modal" href="#comments" ><i class="flaticon-arrow-left"></i></a>
+            </div>
+            <div class="title">Comments</div>
+
+        </div>
+        <div class="bottom-controls bar-footer-modal">
+            <div class="chat-write-message">
+               
+                <div class="input-group">
+                    <div class="input-group-btn" style="right:2px;">
+                         <img id="user_comment_profpic" class="media-object img-circle" class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                    </div>
+                    <input class="form-control" placeholder="Reply on this storm thread..." id="inptcomment" ></input >
+                    <div class="input-group-btn">
+                        <button type="button" class="btn" tabindex="-1" onclick="do_comment();"><i class="flaticon-comment"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-modal">
+				
+				 <div id="commentwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 120px;">
+				 <div id="commentscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">	
+				
+					<div class="inner-wrapper chat-box-wrapper" id="commentlist">
+                     
+						<div class="media"> 
+                            <a class="pull-left" a href="">
+                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="user-profile.html">Jay Quinto</a> <small>2 minutes</small></h4>
+                                <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
+                            </div>
+                        </div>
+						
+               
+			
+				</div>
+
+               </div>
+				<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+				</div>
+			   </div>
+			
+				
+		</div>	
+		</div>
+	
+	<!--Post Settings-->
+	<div class='modal-dialog modal' id='postsettings' style="top:70px;" >
+								
+								<div class="inner-wrapper">
+								<div class="right-top-head pull-right">
+									 <a data-toggle="modal" href="#postsettings" ><i class="flaticon-arrow-top"></i></a>
+								</div>
+								<ul class=''>
+								<li>
+								<button type="button" data-toggle="modal" href="#postsettings"  class="btn  btn-block">Edit</button>
+								<!-- <a href='javascript:void(0);' data-id='001' data-type='edit' class='btn btn-xs btn-block'>Edit</a> -->
+								</li>
+								<li>
+								<button type="button" data-toggle="modal" href="#postsettings" class="btn  btn-block" onclick="conf_delete_post();">Remove</button>
+								<!-- <a href='javascript:void(0);' data-id='001'  class='btn btn-xs btn-block'>Remove</a></li> -->
+								</li>
+								</ul>
+								</div>
+	</div>
+		
+	<!--New-Post-->
+	<div id="newpost" class="modal-content modal fade" >
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <a data-toggle="modal" href="#newpost" data-role="button" type="button"><i class="flaticon-arrow-left"></i></a>
+            </div>
+            <div class="title">New Post</div>
+            <div class="right-top-head pull-right">
+                <button class="" id=""><i class="flaticon-check"></i>
+                </button>
+            </div>
+
+        </div>
+        <div class="bottom-controls bar-footer">
+            <ul class="full-control clearfix">
+                <li><a  data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" onclick="do_post();" ><i class="flaticon-post"></i> Post</a>
+                </li>
+            </ul>
+        </div>
+        <div class="content-modal">
+			
+			<div id="postwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px;">
+			<div id="postscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">	
+            <div class="post-wrapper">
+                <div class="inner-wrapper thin-padding">
+                    <div class="post-wrapper">
+                        <div class="input-group search-address"><span class="input-group-addon"><i class="flaticon-address-book"></i></span>
+                            <input id="search-contacts" class="form-control ui-autocomplete-input" placeholder="To:" type="text" autocomplete="off">
+							<span class="search-all-loading fa-spin-fast ico ico-spinner-10 fa-ts-color"></span>
+                        </div>
+					
+						
+                       <!--  <ul class="btn-list" id="btn‬Group">
+						 	
+                            <li>
+                                <button class="btn btn-default btn-block" value=0  ><i class="flaticon-normal"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-default btn-block"  value=1><i class="flaticon-lamp"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-default btn-block"  value=2><i class="flaticon-amplifier"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-default btn-block"  value=3><i class="flaticon-important"></i>
+                                </button>
+                            </li>
+                        </ul> -->
+						<div class="btn-list pull-left dp-proj">
+						
+													<select class="btn btn-default btn-default" id="select_projlists">
+													</select>
+										
+						</div>
+						<div class="btn-list pull-right " data-toggle="buttons">
+											
+								
+									  <label class="btn btn-default btn-normal btn-style tooltips active" data-placement="top" data-title="Normal" data-original-title="" title="Normal">
+									  
+										<input type="radio" name="post_type" id="option1" checked="checked" value="0"><i class="ico flaticon-normal"></i>
+										
+									  </label>
+									  <label class="btn btn-default btn-idea btn-style tooltips" data-placement="top" data-title="Idea" data-original-title="" title="Idea">
+										<input type="radio" name="post_type" id="option2" value="1"> <i class="ico flaticon-lamp"></i>
+									  </label>
+									  <label class="btn btn-default btn-attention btn-style tooltips" data-placement="top" data-title="Attention" data-original-title="" title="Attention">
+										<input type="radio" name="post_type" id="option3" value="2"> <i class="ico flaticon-amplifier"></i>
+									  </label>
+									  <label class="btn btn-default btn-urgent btn-style tooltips" data-placement="top" data-title="Urgent" data-original-title="" title="Urgent">
+										<input type="radio" name="post_type" id="option4" value="3"> <i class="ico flaticon-important"></i>
+									  </label>
+							</div>
+						
+						
+                        <div class="form-post-wrapper">
+                            <textarea rows="5" class="form-control" placeholder="Share your Updates..." id="txt_post"></textarea>
+							<div id="upld_img">
+							<!-- <img style="display:none;width:100px;height:100px;" id="post_image" src="" /> -->
+							</div>
+                        </div>
+							
+                        <ul class="btn-list-bottom">
+                            <li>
+							<!-- onclick="getPhoto(navigator.camera.PictureSourceType.SAVEDPHOTOALBUM);" getmultiimage();  -->
+                                <button class="btn btn-info"  onclick="getPhoto(navigator.camera.PictureSourceType.SAVEDPHOTOALBUM);" ><i class="flaticon-attachement"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-info" onclick="capturePhoto();" ><i class="flaticon-camera"></i>
+                                </button>
+                            </li>
+							
+							
+                        </ul>
+						<div class="chk">
+												<input type="checkbox" value="None" id="chk_txt_post" name="sendtoemail">
+												<label class="lbl-check" for="chk_txt_post"></label><span><label for="chk_txt_post">Send email to team</label></span>
+						</div>
+					</div>
+                </div>
+            </div>
+			</div>
+			<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+			</div>
+			</div>
+		</div>
+    </div>
+	
+	
+	
+    <!-- SNAP -->
+    <script type="text/javascript" src="js/snap.js"></script>
+
+
+    <script type="text/javascript">
+    var
+
+    // Helper
+        $ = function(id) {
+            return document.getElementById(id);
+        },
+
+        // Instance
+        snapper = new Snap({
+            element: document.getElementById('content')
+        }),
+
+        // 
+        UpdateDrawers = function() {
+            var state = snapper.state(),
+                towards = state.info.towards,
+                opening = state.info.opening;
+            if (opening == 'right' && towards == 'left') {
+                $('right-drawer').classList.add('active-drawer');
+                $('left-drawer').classList.remove('active-drawer');
+            } else if (opening == 'left' && towards == 'right') {
+                $('right-drawer').classList.remove('active-drawer');
+                $('left-drawer').classList.add('active-drawer');
+            }
+        };
+
+    snapper.on('drag', UpdateDrawers);
+    snapper.on('animating', UpdateDrawers);
+    snapper.on('animated', UpdateDrawers);
+
+    $('toggle-left').addEventListener('click', function() {
+        snapper.open('left');
+    });
+
+    $('toggle-right').addEventListener('click', function() {
+        snapper.open('right');
+    });
+    </script>
+
+    <!-- ENDSNAP -->
+
+    <!-- FONTS-->
+    <script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Advent+Pro:400,100,200,500,700,300,600:latin']
+        }
+    };
+    (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+    </script>
+    <script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Roboto:400,400italic,500italic,500,700,700italic:latin']
+        }
+    };
+    (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+    </script>
+    <!-- END FONTS-->
+
+
+    <script src="js/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        spaceBetween: 0,
+        grabCursor: true
+    });
+    </script>
+</body>
+
+</html>

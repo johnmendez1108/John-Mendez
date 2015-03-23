@@ -1,0 +1,78 @@
+/**
+* ==================================
+* Ratchet v1.0.0
+* Licensed under The MIT License
+* http://opensource.org/licenses/MIT
+* ==================================
+*/
+
+/* Hard reset
+-------------------------------------------------- */
+
+/* Prevents iOS text size adjust after orientation change,
+without disabling (Thanks to @necolas) */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Base styles
+-------------------------------------------------- */
+body {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Wrapper to be used around all content not in .bar-title and .bar-tab */
+.content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  background: #eaeaea;
+  -webkit-transition-property: top, bottom;
+  transition-property: top, bottom;
+  -webkit-transition-duration: .2s, .2s;
+  transition-duration: .2s, .2s;
+  -webkit-transition-timing-function: linear, linear;
+  transition-timing-function: linear, linear;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hack to force all relatively and absolutely positioned elements still render while scrolling
+Note:This is a bug for "-webkit-overflow-scrolling:touch" */
+.content > * {
+  -webkit-transform: translateZ(0px);
+  transform: translateZ(0px);
+}
+
+/* Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
+Note:For these to work,
+content must come after both bars in the markup */
+.bar-title ~ .content {
+  top: 50px;
+}
+.bar-footer ~ .content {
+  bottom: 55px;
+}
+-------------------------------------------------- */
+
+/* Modifier class to dock any bar below .bar-title */
+.bar-header-secondary {
+  top: 45px;
+}
+
+/* Modifier class to dock any bar to bottom of viewport */
+.bar-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  box-sizing: border-box;
+}
