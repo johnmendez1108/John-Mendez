@@ -60,7 +60,7 @@ content must come after both bars in the markup */
 .bar-footer ~ .content {
   bottom: 55px;
 }
--------------------------------------------------- */
+/*-------------------------------------------------- */
 
 /* Modifier class to dock any bar below .bar-title */
 .bar-header-secondary {
