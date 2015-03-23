@@ -1,0 +1,40 @@
+{
+  "ProjectName": "TeamStorm App",
+  "ProjectGuid": "06d69e67-c7bd-49e2-981e-0e446bb9b163",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.TeamStormApp",
+  "DisplayName": "TeamStorm App",
+  "Author": "",
+  "Description": "",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "3.5.0",
+  "AndroidPermissions": [],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "false",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{07ea9aef-2b16-4fe9-907d-e9a88f701e5c}",
+  "WP8ProductID": "{9a9a632d-5a27-48cb-be45-981dbf17273c}",
+  "WPSdk": "8.0",
+  "WP8PackageIdentityName": "1234Telerik.TeamStormApp",
+  "WP8WindowsPublisherName": "CN=Telerik",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ]
+}
