@@ -5,7 +5,7 @@
   "AppIdentifier": "com.telerik.TeamStormApp",
   "DisplayName": "TeamStorm App",
   "Author": "",
-  "Description": "",
+  "Description": "TeamStorm App",
   "BundleVersion": "1.0",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [

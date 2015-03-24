@@ -36,10 +36,14 @@ function forgotpass(){
       }
 	  },
 	  error: function (err) {
-        navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+         navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
     }
       
     });
 
 
+}
+function alertDismissed()
+{
+    
 }

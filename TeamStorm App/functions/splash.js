@@ -1,4 +1,5 @@
 $(document).ready(function() {
+   
 
 	if (window.localStorage.getItem('auto_signin')==1)
 	{

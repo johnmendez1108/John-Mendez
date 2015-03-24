@@ -26,7 +26,8 @@ function login(){
       data: { username:username , password: password }, 
       success: function (data) { 
         if(data.status ==0) {
-			navigator.notification.alert(data.status_message, function() {}); 
+			//navigator.notification.alert(data.status_message, function() {}); 
+            navigator.notification.alert(data.status_message,alertDismissed,'Login Error','Ok');
 			//alert(data.status_message); 
 			document.getElementById('password').value="";
 			}
@@ -51,8 +52,11 @@ function login(){
 	  },
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
-		alert(err.description);
-		console.log(err.description);
+		//alert(err.description);
+         navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
+		
+          
+          console.log(err.description);
     }
       
     });
@@ -60,6 +64,12 @@ function login(){
 	
   //getmyprofile();
   }
+
+function alertDismissed()
+{
+    
+}
+
 function preload()
 {
    document.getElementById("formsubmitbutton").style.display = "none"; // to undisplay
