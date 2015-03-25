@@ -14,7 +14,7 @@ function successFunction(position) {
 }
 
 function errorFunction() {
-    alert("Geocoder failed");
+    //alert("Geocoder failed");
 }
 
 function initialize() {

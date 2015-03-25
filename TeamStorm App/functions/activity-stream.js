@@ -356,13 +356,21 @@ function viewpostcomment(id)
                             '</div>';
 										
 				 }
-				 
+                
+                
+			if (data.length<=0){
+				document.getElementById("commentlist").style.display="none";
+			}
+			else
+			{
+			document.getElementById("commentlist").style.display="block";
 			document.getElementById("commentlist").innerHTML=appendHTML;	
-				 
+			}
 	  },
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
 		//alert(err.message);
+         document.getElementById("commentlist").style.display="none";
 		console.log(err.message);
     }
       	
@@ -554,9 +562,20 @@ init();
 
 
 
-function myprofile()
+function myprofile(uid)
 {
+    var usrid=window.localStorage.getItem('ts_myid');
 	window.location="my-profile.html";
+    if(uid<=0)
+    {
+        usrid=window.localStorage.getItem('ts_myid');
+        
+    }
+    else
+    {
+        usrid=uid;
+    }
+    
 	
 }
 
@@ -740,7 +759,7 @@ function getaddressbook(){
                                         '<div class="portrait-status chat">'+
 										 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" class="img-circle"> </td>'+
                                         '</div>'+
-                                        '<td><a href="">'+fullname+'</a>'+
+                                        '<td><a onclick="userprofile('+user_id+');">'+fullname+'</a>'+
                                         '</td>'+
 									 '</td>'+
 								  '</tr>';
