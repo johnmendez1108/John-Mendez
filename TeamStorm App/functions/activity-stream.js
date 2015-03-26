@@ -81,7 +81,7 @@ function loadaddress()
 									 '</td>'+
 								'</tr></tbody></table>';
 	 //document.getElementById("all").innerHTML =conlist;
-	 document.getElementById("all").innerHTML=window.localStorage.getItem('latestcontacts');
+	 document.getElementById("addressall").innerHTML=window.localStorage.getItem('latestcontacts');
 }
 
 function hideMessage() {
@@ -751,12 +751,12 @@ function getaddressbook(){
 					
                      appendHTML += '<tr id="'+user_id+'">'+
                                     '<td>'+
-                                        '<div class="checkbox">'+
-                                           '<div class="icheckbox_flat hover " style="position: relative;"><input type="checkbox" id="flat-checkbox-1" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>'+
+                                        '<div class="checkbox" style="left:20px;">'+
+                                           '<input type="checkbox" id="flat-checkbox-1">'+
                                         '</div>'+
                                     '</td>'+
                                     '<td>'+
-                                        '<div class="portrait-status chat">'+
+                                        '<div class="portrait-status chat" style="left:20px;">'+
 										 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" class="img-circle"> </td>'+
                                         '</div>'+
                                         '<td><a onclick="userprofile('+user_id+');">'+fullname+'</a>'+

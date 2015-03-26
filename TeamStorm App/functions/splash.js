@@ -8,6 +8,7 @@ $(document).ready(function() {
 	else
 	{
 		 window.location.replace("login.html");
+        
 	}
 	
 });
