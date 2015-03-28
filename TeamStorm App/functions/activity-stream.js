@@ -17,7 +17,10 @@ function init() {
 	loadaddress();
 	loadnewsfeed();		
 	 
-	document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
+	//document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
+	
+	//getprojectlist();
+	
 	
 }
 /* $(function() {
@@ -146,7 +149,7 @@ function getnewsfeed()
 										'<div class="main-user-post">'+
 											'<div class="media">'+
 												'<a class="pull-left" a href="" onclick="viewuserprof('+poster_id+');"  >'+
-													'<img class="media-object img-circle" src="data:image/gif;base64,'+getnfeedprofpic+'" width="50" alt="Image">'+
+													'<img class="media-object img-circle" src="data:image/gif;base64,'+getnfeedprofpic+'" width="50" height="50" alt="Image">'+
 												'</a>'+
 												'<div class="media-body">';
 												
@@ -549,7 +552,7 @@ function loadnewsfeed()
 	 
 	getnewsfeed();
 	document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
-	
+	getprojectlist();
 }
 
 
@@ -557,6 +560,7 @@ function loadnewsfeed()
 $(document).ready(function() {
 
 init();
+
 	 
 });
 
@@ -752,12 +756,12 @@ function getaddressbook(){
                      appendHTML += '<tr id="'+user_id+'">'+
                                     '<td>'+
                                         '<div class="checkbox" style="left:20px;">'+
-                                           '<input type="checkbox" id="flat-checkbox-1">'+
+                                           '<input type="checkbox" id="flat-checkbox-1" class="icheckbox_flat">'+
                                         '</div>'+
                                     '</td>'+
                                     '<td>'+
                                         '<div class="portrait-status chat" style="left:20px;">'+
-										 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" class="img-circle"> </td>'+
+										 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" height="35" class="img-circle"> </td>'+
                                         '</div>'+
                                         '<td><a onclick="userprofile('+user_id+');">'+fullname+'</a>'+
                                         '</td>'+
