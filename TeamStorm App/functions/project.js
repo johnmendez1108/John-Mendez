@@ -1,8 +1,123 @@
 var ses_id = window.localStorage.getItem('session_id');
 var proj_completed = 0;
 var allmemberid = new Array();
+var alltaskid= new Array();
+var alltaskname= new Array();
+var numoftask;
 var numofmembers;
 var proj_mem_profpic="";
+
+function getproject()
+{
+	
+	var appendHTML ='<li><a data-toggle="modal" href="#newproject"><i class="flaticon-folder-plus"></i> Create New Project</a></li>';
+	
+	  jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/getlist', 
+			data: { sid: ses_id }, 
+			success: function (data) { 
+						 
+				 for(var x = 0; x < data.length; x++){
+					var pid= data[x].id;
+					var project_creator= data[x].project_creator;
+					var project_title= data[x].project_title;   
+					var project_description= data[x].project_description;
+					var date_last_update= data[x].date_last_update;
+					var date_created= new Date(data[x].date_created);  
+					var is_deleted= data[x].is_deleted;
+					var status= data[x].status;
+					var creator_name= data[x].creator_name;
+					var percentcomplete=0;
+					
+					
+					
+					appendHTML+= '<li><a data-toggle="collapse" href="#collapse-projects-task-lists-'+pid+'" ><i class="flaticon-folder-open" ></i>'+project_title+'';
+					
+					
+					gettasklist(pid);
+					
+					if (numoftask>0){
+						
+						appendHTML+= '<i class="flaticon-menu pull-right"></i></a>';
+						appendHTML+= '<ul id="collapse-projects-task-lists-'+pid+'" class="panel-collapse collapse">';
+					
+						for(var i = 0; i < numoftask; i++){	
+						
+							appendHTML+= '<li><a id='+alltaskid[i]+'>'+alltaskname[i]+'</a></li>';
+							
+						}
+						
+						appendHTML+= '</ul>';
+					}
+					else{
+						appendHTML+= '</a>';
+						
+					}
+										
+					
+					appendHTML+= '</li>';
+				
+					
+				 }
+				 
+				appendHTML+= '<li><a data-toggle="modal" href="#project"  ><i class="flaticon-folder-close-line"></i>See All</a>';	 				 
+				if (appendHTML.length >0){
+					
+					document.getElementById("collapse-projects-lists").innerHTML=appendHTML;
+				}
+				
+			
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});  
+	
+	
+	
+}
+
+function gettasklist(id)
+{
+	jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/tasklist/'+id, 
+			data: { sid: ses_id}, 
+			success: function (data) { 
+			
+				if(data.status == 1){
+						
+					 numoftask=data.items.length;			
+					 for(var x = 0; x < data.items.length; x++){	
+						
+						alltaskid[x] = data.items[x].id;
+						alltaskname[x] = data.items[x].task_title;
+					 }
+								
+				}
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});
+	
+}
+
 function getprojectlist()
 {
 	
@@ -159,8 +274,7 @@ function proj_inf(id)
 }
 
 function get_proj_member(id)
-{
-	
+{	
 	jQuery.ajax({ 
 			type: 'post', 
 			async : false,     
@@ -188,11 +302,11 @@ function get_proj_member(id)
 		console.log(err.message);
     }
       	
-}); 
-	
-	
+}); 	
 }
-function getprofpic(tsid){
+
+function getprofpic(tsid)
+{
 
 	  jQuery.ajax({ 
 			type: 'post', 
@@ -216,6 +330,46 @@ function getprofpic(tsid){
     }
       	
 });   
+	
+}
+
+function clearprj_text()
+{
+	document.getElementById("txt_prj_name").value ="";
+	document.getElementById("txt_prj_desc").value ="";
+}
+
+
+function create_project()
+{
+var pname=document.getElementById("txt_prj_name").value;
+var pdesc=document.getElementById("txt_prj_desc").value;
+	
+	jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/create', 
+			data: { sid: ses_id,
+					name:pname,
+					description:pdesc}, 
+			success: function (data) { 
+			
+				if(data.status == 1){
+					clearprj_text();
+					getproject();
+					
+				}
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+}); 	
 	
 }
 

@@ -20,7 +20,7 @@ function init() {
 	//document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
 	
 	//getprojectlist();
-	
+	getproject();
 	
 }
 /* $(function() {
@@ -148,7 +148,7 @@ function getnewsfeed()
 					appendHTML += '<div class="inner-wrapper" id ="newsfeed '+postid+'">'+
 										'<div class="main-user-post">'+
 											'<div class="media">'+
-												'<a class="pull-left" a href="" onclick="viewuserprof('+poster_id+');"  >'+
+												'<a class="pull-left" a  onclick="viewuserprof('+poster_id+');"  >'+
 													'<img class="media-object img-circle" src="data:image/gif;base64,'+getnfeedprofpic+'" width="50" height="50" alt="Image">'+
 												'</a>'+
 												'<div class="media-body">';
