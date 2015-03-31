@@ -6,11 +6,12 @@ var alltaskname= new Array();
 var numoftask;
 var numofmembers;
 var proj_mem_profpic="";
+var task_mem_profpic="";
+var cur_pid;
 
 function getproject()
 {
-	
-	var appendHTML ='<li><a data-toggle="modal" href="#newproject"><i class="flaticon-folder-plus"></i> Create New Project</a></li>';
+	var appendHTML ='<li><a data-toggle="modal" href="#newproject" ><i class="flaticon-folder-plus"></i> Create New Project</a></li>';
 	
 	  jQuery.ajax({ 
 			type: 'post', 
@@ -65,10 +66,10 @@ function getproject()
 					
 				 }
 				 
-				appendHTML+= '<li><a data-toggle="modal" href="#project"  ><i class="flaticon-folder-close-line"></i>See All</a>';	 				 
+				appendHTML+= '<li><a data-toggle="modal" href="#project" ><i class="flaticon-folder-close-line"></i>See All</a>';	 				 
 				if (appendHTML.length >0){
 					
-					document.getElementById("collapse-projects-lists").innerHTML=appendHTML;
+					window.localStorage["getprojects"]=appendHTML;
 				}
 				
 			
@@ -82,7 +83,7 @@ function getproject()
 });  
 	
 	
-	
+document.getElementById("collapse-projects-lists").innerHTML=window.localStorage.getItem('getprojects');
 }
 
 function gettasklist(id)
@@ -145,6 +146,7 @@ function getprojectlist()
 					var status= data[x].status;
 					var creator_name= data[x].creator_name;
 					var percentcomplete=0;
+					var numact,numpen,numcomp;
 					
 					proj_inf(pid);
 					if (proj_completed==1)
@@ -172,23 +174,26 @@ function getprojectlist()
                                 '<div class="task-description">'+project_description+'</div>';
 								
 								
+							numact=	getcounttask(pid,"active");
+							numpen=getcounttask(pid,"pending");
+							numcomp=getcounttask(pid,"completed");
 								
                     appendHTML+='<div class="project-status">'+
                                    '<ul class="clearfix">'+
                                         '<li>'+
-                                            '<div class="title">Tasks</div>'+
+                                            '<div class="title" data-toggle="modal" href="#project"><a data-toggle="modal" href="#task" data-role="button" type="button" onclick="loadtask('+pid+');">Tasks</a></div>'+
                                         '</li>'+
                                         '<li>'+
-                                            '<div class="stats">Pending</div>'+
-                                            '<div class="count">4</div>'+
+                                            '<div class="stats">Active</div>'+
+                                            '<div class="count">'+numact+'</div>'+
                                        '</li>'+
                                         '<li>'+
-                                            '<div class="stats">Ongoing</div>'+
-                                            '<div class="count">6</div>'+
+                                            '<div class="stats">Pending</div>'+
+                                            '<div class="count">'+numpen+'</div>'+
                                         '</li>'+
                                         '<li>'+
                                             '<div class="stats">Completed</div>'+
-                                            '<div class="count">10</div>'+
+                                            '<div class="count">'+numcomp+'</div>'+
                                         '</li>'+
                                     '</ul>'+
                                 '</div>';
@@ -197,7 +202,7 @@ function getprojectlist()
 								
                        appendHTML+='<div class="task-user">'+
                                     '<ul>';
-									
+								
 								get_proj_member(pid);
 									
 								 for(var i = 0; i < numofmembers; i++){	
@@ -220,7 +225,7 @@ function getprojectlist()
                 appendHTML+='</div>'+
                             '<div class="right-border">'+
                                 '<div class="link-wrapper">'+
-                                    '<a href="task-info.html" class="arrow-link"><span class="flaticon-arrow-right"></span></a>'+
+                                    '<a  data-role="button" type="button" class="arrow-link" ><span class="flaticon-arrow-right"></span></a>'+
                                 '</div>'+
                             '</div>'+
                      
@@ -337,6 +342,178 @@ function clearprj_text()
 {
 	document.getElementById("txt_prj_name").value ="";
 	document.getElementById("txt_prj_desc").value ="";
+
+}
+
+function getcounttask(id,type)
+{
+	var counttask=0;
+	jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/tasklist/'+id, 
+			data: { sid: ses_id,
+					sort: type}, 
+			success: function (data) { 
+			
+				if(data.status == 1){
+						
+					 counttask=data.items.length;			
+					 								
+				}
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});
+	
+return counttask;	
+}
+
+
+
+function loadtask(pid)
+{
+	cur_pid=pid;
+	gettask(pid,"active");
+	gettask(pid,"pending");
+	gettask(pid,"completed");
+	dependanttask_select();
+}
+function gettask(pid,type)
+{
+var appendHTML ='';
+		jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/tasklist/'+pid, 
+			data: { sid: ses_id,
+					sort: type}, 
+			success: function (data) { 
+			
+				if(data.status == 1){
+						
+					
+					 for(var x = 0; x < data.items.length; x++){	
+						var id =data.items[x].id;
+						var dependent_taskid =data.items[x].dependent_taskid;
+						var task_title =data.items[x].task_title;
+						var task_description =data.items[x].task_description;
+						var task_creator_id =data.items[x].task_creator_id;
+						var task_creator_name =data.items[x].task_creator_name;
+						var priority =data.items[x].priority;
+						var date_created =data.items[x].date_created;
+						var date_start =data.items[x].date_start;
+						var date_end =data.items[x].date_end;
+						var date_completed =data.items[x].date_completed;
+						var task_status =data.items[x].task_status;
+						var progval=0;
+						var progbarclass=""
+						if (type=="completed")
+						{
+							progval=100;
+							progbarclass="progress-bar-success";
+						}
+						else{
+							progval=0;
+							progbarclass="progress-bar-primary";
+						}
+						
+						
+						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
+									'<div class="left-border" style="width:100%;">'+
+									'<div class="title-task"><a >'+task_title+'</a>'+
+                                    '</div>'+
+                                    '<div class="progress">'+
+                                        '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
+                                            '<span class="progress-type">'+progval+'%</span>'+
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class="task-description">'+task_description+'</div>';
+						
+						gettaskprofpic(task_creator_id);			
+						appendHTML +='<div class="task-user">'+
+                                       '<ul>'+
+                                            '<li>'+
+                                                '<a onclick="userprofile('+task_creator_id+');"><img class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
+                                                '</a>'+
+                                            '</li>'+
+                                        '</ul>'+
+                                    '</div>';
+						appendHTML +='</div>';
+						
+						 appendHTML +='<div class="right-border">'+
+                                    '<div class="link-wrapper">'+
+                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right"></span></a>'+
+                                    '</div>'+
+                                '</div></div></div>';
+						
+						
+					 }
+								
+				}
+				
+				
+				if (appendHTML.length >0){
+				 window.localStorage["get"+type+"task"]= appendHTML; 
+				
+				}
+				else{
+				 window.localStorage["get"+type+"task"]= ""; 
+				
+				}
+				
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});
+document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
+	
+}
+
+
+
+
+
+function gettaskprofpic(tsid)
+{
+
+	  jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/user', 
+			data: { sid: ses_id, id: tsid}, 
+			success: function (data) { 
+			
+		
+			task_mem_profpic = data.preview_pic;
+			
+			
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});   
+	
 }
 
 
@@ -372,4 +549,38 @@ var pdesc=document.getElementById("txt_prj_desc").value;
 }); 	
 	
 }
+function dependanttask_select(){	
+	var appendHTML = '<option value="0">None</option>';
+	
+	
+	 jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/tasklist/'+cur_pid, 
+			data: { sid: ses_id,
+					sort: 'active'}, 
+			success: function (data) { 
+
+				if(data.status == 1){
+						
+					 for(var x = 0; x < data.items.length; x++){
+				
+					appendHTML += '<option value="'+data.items[x].id+'">'+data.items[x].task_title+'</option>';
+			
+					}
+				}
+			
+			},				
+			error: function (err) {
+        
+		console.log(err.message);
+    }});
+	window.localStorage["dependanttask"]= appendHTML; 	
+  document.getElementById("select_deptask").innerHTML=window.localStorage.getItem('dependanttask');	    	
+}
+
+
 
