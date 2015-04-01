@@ -8,6 +8,7 @@ var numofmembers;
 var proj_mem_profpic="";
 var task_mem_profpic="";
 var cur_pid;
+var task_mem_profpic1="";
 
 function getproject()
 {
@@ -147,6 +148,7 @@ function getprojectlist()
 					var creator_name= data[x].creator_name;
 					var percentcomplete=0;
 					var numact,numpen,numcomp;
+					var p_title ="'"+project_title+"'";
 					
 					proj_inf(pid);
 					if (proj_completed==1)
@@ -163,7 +165,7 @@ function getprojectlist()
 							'<div class="task-wrapper">'+
 							
 							'<div class=" left-border" style="width:100%">'+
-                                '<div class="title-task"><a href="task-info.html">'+project_title+' </a>'+
+                                '<div class="title-task"><a >'+project_title+' </a>'+
                                 '</div>'+
                                 '<div class="sub-title-task">Date Created: '+date_created.toDateString()+' '+ date_created.toLocaleTimeString()+'</div>'+
                                 '<div class="progress">'+
@@ -181,7 +183,7 @@ function getprojectlist()
                     appendHTML+='<div class="project-status">'+
                                    '<ul class="clearfix">'+
                                         '<li>'+
-                                            '<div class="title" data-toggle="modal" href="#project"><a data-toggle="modal" href="#task" data-role="button" type="button" onclick="loadtask('+pid+');">Tasks</a></div>'+
+                                            '<div class="title" ><a data-toggle="modal" href="#task" data-role="button" type="button" onclick="loadtask('+p_title+','+pid+');"><p data-toggle="modal" href="#project" style="margin: 0 0 0px;">Tasks</p></a></div>'+
                                         '</li>'+
                                         '<li>'+
                                             '<div class="stats">Active</div>'+
@@ -212,7 +214,7 @@ function getprojectlist()
 									 getprofpic(allmemberid[i]);
 									 
 									 appendHTML+='<li>'+
-                                            '<a onclick="userprofile('+allmemberid[i]+');"><img class="img-circle" src="data:image/gif;base64,'+proj_mem_profpic+'" width="50" height="50" alt="Image"></a>'+
+                                            '<a data-toggle="modal" href="#userprof" onclick="userprofile('+allmemberid[i]+');"><img class="img-circle" src="data:image/gif;base64,'+proj_mem_profpic+'" width="50" height="50" alt="Image"></a>'+
 											'</li>';
 									  
 									  
@@ -378,13 +380,18 @@ return counttask;
 
 
 
-function loadtask(pid)
+function loadtask(pname,pid)
 {
+	document.getElementById("viewtaskhdr").innerHTML=pname+"-Task List";
 	cur_pid=pid;
 	gettask(pid,"active");
 	gettask(pid,"pending");
 	gettask(pid,"completed");
+	document.getElementById("viewnewtaskhdr").innerHTML=pname+"-Create Task";
 	dependanttask_select();
+	
+	get_proj_mem_for_task();
+	
 }
 function gettask(pid,type)
 {
@@ -444,7 +451,7 @@ var appendHTML ='';
 						appendHTML +='<div class="task-user">'+
                                        '<ul>'+
                                             '<li>'+
-                                                '<a onclick="userprofile('+task_creator_id+');"><img class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
+                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+task_creator_id+');"><img class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
                                                 '</a>'+
                                             '</li>'+
                                         '</ul>'+
@@ -483,9 +490,6 @@ var appendHTML ='';
 document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
 	
 }
-
-
-
 
 
 function gettaskprofpic(tsid)
@@ -582,5 +586,82 @@ function dependanttask_select(){
   document.getElementById("select_deptask").innerHTML=window.localStorage.getItem('dependanttask');	    	
 }
 
+
+function get_proj_mem_for_task()
+{	
+
+	var appendHTML = '';
+	jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/memberlist/'+cur_pid, 
+			data: { sid: ses_id}, 
+			success: function (data) { 
+			
+				if(data.status == 1){
+					
+				
+			    for(var x = 0; x < data.items.length; x++){
+						 
+						var id=data.items[x].id;
+						var role= data.items[x].role;
+						var email= data.items[x].email;
+						var name= data.items[x].name;
+						
+						 appendHTML +='<tr class="checked-list">'; 
+						 getmemprofpic(id);
+						 appendHTML +='<td><div class="portrait-status chat"><img src="data:image/gif;base64,'+task_mem_profpic1+'" height="45" width="45" class="img-circle"></div>';
+						 
+					    
+						appendHTML +='<td><a >'+name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><input type="checkbox" id="flat-checkbox-1" class="icheckbox_flat" value="'+id+'"></div></td></tr>';
+					}			
+				}
+				
+				
+				
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+}); 
+
+if (appendHTML.length >0){document.getElementById("fortaskmembers").innerHTML= appendHTML; }
+else{document.getElementById("fortaskmembers").innerHTML="";}
+	
+}
+
+function getmemprofpic(tsid)
+{
+
+	  jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/user', 
+			data: { sid: ses_id, id: tsid}, 
+			success: function (data) { 
+			
+		
+			task_mem_profpic1 = data.preview_pic;
+			
+			
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});   
+	
+}
 
 

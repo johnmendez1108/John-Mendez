@@ -45,10 +45,24 @@
 	<script type="text/javascript" charset="utf-8" src="functions/getlocation.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/camera.js"></script>
     <script type="text/javascript" charset="utf-8" src="functions/project.js"></script>
-	 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8" src="functions/userprofile.js"></script>
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
+	<!-- <link rel="stylesheet" href="kendo/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="kendo/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="kendo/styles/kendo.dataviz.min.css" />
+    <link rel="stylesheet" href="kendo/styles/kendo.dataviz.default.min.css" />
+
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.all.min.js"></script> -->
 	
+<link rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css"/>
+<style type="text/css">
 
+.custom-date-style {
+	background-color: red !important;
+}	
+</style>	
 <script type="text/javascript">
 	
 	
@@ -71,7 +85,7 @@
 
 	
 			 
-	var myScroll,leftScroll,rightScroll,commentScroll,postScroll,projectScroll,newprjScroll,newtskscroll,loadtskscroller,
+	var myScroll,leftScroll,rightScroll,commentScroll,postScroll,projectScroll,newprjScroll,newtskscroll,loadtskscroller,userprofscroller,
 	pullDownEl, pullDownOffset,
 	pullUpEl, pullUpOffset,
 	generatedCount = 0;
@@ -83,7 +97,7 @@
 		var newpost = "<div class='inner-wrapper'>"+
                     "<div class='main-user-post'>"+
                         "<div class='media'>"+
-                            "<a class='pull-left' a href='user-profile.html'>"+
+                            "<a class='pull-left' a >"+
                                 "<img class='media-object img-circle' src='img/user/thumb-user-medium.jpg' width='50' alt='Image'>"+
                             "</a>"+
                             "<div class='media-body'>"+
@@ -91,7 +105,7 @@
 								"<div class='btn-group pull-right' ><span class='ico flaticon-arrow-bottom' data-toggle='modal' href='#postsettings'></span></div>"+
 								
 								
-                                "<h4 class='media-heading'><a href='user-profile.html'>Jay Quinto</a> </h4>"+
+                                "<h4 class='media-heading'><a >Jay Quinto</a> </h4>"+
                                 "<small>4 hours ago via public</small>"+
 								" <span class='ico flaticon-lamp'></span>"+
                             "</div>"+
@@ -128,7 +142,7 @@
 			//li = document.createElement('div');
 			//li.innerHTML  =newpost;
 			//el.appendChild(li, el.childNodes[0]);
-			loadnewsfeed();
+			//loadnewsfeed();
 		//}
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
 		}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
@@ -194,6 +208,7 @@
 	newprjScroll = new iScroll('newprjwrapper');
 	newtskscroll= new iScroll('newtskwrapper');
 	loadtskscroller= new iScroll('loadtskwrapper');
+	userprofscroller= new iScroll('userprofwrapper');
 	postScroll.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
 
@@ -230,7 +245,7 @@
 	
 	}, 10);
 }	
-		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh(); }, false);
+		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh(); newtskscroll.refresh();}, false);
 		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);			 
      
 
@@ -254,7 +269,7 @@ body {
 	font-family: 'Roboto', sans-serif !important;
 }
  
-#wrapper, #commentwrapper,#postwrapper,#projectwrapper,#newprjwrapper,#loadtskwrapper,#newtskwrapper {
+#wrapper, #commentwrapper,#postwrapper,#projectwrapper,#newprjwrapper,#loadtskwrapper,#newtskwrapper,#userprofwrapper {
 	position:absolute; z-index:1;
 	top: 0px; bottom:0px; left:-9999px;
 	width:100%;
@@ -276,7 +291,7 @@ body {
  * Scroller
  *
  */	  	  
-#scroller,#commentscroller,#postscroller,#projectscroller,#newprjscroller,#newtskscroller,#loadtskscroller,#leftscroller,#rightscroller {
+#scroller,#commentscroller,#postscroller,#projectscroller,#newprjscroller,#newtskscroller,#loadtskscroller,#userprofscroller,#leftscroller,#rightscroller {
 	position:absolute; z-index:1;
 	-webkit-touch-callout:none;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
@@ -390,7 +405,7 @@ body {
 			
                 <ul class="main">
 
-                    <li><a onclick="userprofile(0);" data-role="button" type="button"><i class="flaticon-user-profile"></i> Profile</a>
+                    <li><a data-toggle="modal" href="#userprof" onclick="userprofile(0);" data-role="button" type="button"><i class="flaticon-user-profile"></i> Profile</a>
                     </li>
                     <li><a onclick="appsettings();" data-role="button" type="button"><i class="flaticon-settings"></i> Settings</a>
                     </li>
@@ -428,13 +443,13 @@ body {
                 </ul>
                 <hr>
                 <ul class="additional-menu">
-                    <li><a onclick="calendar();" data-role="button" type="button"><i class="flaticon-calendar"></i> Calendar</a>
+                    <li><a  data-role="button" type="button"><i class="flaticon-calendar"></i> Calendar</a>
                     </li>
-                    <li><a onclick="memopad();" data-role="button" type="button"><i class="flaticon-memo-pad"></i> Memo Pad</a>
+                    <li><a  data-role="button" type="button"><i class="flaticon-memo-pad"></i> Memo Pad</a>
                     </li>
-                    <li><a onclick="todo();" data-role="button" type="button"><i class="flaticon-to-do"></i> To-Do</a>
+                    <li><a  data-role="button" type="button"><i class="flaticon-to-do"></i> To-Do</a>
                     </li>
-                    <li><a href=""><i class="flaticon-address-book"></i> Address Book</a>
+                    <li><a ><i class="flaticon-address-book"></i> Address Book</a>
                     </li>
                 </ul>
             </div>
@@ -543,7 +558,7 @@ body {
                                             <img src="img/user/thumb-user-small.jpg" height="35" class="img-circle" ></td>
 											
                                         </div>
-                                        <td><a href="">Anthony Perks</a>
+                                        <td><a >Anthony Perks</a>
                                         </td>
                                 </tr>
 								
@@ -575,13 +590,13 @@ body {
         </div>
 		</div>
     </div>
-	
+
     <div id="content" class="snap-content">
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
                 <button class="" id="toggle-left"><i class="flaticon-menu"></i>
                 </button>
-                <a href="activity-stream.html"><img src="img/logo-teamstorm.png" height="31">
+                <a ><img src="img/logo-teamstorm.png" height="31">
                 </a>
             </div>
             <div class="title">Activity Stream</div>
@@ -593,7 +608,7 @@ body {
         </div>
         <div class="bottom-controls bar-footer">
             <ul class="half-control-2 clearfix">
-                <li><a data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" onclick="" ><i class="flaticon-post"></i> Post</a>
+                <li><a data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" onclick="newpost()" ><i class="flaticon-post"></i> Post</a>
                 </li>
                 <li><a data-toggle="modal" href="#chat" class="btn btn-block btn-primary btn-lg"  ><i class="flaticon-chat"></i> Chat</a>
 		
@@ -613,11 +628,11 @@ body {
 
                     <div class="main-user-post">
                         <div class="media">
-                            <a class="pull-left" a href="my-profile.html">
+                            <a class="pull-left" a >
                                 <img class="media-object img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading"><a href="my-profile.html">Willem den Toom</a></h4>
+                                <h4 class="media-heading"><a >Willem den Toom</a></h4>
                                 <small>Just now via public</small>
                             </div>
 
@@ -634,20 +649,20 @@ body {
                     </div>
                     <div class="comment-user-post">
                         <div class="media">
-                            <a class="pull-left" a href="user-profile.html">
+                            <a class="pull-left" a >
                                 <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading"><a href="user-profile.html">Jay Quinto</a> <small>2 minutes</small></h4>
+                                <h4 class="media-heading"><a >Jay Quinto</a> <small>2 minutes</small></h4>
                                 <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
                             </div>
                         </div>
                         <div class="media">
-                            <a class="pull-left" a href="user-profile.html">
+                            <a class="pull-left" a >
                                 <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading"><a href="user-profile.html">Jay Quinto</a> <small>1 minute</small></h4>
+                                <h4 class="media-heading"><a >Jay Quinto</a> <small>1 minute</small></h4>
                                 <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
                                 <img class="img-responsive" src="img/post-images/image1.jpg" alt="Image">
                             </div>
@@ -657,11 +672,11 @@ body {
 				<!--  <div class="inner-wrapper">
                     <div class="main-user-post">
                         <div class="media">
-                            <a class="pull-left" a href="user-profile.html">
+                            <a class="pull-left" a >
                                 <img class="media-object img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading"><a href="user-profile.html">Jay Quinto</a></h4>
+                                <h4 class="media-heading"><a >Jay Quinto</a></h4>
                                 <small>4 hours ago via public</small>
                             </div>
 
@@ -686,7 +701,7 @@ body {
 							</div>
 						</div>
 					<div id="pullUp">
-						<span class="pullUpIcon"></span> <center><span class="pullUpLabel">Pull up to refresh...</span></center>
+						<!-- <span class="pullUpIcon"></span> <center><span class="pullUpLabel">Pull up to refresh...</span></center> -->
 					</div>
 				
 			</div>
@@ -731,11 +746,11 @@ body {
 					<div class="inner-wrapper chat-box-wrapper" id="commentlist">
                      
 						<!--<div class="media"> 
-                            <a class="pull-left" a href="">
+                            <a class="pull-left" a >
                                 <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading"><a href="user-profile.html">Jay Quinto</a> <small>2 minutes</small></h4>
+                                <h4 class="media-heading"><a >Jay Quinto</a> <small>2 minutes</small></h4>
                                 <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
                             </div>
                         </div>-->
@@ -826,25 +841,25 @@ body {
                         </ul> -->
 						<div class="btn-list pull-left dp-proj">
 						
-													<select class="btn btn-default btn-default" id="select_projlists">
+													<select class="btn-default btn-default form-control" id="select_projlists">
 													</select>
 										
 						</div>
 						<div class="btn-list pull-right " data-toggle="buttons">
 											
 								
-									  <label class="btn btn-default btn-normal btn-style tooltips active" data-placement="top" data-title="Normal" data-original-title="" title="Normal">
+									  <label class="btn btn-default btn-normal btn-style tooltips active" data-placement="top" data-title="Normal" data-original-title="" title="Normal" >
 									  
 										<input type="radio" name="post_type" id="option1" checked="checked" value="0"><i class="ico flaticon-normal"></i>
 										
 									  </label>
-									  <label class="btn btn-default btn-idea btn-style tooltips" data-placement="top" data-title="Idea" data-original-title="" title="Idea">
+									  <label class="btn btn-default btn-idea btn-style tooltips" data-placement="top" data-title="Idea" data-original-title="" title="Idea" style="background:#FFFF00">
 										<input type="radio" name="post_type" id="option2" value="1"> <i class="ico flaticon-lamp"></i>
 									  </label>
-									  <label class="btn btn-default btn-attention btn-style tooltips" data-placement="top" data-title="Attention" data-original-title="" title="Attention">
+									  <label class="btn btn-default btn-attention btn-style tooltips" data-placement="top" data-title="Attention" data-original-title="" title="Attention" style="background:#FF9900">
 										<input type="radio" name="post_type" id="option3" value="2"> <i class="ico flaticon-amplifier"></i>
 									  </label>
-									  <label class="btn btn-default btn-urgent btn-style tooltips" data-placement="top" data-title="Urgent" data-original-title="" title="Urgent">
+									  <label class="btn btn-default btn-urgent btn-style tooltips" data-placement="top" data-title="Urgent" data-original-title="" title="Urgent" style="background:#FF0000">
 										<input type="radio" name="post_type" id="option4" value="3"> <i class="ico flaticon-important"></i>
 									  </label>
 							</div>
@@ -909,7 +924,7 @@ body {
 					<!-- <div class="inner-wrapper">
                         <div class="task-wrapper">
                             <div class=" left-border">
-                                <div class="title-task"><a href="task-info.html">Project Name </a>
+                                <div class="title-task"><a >Project Name </a>
                                 </div>
                                 <div class="sub-title-task">Message of the day
                                 </div>
@@ -941,15 +956,15 @@ body {
                                 <div class="task-user">
                                     <ul>
                                         <li>
-                                            <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
+                                            <a ><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
                                             </a>
                                         </li>
                                         <li>
-                                            <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
+                                            <a ><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
                                             </a>
                                         </li>
                                         <li>
-                                            <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
+                                            <a ><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
                                             </a>
                                         </li>
                                     </ul>
@@ -957,7 +972,7 @@ body {
                             </div>
                             <div class="right-border">
                                 <div class="link-wrapper">
-                                    <a href="task-info.html" class="arrow-link"><span class="flaticon-arrow-right"></span></a>
+                                    <a  class="arrow-link"><span class="flaticon-arrow-right"></span></a>
                                 </div>
                             </div>
 
@@ -1067,157 +1082,14 @@ body {
                 <div id="task-tab-content" class="tab-content">
                     <div class="tab-pane fade active in" id="active-task">
 
-                       <!--  <div class="inner-wrapper">
-                            <div class="task-wrapper">
-
-                                <div class="left-border">
-                                    <div class="title-task"><a href="task-info.html">Task Name </a>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
-                                            <span class="progress-type">35%</span>
-                                        </div>
-                                    </div>
-                                    <div class="task-description">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</div>
-                                    <div class="task-user">
-                                        <ul>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="right-border">
-                                    <div class="link-wrapper">
-                                        <a href="task-info.html" class="arrow-link"><span class="flaticon-arrow-right"></span></a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div> -->
-                        <!-- <div class="inner-wrapper">
-                            <div class="task-wrapper">
-
-                                <div class="left-border">
-                                    <div class="title-task"><a href="task-info.html">Task Name </a>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                            <span class="progress-type">60%</span>
-                                        </div>
-                                    </div>
-                                    <div class="task-description">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</div>
-                                    <div class="task-user">
-                                        <ul>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="right-border">
-                                    <div class="link-wrapper">
-                                        <a href="task-info.html" class="arrow-link"><span class="flaticon-arrow-right"></span></a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div> -->
                     </div>
                     <div class="tab-pane fade" id="pending-task">
-                        <div class="inner-wrapper">
-                            <div class="task-wrapper">
-
-                                <div class="left-border">
-                                    <div class="title-task"><a href="task-info.html">Task Name</a>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 14%">
-                                            <span class="progress-type">14%</span>
-                                        </div>
-                                    </div>
-                                    <div class="task-description">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</div>
-                                    <div class="task-user">
-                                        <ul>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="right-border">
-                                    <div class="link-wrapper">
-                                        <a href="task-info.html" class="arrow-link"><span class="flaticon-arrow-right"></span></a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
+                     
                     </div>
                     <div class="tab-pane fade" id="completed-task">
 
-                        <div class="inner-wrapper">
-                            <div class="task-wrapper">
-
-                                <div class="left-border">
-                                    <div class="title-task"><a href="task-info.html">Task Name</a>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                            <span class="progress-type">100%</span>
-                                        </div>
-                                    </div>
-                                    <div class="task-description">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</div>
-                                    <div class="task-user">
-                                        <ul>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href=""><img class="img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="right-border">
-                                    <div class="link-wrapper">
-                                        <a href="task-info.html" class="arrow-link"><span class="flaticon-arrow-right"></span></a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
+                      
+						
                     </div>
                 </div>
 			 </div>
@@ -1228,17 +1100,14 @@ body {
             </div>
         </div>
     </div>
-	
-
-
-	
+		
      <!--New Task-->  
 	<div id="newtask" class="modal-content modal" >
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
                 <a data-toggle="modal" href="#newtask" data-role="button" type="button" onclick="cleartask_text();"><i class="flaticon-arrow-left"></i></a>
             </div>
-            <div class="title">Create Task</div>
+            <div class="title" id="viewnewtaskhdr">Create Task</div>
           
         </div>
         <div class="bottom-controls bar-footer">
@@ -1249,7 +1118,7 @@ body {
         </div>
         <div class="content-modal">
 			
-			<div id="newtskwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px;">
+			<div id="newtskwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px; bottom: 30px;">
 			<div id="newtskscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">	
             <div class="post-wrapper">
                 <div class="inner-wrapper thin-padding">
@@ -1286,13 +1155,29 @@ body {
 						<div class="form-post-wrapper">
 						
 							<label>End Date</label>
-							<input class="form-control"  placeholder="" id="txt_enddate" >					
+							<input class="form-control"  placeholder="" id="txt_duedate" >					
                         </div>
 						<div class="form-post-wrapper">
 						
 							<label>Task Description</label>
 							<input class="form-control"  placeholder="Task Description" id="txt_taskdesc" >					
                         </div>
+						
+						<div class="form-post-wrapper">
+						
+							<label>Send Task Assignment</label>
+							<p >you can select member/s on the list below to assign a task.</p>
+							<div >
+							
+							 <table class="table ">
+								<tbody id="fortaskmembers">
+									
+								</tbody>
+							</table>
+							</div>
+                        </div>
+						
+						
 					</div>
                 </div>
             </div>
@@ -1304,8 +1189,102 @@ body {
 	   
 
 
+	 <!--User Profile-->
+	 <div id="userprof" class="modal-content modal">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <a  data-toggle="modal" href="#userprof" data-role="button" type="button" ><i class="flaticon-arrow-left"></i></a>
+            </div>
+            <div class="title" id ="usernamehdr" ></div>
+
+        </div>
+        <div class="content-modal">
+            <div class="media profile-status" style="padding-top:65px">
+                <a class="pull-left" >
+                    <div class="portrait-status">
+                       <!--  <img class="status" src="img/status/online.png" alt="Image"> -->
+                        <!-- <img class="status" src="img/status/offline.png" alt="Image"> -->
+                        <!-- <img class="status" src="img/status/busy.png" alt="Image"> -->
+                        <img id="userprof_pic" class="media-object img-circle" src="data:image/gif;base64,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" width="90" height="90" alt="Image">
+                    </div>
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading"><a id="userprof_name"></a></h4>
+                    <!-- <p>Director</p> -->
+                </div>
+				 <a class="pull-right" >
+					<li>
+                       <button class="btn btn-default" id="btn_follow_unfollow" style="display:none;" > <i class="flaticon-adduser"></i> Follow
+                       </button>
+                    </li>
+				</a>			
+            </div>
+            <div id="userprofwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 175px;">
+			<div id="userprofscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">
+			<div class="main-wrapper">
+                <div class="inner-wrapper">
+                    <div class="info-profile">
+                    <div class="panel panel-default">
+                            <div class="panel-heading">TeamStorm ID</div>
+                            <ul class="list-group">
+                            <li class="list-group-item" id="userprof_id">
+                                
+                                </li>
+                                </ul>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Basic Info</div>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <label>Full Name</label>
+                                    <div class="info"><a id="userprof_fullname"></a></div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Gender</label>
+                                    <div class="info"><a id="userprof_gender"></a></div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Address</label>
+                                    <div class="info"><a id="userprof_address"></a>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Company</label>
+                                    <div class="info"><a id="userprof_company"></a></div>
+                                </li>
+								 <li class="list-group-item">
+                                    <label>School Graduated</label>
+                                    <div class="info"><a id="userprof_school"></a></div>
+                                </li>
+                            </ul>
+                        </div>
+                    
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Contact info</div>
+                            <ul class="list-group">
+								<li class="list-group-item">
+                                    <label>Tel / Mobile</label>
+                                    <div class="info"><a id="userprof_mobile"></a>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Email Address</label>
+                                    <div class="info"><a id="userprof_emailadd"></a></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+			<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+			</div>	
+            </div>
+		</div>
+    </div>
 
 	   
+
 	   
     <!-- SNAP -->
     <script type="text/javascript" src="js/snap.js"></script>
@@ -1401,5 +1380,60 @@ body {
     });
     </script>
 </body>
+<script src="datetimepicker/jquery.js"></script>
+<script src="datetimepicker/jquery.datetimepicker.js"></script>
+<script>
+//create task start date and due date
+var startDate = new Date('01/01/2012');
+var FromEndDate = new Date();
+var ToEndDate = new Date();
+
+//$('#txt_duedate,#txt_duedate1').prop('disabled',true);
+$('#txt_duedate').datetimepicker({
+	format:'m/d/Y H:i',
+	formatDate: 'm/d/Y',
+	formatTime: 'H:i',
+	startDate: 'today',
+	minDate: 'today',
+	onChangeDateTime: function(ct,$i){
+		//alert(ct.dateFormat('m/d/Y'));
+		$('#txt_startdate').datetimepicker({
+			format:'m/d/Y H:i',
+			formatDate: 'm/d/Y',
+			formatTime: 'H:i',
+			maxTime: ct.dateFormat('H:i'),
+			maxDate: ct.dateFormat('m/d/Y')
+		})
+	}
+});
+$('#txt_startdate').datetimepicker({
+	format:'m/d/Y H:i',
+	formatDate: 'm/d/Y',
+	formatTime: 'H:i',
+	minDate: 'today',
+	onChangeDateTime: function(ct,$i){
+		//alert(ct.dateFormat('m/d/Y'));
+		$('#txt_duedate').datetimepicker({
+			format:'m/d/Y H:i',
+			formatDate: 'm/d/Y',
+			formatTime: 'H:i',
+			minTime: ct.dateFormat('H:i'),
+			startDate: ct.dateFormat('m/d/Y'),
+			minDate: ct.dateFormat('m/d/Y'),
+			onChangeDateTime: function(ct,$i){
+				//alert(ct.dateFormat('m/d/Y'));
+				$('#txt_startdate').datetimepicker({
+					format:'m/d/Y H:i',
+					formatDate: 'm/d/Y',
+					formatTime: 'H:i',
+					maxTime: ct.dateFormat('H:i'),
+					maxDate: ct.dateFormat('m/d/Y')
+				})
+			}
+		}).prop('disabled',false);
+	}
+});
+
+</script>
 
 </html>

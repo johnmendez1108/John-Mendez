@@ -40,14 +40,17 @@ function getmultiimage()
 
 $(document).ready(function() {
 
-loadprojects_select();
-document.getElementById('select_projlists').innerHTML=window.localStorage.getItem('projlist');
+
+
 
 //document.getElementById('select_projlists').options.add(new Option("0", "Project List"))
 	 //var ptype = $('input[type="radio"][name="post_type"]:checked').val();
 search_post_user();
 });
-
+function newpost()
+{
+loadprojects_select();
+}
 
 function loadprojects_select(){	
 	var appendHTML = '<option value="0">Project list</option>';
@@ -82,8 +85,9 @@ function loadprojects_select(){
 			error: function (err) {
         
 		console.log(err.message);
-    }}); 
-      	
+    }});
+	
+ document.getElementById('select_projlists').innerHTML=window.localStorage.getItem('projlist');     	
 }
 
 function do_post(){	
@@ -129,7 +133,7 @@ function do_post(){
 				if (data.status==1)
 				{
 					
-				alert(data.message);
+				//alert(data.message);
 				loadnewsfeed();
 				document.getElementById('option1').checked = true;
 				document.getElementById('chk_txt_post').checked	= false;

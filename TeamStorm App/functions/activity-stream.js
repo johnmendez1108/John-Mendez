@@ -21,6 +21,7 @@ function init() {
 	
 	//getprojectlist();
 	getproject();
+	loadprojects_select();
 	
 }
 /* $(function() {
@@ -133,12 +134,12 @@ function getnewsfeed()
 					
 					getposterpic(poster_id);
 					if(project_id > 0){
-						projname = ' posted in <a href="" onclick="viewprojectpost('+project_id+');"  >' + title  + '</a>';
+						projname = ' posted in <a onclick="viewprojectpost('+project_id+');"  >' + title  + '</a>';
 					}	
 					if(to_user_id > 0 && to_user_id != localStorage.getItem("ts_myid")) { 
 						getnfeeduserinfo(to_user_id);
 						var to_user_name = getnfeeduname;
-						projname = '<i class="flaticon-arrow-right"></i> <a href=""   onclick="viewuserprof('+to_user_id+');" >' + to_user_name + '</a>'; 						
+						projname = '<i class="flaticon-arrow-right"></i> <a data-toggle="modal" href="#userprof" onclick="userprofile('+to_user_id+');" >' + to_user_name + '</a>'; 						
 					}
 					if(task_id > 0){
 						
@@ -148,7 +149,7 @@ function getnewsfeed()
 					appendHTML += '<div class="inner-wrapper" id ="newsfeed '+postid+'">'+
 										'<div class="main-user-post">'+
 											'<div class="media">'+
-												'<a class="pull-left" a  onclick="viewuserprof('+poster_id+');"  >'+
+												'<a class="pull-left" data-toggle="modal" href="#userprof"  onclick="userprofile('+poster_id+');"  >'+
 													'<img class="media-object img-circle" src="data:image/gif;base64,'+getnfeedprofpic+'" width="50" height="50" alt="Image">'+
 												'</a>'+
 												'<div class="media-body">';
@@ -583,11 +584,7 @@ function myprofile(uid)
 	
 }
 
-function userprofile()
-{
-	window.location="user-profile.html";
-	
-}
+
 
 function memopad()
 {
@@ -763,7 +760,7 @@ function getaddressbook(){
                                         '<div class="portrait-status chat" style="left:20px;">'+
 										 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" height="35" class="img-circle"> </td>'+
                                         '</div>'+
-                                        '<td><a onclick="userprofile('+user_id+');">'+fullname+'</a>'+
+                                        '<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+user_id+');">'+fullname+'</a>'+
                                         '</td>'+
 									 '</td>'+
 								  '</tr>';
