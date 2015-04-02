@@ -214,7 +214,7 @@ function getprojectlist()
 									 getprofpic(allmemberid[i]);
 									 
 									 appendHTML+='<li>'+
-                                            '<a data-toggle="modal" href="#userprof" onclick="userprofile('+allmemberid[i]+');"><img class="img-circle" src="data:image/gif;base64,'+proj_mem_profpic+'" width="50" height="50" alt="Image"></a>'+
+                                            '<a data-toggle="modal" href="#userprof" onclick="userprofile('+allmemberid[i]+');"><img data-toggle="modal" href="#project" class="img-circle" src="data:image/gif;base64,'+proj_mem_profpic+'" width="50" height="50" alt="Image"></a>'+
 											'</li>';
 									  
 									  
@@ -451,7 +451,7 @@ var appendHTML ='';
 						appendHTML +='<div class="task-user">'+
                                        '<ul>'+
                                             '<li>'+
-                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+task_creator_id+');"><img class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
+                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+task_creator_id+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
                                                 '</a>'+
                                             '</li>'+
                                         '</ul>'+
@@ -613,10 +613,9 @@ function get_proj_mem_for_task()
 						
 						 appendHTML +='<tr class="checked-list">'; 
 						 getmemprofpic(id);
-						 appendHTML +='<td><div class="portrait-status chat"><img src="data:image/gif;base64,'+task_mem_profpic1+'" height="45" width="45" class="img-circle"></div>';
-						 
-					    
-						appendHTML +='<td><a >'+name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><input type="checkbox" id="flat-checkbox-1" class="icheckbox_flat" value="'+id+'"></div></td></tr>';
+						 appendHTML +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" ><img data-toggle="modal" href="#newtask" src="data:image/gif;base64,'+task_mem_profpic1+'" height="45" width="45" class="img-circle"></a></div>';
+						  
+						appendHTML +='<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');"><i data-toggle="modal" href="#newtask" ></i>'+name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><input type="checkbox" id="flat-checkbox-1" name="chk_members" class="icheckbox_flat" value="'+id+'"></div></td></tr>';
 					}			
 				}
 				
@@ -662,6 +661,89 @@ function getmemprofpic(tsid)
       	
 });   
 	
+}
+
+function create_task()
+{
+	var members = getCheckedBoxes('chk_members');
+	var chk_members = '';
+	
+	for(var x = 0; x < members.length; x++){
+		chk_members += members[x].value + ',';
+	}
+	chk_members = chk_members.slice(0,-1);
+	
+	
+	var title = document.getElementById('txt_tasktitle').value;
+	var priority = document.getElementById('select_priority').value;
+	var desc = document.getElementById('txt_taskdesc').value;
+	var startdate = document.getElementById('txt_startdate').value
+	var duedate = document.getElementById('txt_duedate').value;
+	var depentask = document.getElementById('select_deptask').value;
+	
+	
+	jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/task/create', 
+			data: { sid: ses_id,
+					project_id: cur_pid,
+					title: title,
+					description:desc,
+					startdate:startdate,
+					duedate:duedate,
+					priority:priority,
+					members:chk_members,
+					dependent:depentask
+					}, 
+			success: function (data) { 
+			
+				if(data.status == 1){
+					
+					cleartsk_text();
+					getproject();
+					
+				}
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+}); 	
+	 
+	
+}
+
+function getCheckedBoxes(chkboxName) {
+  var checkboxes = document.getElementsByName(chkboxName);
+  var checkboxesChecked = [];
+  // loop over them all
+  for (var i=0; i<checkboxes.length; i++) {
+     // And stick the checked ones onto an array...
+     if (checkboxes[i].checked) {
+        checkboxesChecked.push(checkboxes[i]);
+     }
+  }
+  // Return the array if it is non-empty, or null
+  return checkboxesChecked.length > 0 ? checkboxesChecked : '';
+}
+function cleartsk_text(){
+	
+	var curdate = new Date();
+	var preDate =(curdate.getMonth()+1) + '/' + curdate.getDate() + '/' +
+        curdate.getFullYear() + ' '+curdate.getHours() + ':' + curdate.getMinutes();
+		
+	document.getElementById('txt_tasktitle').value="";
+	document.getElementById('select_priority').value="";
+	document.getElementById('txt_taskdesc').value="";
+	document.getElementById('txt_startdate').value=preDate;
+	document.getElementById('txt_duedate').value=preDate;
+	document.getElementById('select_deptask').value="";
 }
 
 
