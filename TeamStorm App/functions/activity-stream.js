@@ -404,6 +404,7 @@ function do_comment()
 				
 				if (data.status==1)
 				{
+					preloading2();
 					document.getElementById('inptcomment').value="";
 					viewpostcomment(cur_postid);
 					loadnewsfeed();
@@ -442,6 +443,7 @@ function delete_post(buttonIndex) {
 	
 		if (buttonIndex==1)
 		{
+			preloading2();
 			alertDismissed();
 			jQuery.ajax({ 
 			type: 'post', 
@@ -560,7 +562,7 @@ function loadnewsfeed()
 
 $(document).ready(function() {
 
-init();
+
 
 	 
 });

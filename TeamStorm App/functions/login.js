@@ -39,15 +39,18 @@ function login(){
 		 //$.mobile.changePage($('#modalview-login'));
 		 //$.mobile.changePage("Index2.html");
 		 //alert(data.session_id);
-         preload();  
+          
 		 window.localStorage["session_id"] = data.session_id;
 		 window.localStorage["name"] = data.name;
 		  
-		  window.localStorage["islogin"] = 1;
+		 window.localStorage["islogin"] = 1;
 		 window.localStorage["username"] = username;
 		 window.localStorage["password"] = password;
-		 window.location.replace("activity-stream.html");
-		 //window.location = "activity-stream.html";
+		 //
+         preload();
+         window.location.replace("activity-stream.html");
+		
+         
       }
 	  },
 	  error: function (err) {
@@ -65,12 +68,12 @@ function login(){
   //getmyprofile();
   }
 
-function alertDismissed()
+ function alertDismissed()
 {
     
 }
 
-function preload()
+/*function preload()
 {
    document.getElementById("formsubmitbutton").style.display = "none"; // to undisplay
    document.getElementById("buttonreplacement").style.display = ""; // to display
@@ -88,7 +91,7 @@ function RestoreSubmitButton()
    document.getElementById("buttonreplacement").style.display = "none"; // to undisplay
 }
 // To disable restoring submit button, disable or delete next line.
-document.onfocus = RestoreSubmitButton;  
+document.onfocus = RestoreSubmitButton;   */
   
  
   

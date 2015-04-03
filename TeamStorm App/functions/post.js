@@ -132,7 +132,7 @@ function do_post(){
 			success: function (data) {
 				if (data.status==1)
 				{
-					
+				preloading2();	
 				//alert(data.message);
 				loadnewsfeed();
 				document.getElementById('option1').checked = true;

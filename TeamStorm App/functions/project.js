@@ -382,6 +382,7 @@ return counttask;
 
 function loadtask(pname,pid)
 {
+	preloading2();
 	document.getElementById("viewtaskhdr").innerHTML=pname+"-Task List";
 	cur_pid=pid;
 	gettask(pid,"active");
