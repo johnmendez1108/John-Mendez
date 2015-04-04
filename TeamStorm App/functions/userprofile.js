@@ -1,4 +1,5 @@
 var cur_uid;
+var cur_is_following=0;
 
 
 $(document).ready(function() {
@@ -69,11 +70,24 @@ function userprofile(uid)
  document.getElementById("userprof_pic").src="data:image/gif;base64,"+preview_pic;
  document.getElementById("userprof_name").innerHTML=name;
  
+ cur_is_following=is_following;
+ 
   if (cur_uid != localStorage.getItem("ts_myid")){ document.getElementById("btn_follow_unfollow").style.display="block";}
   else if(cur_uid==localStorage.getItem("ts_myid")){document.getElementById("btn_follow_unfollow").style.display="none";}
  
-  if (is_following==1){document.getElementById("btn_follow_unfollow").innerHTML='<i class="flaticon-check" style="color: #FFF;">  Following</i> ';}	
-  else if(is_following==0){document.getElementById("btn_follow_unfollow").innerHTML='<i class="flaticon-adduser"> Follow</i> '}	
+  if (is_following==1){
+	  var unfollow="'unfollow'";
+	  
+	  document.getElementById("btn_follow_unfollow").innerHTML='<i class="flaticon-check" style="color: #FFF;"  >  Following</i> ';
+	  //document.getElementById("btn_follow_unfollow").addEventListener("click", follow_unfollow('unfollow',tsid));
+	  
+	  
+	  }	
+  else if(is_following==0){
+	  var follow="'follow'";
+	  document.getElementById("btn_follow_unfollow").innerHTML='<i class="flaticon-adduser" > Follow</i> ';
+	  //document.getElementById("btn_follow_unfollow").addEventListener("click",follow_unfollow('follow',tsid));
+	  }	
   	
   document.getElementById("userprof_id").innerHTML=tsid;
   document.getElementById("userprof_fullname").innerHTML=name;
@@ -86,4 +100,101 @@ function userprofile(uid)
   document.getElementById("userprof_emailadd").innerHTML=email;
   
    	
+}
+
+
+function follow_unfollow()
+{
+	
+	if (cur_is_following==0)
+	{
+	do_follow();
+	}
+	else if (cur_is_following==1)
+	{
+	conf_unfollow();
+	}
+	
+}
+
+function conf_unfollow()
+{	 //test_delete();
+	navigator.notification.confirm(
+        'Do you want to Unfollow this person?', 
+        do_unfollow, // <-- no brackets
+        'Confirmation Message',
+        ['Ok','Cancel']
+    );
+	
+	
+}
+function do_follow()
+{
+
+	 jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/user/follow/'+ cur_uid,
+			data: { sid: ses_id}, 
+			success: function (data) {
+				if (data.status==1)
+				{
+					
+					
+					document.getElementById("btn_follow_unfollow").innerHTML='<i class="flaticon-check" style="color: #FFF;" >  Following</i> ';
+					//document.getElementById("btn_follow_unfollow").addEventListener("click", follow_unfollow('unfollow',tsid));	
+					
+					cur_is_following=1;
+				}			
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});
+
+}
+function do_unfollow(buttonIndex)
+{
+	
+		if (buttonIndex==1)
+		{
+
+			 jQuery.ajax({ 
+					type: 'post', 
+					async : false,     
+					global : false,
+					cache: false,
+					dataType : 'json',
+					url: 'http://teamstormapps.net/mobile/user/unfollow/'+ cur_uid,
+					data: { sid: ses_id}, 
+					success: function (data) {
+						if (data.status==1)
+						{
+							
+								
+							
+							document.getElementById("btn_follow_unfollow").innerHTML='<i class="flaticon-adduser" > Follow</i> ';
+							//document.getElementById("btn_follow_unfollow").addEventListener("click",follow_unfollow('follow',tsid));	
+								
+							
+							cur_is_following=0;
+						}			
+			  },
+			  error: function (err) {
+				//navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+				//alert(err.message);
+				console.log(err.message);
+			}
+				
+				});
+
+		}
+
+
 }
