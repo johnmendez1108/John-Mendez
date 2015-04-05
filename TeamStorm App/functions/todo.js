@@ -1,11 +1,11 @@
 var ses_id = window.localStorage.getItem('session_id');
 var curdate= new Date();
-
+var cur_todoid;
 
 function load_todo()
 {
-	preloading2();
 	
+	preloading2();
 	var appendHTML ='';
 	var appendHTMLA='';
 	var appendHTMLC='';
@@ -48,7 +48,7 @@ function load_todo()
 						
 						
 						appendHTML ='<div class="panel" id="todo-'+id+'">'+
-											'<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
+											'<button type="button" class="close"   onclick="conf_delete_todo('+id+')">×</button>'+
 											'<div class="panel-heading">'+
 												'<h4 class="panel-title">'+
 											'<a >'+title+'</a>';
@@ -149,6 +149,53 @@ function do_todo()
 }); 	
 	
 }
+
+function conf_delete_todo(id)
+{	 //test_delete();
+
+	cur_todoid =id;
+	navigator.notification.confirm(
+        'Delete this note?', 
+        delete_todo, // <-- no brackets
+        'Confirmation Message',
+        ['Ok','Cancel']
+    );
+	
+	
+}
+
+
+function delete_todo(buttonIndex)
+{
+	
+if (buttonIndex==1)
+{
+	jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/todo/delete/'+cur_todoid, 
+			data: { sid: ses_id
+					}, 
+			success: function (data) { 
+			
+				if(data.status == 1){
+					load_todo();
+				}
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+	}); 
+}	
+	
+}
+
 
 
 

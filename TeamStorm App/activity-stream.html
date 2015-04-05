@@ -47,6 +47,7 @@
     <script type="text/javascript" charset="utf-8" src="functions/project.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/userprofile.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/todo.js"></script>
+	<script type="text/javascript" charset="utf-8" src="functions/memopad.js"></script>
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
 	<!-- <link rel="stylesheet" href="kendo/styles/kendo.common.min.css" />
@@ -91,7 +92,7 @@
 
 	
 			 
-	var myScroll,leftScroll,rightScroll,commentScroll,postScroll,projectScroll,newprjScroll,newtskscroll,loadtskscroller,userprofscroller,addtodoscroller,newtodoscroller,
+	var myScroll,leftScroll,rightScroll,commentScroll,postScroll,projectScroll,newprjScroll,newtskscroll,loadtskscroller,userprofscroller,addtodoscroller,newtodoscroller,memoscroller,
 	pullDownEl, pullDownOffset,
 	pullUpEl, pullUpOffset,
 	generatedCount = 0;
@@ -221,7 +222,7 @@
 	userprofscroller= new iScroll('userprofwrapper');
 	addtodoscroller= new iScroll('addtodowrapper');
 	newtodoscroller= new iScroll('newtodowrapper');
-	
+	memoscroller= new iScroll('memowrapper');
 	
 	postScroll.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
@@ -258,6 +259,16 @@
             e.preventDefault();
         }
    }
+
+   memoscroller.options.onBeforeScrollStart = function(e) {                
+        var target = e.target;
+
+        while (target.nodeType != 1) target = target.parentNode;
+        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+            e.preventDefault();
+        }
+   }
+   
    
 	
 	setTimeout(function () { 
@@ -267,7 +278,7 @@
 	
 	}, 10);
 }	
-		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh(); newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();}, false);
+		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh(); newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();memoscroller.refresh();}, false);
 		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);			 
      
 
@@ -291,7 +302,7 @@ body {
 	font-family: 'Roboto', sans-serif !important;
 }
  
-#wrapper, #commentwrapper,#postwrapper,#projectwrapper,#newprjwrapper,#loadtskwrapper,#newtskwrapper,#userprofwrapper,#addtodowrapper,#newtodowrapper{
+#wrapper, #commentwrapper,#postwrapper,#projectwrapper,#newprjwrapper,#loadtskwrapper,#newtskwrapper,#userprofwrapper,#addtodowrapper,#newtodowrapper,#memowrapper{
 	position:absolute; z-index:1;
 	top: 0px; bottom:0px; left:-9999px;
 	width:100%;
@@ -313,7 +324,7 @@ body {
  * Scroller
  *
  */	  	  
-#scroller,#commentscroller,#postscroller,#projectscroller,#newprjscroller,#newtskscroller,#loadtskscroller,#userprofscroller,#leftscroller,#rightscroller,#addtodoscroller,#newtodoscroller {
+#scroller,#commentscroller,#postscroller,#projectscroller,#newprjscroller,#newtskscroller,#loadtskscroller,#userprofscroller,#leftscroller,#rightscroller,#addtodoscroller,#newtodoscroller,#memoscroller {
 	position:absolute; z-index:1;
 	-webkit-touch-callout:none;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
@@ -470,7 +481,7 @@ body {
                 <ul class="additional-menu">
                     <li><a  data-role="button" type="button"><i class="flaticon-calendar"></i> Calendar</a>
                     </li>
-                    <li><a  data-role="button" type="button"><i class="flaticon-memo-pad"></i> Memo Pad</a>
+                    <li><a data-toggle="modal" href="#memo"  onclick="load_memo();"  data-role="button" type="button"><i class="flaticon-memo-pad"></i> Memo Pad</a>
                     </li>
                     <li><a data-toggle="modal" href="#todo" onclick="load_todo();" data-role="button" type="button" ><i class="flaticon-to-do"></i> To-Do</a>
                     </li>
@@ -1256,38 +1267,25 @@ body {
 					 <div id="task-tab-content" class="tab-content">
 					
 						<div class="tab-pane fade active in" id="active-todo">
-								 <div class="panel-group memo-to-do">
-									<div id="activetodolist">
-										<!-- <div class="panel" id="">
-											<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-											<div class="panel-heading">
-												<h4 class="panel-title">
-											<a >To-do 1</a>	
-											<label style=" color:white; background:#aeafb1">Low</label>
-											<label style=" color:white; background:#2bbce0">Normal</label>
-											<label style=" color:white; background:#e73c3c">High</label>
-											</h4>
-											
-											</div>
-										</div> -->
-												  
+							
+									<div id="activetodolist" class="panel-group memo-to-do">	  
 									</div>
-								 </div>	
+								
 						 
 						</div>
 						<div class="tab-pane fade active" id="completed-todo">
-								 <div class="panel-group memo-to-do">
-									<div id="completedtodolist">		  
+								
+									<div id="completedtodolist" class="panel-group memo-to-do">		  
 									</div>
-								 </div>	
+								 
 						 
 						</div>
 						<div class="tab-pane fade active" id="overdue-todo">
-								 <div class="panel-group memo-to-do">
-									<div id="overduetodolist">
+								
+									<div id="overduetodolist" class="panel-group memo-to-do">
 									
 									</div>
-								 </div>	
+								
 						 
 						</div>
 						
@@ -1317,7 +1315,7 @@ body {
         </div>
         <div class="bottom-controls bar-footer">
             <ul class="full-control clearfix">
-                <li><a  data-toggle="modal" href="#newtodo" class="btn btn-block btn-primary btn-lg" onclick="do_todo();" ><i class="flaticon-check"></i> Save Changes</a>
+                <li><a  data-toggle="modal" href="#newtodo" class="btn btn-block btn-primary btn-lg" onclick="do_todo();" ><i class="flaticon-check"></i> Save</a>
                 </li>
             </ul>
         </div>
@@ -1361,6 +1359,90 @@ body {
 
 	
 
+	 <!--Memo-->  
+	<div id="memo" class="modal-content modal">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <a data-toggle="modal" href="#memo" data-role="button" type="button"  onclick="clearnote();"><i class="flaticon-arrow-left"></i></a>
+            </div>
+            <div class="title">Memo Pad</div>
+            <div class="right-top-head pull-right">
+                <button class="" id="btn_savememo"  onclick="do_memo();" ><i class="flaticon-check"></i>
+                </button>
+            </div>
+
+        </div>
+        <div class="content-modal">
+				<div class="inner-wrapper" style="padding-top:60px">
+               
+                        <div class="form-group">
+                            <textarea rows="6" class="form-control" placeholder="Notes or Message" id="txt_memopad" onkeyUp="memoonwrite();" ></textarea>
+                        </div>
+						 <div class="form-group">
+                            <button class="add-list-todo btn btn-default" onclick="addnote();" id="btn_addnote"><span class="glyphicon glyphicon-plus-sign"></span> Add Note</button>
+                        </div>
+                    </div>
+			
+				<div class="main-wrapper">
+			
+			    <div class="memo-pad-wrapper">
+					
+					
+					<div id="memowrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 280px;">
+					<div id="memoscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">	
+	
+					<div class="inner-wrapper" style="background: #FFFCEC;">
+                    <div class="panel-group memo-note" id="memolist">
+                        <!-- <div class="panel">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion1" href="#note-1">Note 1</a></h4>
+                                
+                            </div>
+                            <div id="note-1" class="panel-collapse collapse">
+                                <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="panel">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion1" href="#note-2">Note 2</a></h4>
+                                
+                            </div>
+                            <div id="note-2" class="panel-collapse collapse">
+                                <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</div>
+                            </div>
+                        </div> -->
+                       <!--  <div class="panel">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion1" href="#note-3">Note 3</a></h4>
+                                
+                            </div>
+                            <div id="note-3" class="panel-collapse collapse">
+                                <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</div>
+                            </div>
+                        </div> -->
+                    </div>
+                    </div>
+					
+					</div>
+					<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+					</div>
+					</div>
+                </div>
+			
+				
+            </div>
+        </div>
+    </div>
+	
+	
+	
+	
 
 	 <!--User Profile-->
 	 <div id="userprof" class="modal-content modal">
@@ -1712,7 +1794,7 @@ $(document).mousedown(function(e) {
 	</script>
 	
 	
-	 <!-- Google Analytics -->
+	 <!-- Google Analytics 
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
@@ -1720,7 +1802,7 @@ $(document).mousedown(function(e) {
             e.src='//www.google-analytics.com/analytics.js';
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-47727083-1');ga('send','pageview');
-        </script>
+        </script>-->
 	
 
 
