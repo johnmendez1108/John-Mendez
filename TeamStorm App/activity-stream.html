@@ -100,7 +100,7 @@
 	function pullDownAction () {
 	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
 		var el, li, i;
-		//el = document.getElementById('streamlist');
+		el = document.getElementById('streamlist');
 		var newpost = "<div class='inner-wrapper'>"+
                     "<div class='main-user-post'>"+
                         "<div class='media'>"+
@@ -129,12 +129,12 @@
                         "</ul>"+
                     "</div>"+
                 "</div>";	
-		for (i=0; i<1; i++) {	
-				//li = document.createElement('div');
-				//li.innerHTML  =newpost;
-				//el.insertBefore(li, el.childNodes[0]);
-				loadnewsfeed();
-		}
+		
+				
+				li = document.createElement('div');
+				li.innerHTML  = reload_feed();
+				el.insertBefore(li, el.childNodes[0]);
+	
 		
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
 		}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
@@ -200,13 +200,13 @@
 				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';				
 				pullDownAction();	// Execute custom function (ajax call?)
 				//loadnewsfeed();
-				myScroll.refresh();
+				
 			} else if (pullUpEl.className.match('flip')) {
 				pullUpEl.className = 'loading';
 				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
 				pullUpAction();	// Execute custom function (ajax call?)
 				//loadnewsfeed();
-				myScroll.refresh();
+				
 			}
 		}
 	});
@@ -729,13 +729,13 @@ body {
                         </ul>
                     </div>
                 </div> -->
-							<div class="inner-wrapper">
+							<!-- <div class="inner-wrapper">
 							<div class="main-user-post">
 								<div class="media">
 								 </div>
 								  <p class="post">No More Post to show</p>
 							</div>
-							</div>
+							</div> -->
 						</div>
 					<div id="pullUp">
 						<!-- <span class="pullUpIcon"></span> <center><span class="pullUpLabel">Pull up to refresh...</span></center> -->

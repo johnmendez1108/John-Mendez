@@ -2,6 +2,7 @@ var ses_id = window.localStorage.getItem('session_id');
 var getnfeeduname ="";
 var getnfeedprofpic="";
 var cur_postid,cur_set_postid;
+var numoffeed = window.localStorage.getItem('numoffeed');
 
 function init() {
 	
@@ -22,6 +23,7 @@ function init() {
 	//getprojectlist();
 	getproject();
 	loadprojects_select();
+	
 	
 }
 /* $(function() {
@@ -95,9 +97,7 @@ document.getElementById("feednotif").style.display="none";
 function getnewsfeed()
 {
 	var appendHTML = '';
-	
-	
-	
+
 	 jQuery.ajax({ 
 			type: 'post', 
 			async : false,     
@@ -108,6 +108,7 @@ function getnewsfeed()
 			data: { sid: ses_id, mypost: 0 }, 
 			success: function (data) { 
 			if(data.items > 0){
+				
 				 for(var x = 0; x < data.items; x++){
 					var postid= data.feeds[x].id;
 					var poster_id= data.feeds[x].poster_id;
@@ -284,7 +285,7 @@ function getnewsfeed()
 				if (appendHTML.length >0){
 					
 				 window.localStorage["latestnewsfeed"]= appendHTML;
-				 
+				 window.localStorage["numoffeed"]= data.items-1;
 				}			
 				/* else
 				{
@@ -294,18 +295,7 @@ function getnewsfeed()
 				} */			
 			}
 			
-			else{
-				
-				
-				document.getElementById("streamlist").innerHTML="";
-				window.localStorage["latestnewsfeed"]= '<div class="inner-wrapper">'+
-							'<div class="main-user-post">'+
-								'<div class="media">'+
-								 '</div>'+
-								  '<p class="post">No More Post to show</p>'+
-							'</div>'+
-							'</div>';				
-			}
+		
 			
 	  },
 	  error: function (err) {
@@ -316,9 +306,212 @@ function getnewsfeed()
 		//alert(window.localStorage.getItem('latestnewsfeed'));
 		//alert(err.message);
 		console.log(err.message);
+		//window.localStorage["numoffeed"]= 0;
+		
     }
       	
 });   
+	
+	
+}
+
+function reload_feed()
+{
+	
+	
+	var appendHTML = '';
+	
+		 jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/newsfeed', 
+			data: { sid: ses_id, mypost: 0 }, 
+			success: function (data) { 
+			if(data.items > numoffeed){
+				
+				
+				
+				 for(var x = 0; x < (data.items-numoffeed)-1; x++){
+					var postid= data.feeds[x].id;
+					var poster_id= data.feeds[x].poster_id;
+					var poster_name = data.feeds[x].poster_name;
+					var poster_picture = data.feeds[x].poster_picture;
+					var date_posted = data.feeds[x].date_posted;
+					var post_mood = data.feeds[x].post_mood;
+					var post_mood_desc = data.feeds[x].post_mood_desc;
+					var can_modify = data.feeds[x].can_modify;
+					var project_id = data.feeds[x].project_id;
+					var task_id = data.feeds[x].task_id;
+					var to_user_id = data.feeds[x].to_user_id;
+					var title = data.feeds[x].title;
+					var content = data.feeds[x].content;
+					var agree_count = data.feeds[x].agree_count;
+					var disagree_count = data.feeds[x].agree_count;
+					var comment_count = data.feeds[x].comment_count;
+					var location = data.feeds[x].location;
+					var is_agree = data.feeds[x].is_agree;
+					var is_disagree = data.feeds[x].is_disagree;					
+					//alert(data.feeds[x].content);
+					var projname= '';
+					var is_agree_atr;
+					
+					getposterpic(poster_id);
+					if(project_id > 0){
+						projname = ' posted in <a onclick="viewprojectpost('+project_id+');"  >' + title  + '</a>';
+					}	
+					if(to_user_id > 0 && to_user_id != localStorage.getItem("ts_myid")) { 
+						getnfeeduserinfo(to_user_id);
+						var to_user_name = getnfeeduname;
+						projname = '<i class="flaticon-arrow-right"></i> <a data-toggle="modal" href="#userprof" onclick="userprofile('+to_user_id+');" >' + to_user_name + '</a>'; 						
+					}
+					if(task_id > 0){
+						
+						projname = ' posted on task <a href="" >' + task_id + '</a>'; 
+					}
+					
+					appendHTML += '<div class="inner-wrapper" id ="newsfeed '+postid+'">'+
+										'<div class="main-user-post">'+
+											'<div class="media">'+
+												'<a class="pull-left" data-toggle="modal" href="#userprof"  onclick="userprofile('+poster_id+');"  >'+
+													'<img class="media-object img-circle" src="data:image/gif;base64,'+getnfeedprofpic+'" width="50" height="50" alt="Image">'+
+												'</a>'+
+												'<div class="media-body">';
+												
+					if(poster_id == localStorage.getItem('ts_myid')){
+						
+					appendHTML +=	'<div class="btn-group pull-right" ><span class="ico flaticon-arrow-bottom dropdown-toggle" data-toggle="modal" href="#postsettings" onclick="postsettings('+postid+')"></span></div>';								 
+								
+					}														
+					appendHTML +='<h4 class="media-heading"><a href=""  onclick="viewuserprof('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
+													'<small>'+date_posted+'</small>';
+													
+					switch(post_mood){
+						case '1': appendHTML += ' <span class="ico flaticon-lamp"></span>'; break;
+						case '2': appendHTML += ' <span class="ico flaticon-amplifier"></span>'; break;
+						case '3': appendHTML += ' <span class="ico flaticon-important"></span>'; break;
+						default: appendHTML += ' <span class="ico flaticon-normal"></span>';
+					}
+					
+					if (location.length>0){				
+					appendHTML+='<small>at '+location+'</small>';
+					}
+					appendHTML+='</div>'+
+											'</div>'+
+											'<p class="post emojis-wysiwyg">'+content+'</p>';
+											
+					
+					var images = ["jpg","jpeg","gif","png","bmp"];
+					var sql_attachment = data.feeds[x].attachments;
+					var attachment_images = [];
+					var attachment_others = [];
+					
+					for(var attcx = 0; attcx < sql_attachment.length; attcx++){
+						if(sql_attachment[attcx].is_deleted == 0 ){
+							var ftype = sql_attachment[attcx].type;
+							
+							if(ftype=='image'){
+								attachment_images.push(sql_attachment[attcx]); 
+								}
+							else {
+								attachment_others.push(sql_attachment[attcx]); 
+								} 				
+						}
+						
+					}
+					
+					if(attachment_images.length > 0){
+						appendHTML += '<div id="links" class="feed-content-post-img"><section class="Collage effect-parent">';
+						var min_images_show = 3;
+						
+							for(var attimg = 0; attimg < attachment_images.length; attimg++){
+								//var imgpath = site_url + 'thumbs?id=' + attachment_images[attimg].user_id + '&hash=' + attachment_images[attimg].filepath;
+								var imgpath =attachment_images[attimg].download_url;	
+								//var imgpath2 = site_url + 'thumbs/attach_thumb2?id=' + attachment_images[attimg].user_id + '&hash=' + attachment_images[attimg].filepath;
+							
+								var imgpath2 =attachment_images[attimg].download_url;
+								var fname = attachment_images[attimg].filename;
+								//var fid = attachment_images[attimg].id;
+								/* encodeImage(attachment_images[attimg].download_url, function(encodedImage) { 
+									imgpath2=encodedImage;
+								}); */
+								
+								
+								if(attimg < min_images_show){
+										appendHTML += '<div class="media-body">';
+										 appendHTML += '<a href="">'; 
+										appendHTML += '<img class="img-responsive" src="'+imgpath2+'" alt="'+fname+'" >';
+										appendHTML += '</a>';
+										appendHTML += '</div>';
+									
+								} 
+								var min_imgrshow = min_images_show - 1;
+								if(attimg == min_imgrshow){  appendHTML += '</section>'; }
+								
+								
+							}
+							appendHTML += '</div>';
+					}
+					
+						if(attachment_others.length > 0){
+						appendHTML += '<div class="feed-content-post-attachment"><i>Attachments</i><ul>';
+						
+						for(var atto = 0; atto < attachment_others.length; atto++){
+							var fname = attachment_others[atto].filename;
+							var fsize = attachment_others[atto].filesize;
+							var fid = attachment_others[atto].id;
+							
+							appendHTML += '<li><a href="'+site_url+'download/attachment?id='+fid+'">'+fname+'</a> - '+formatsize(fsize)+'</li>';
+						}
+						appendHTML += '</ul></div>';
+					}
+
+					if (is_agree==1)
+					{
+					
+						is_agree_atr ='btn-agree-active';
+					}
+					else
+					{
+						is_agree_atr ='';
+					}
+
+					appendHTML+='<ul class="half-2 clearfix">'+
+												'<li>'+
+													'<button id="btn_post_ag_'+postid+'" type="button" class="btn btn-default btn-block '+is_agree_atr+'" onclick="postagree('+postid+');"><i class="flaticon-check-circle"></i> Agree ('+agree_count+')</button>'+
+												'</li>'+
+												'<li>'+
+													'<button type="button" class="btn btn-default btn-block" onclick="viewpostcomment('+postid+');" data-toggle="modal" href="#comments"><i class="flaticon-comment-more"></i> Comments ('+comment_count+')</button>'+
+												'</li>'+
+											'</ul>'+
+										'</div>'+
+									'</div>';
+
+				}
+				
+				
+						
+			}
+			
+			
+		numoffeed=data.items-1;	
+	  },
+	  error: function (err) {
+
+		document.getElementById('feednotif').style.display = "block";
+		window.setTimeout("hideMessage()", 4000);
+		console.log(err.message);
+		
+		
+    }
+      	
+});   
+		
+		
+	return 	appendHTML;
+	
 	
 	
 }

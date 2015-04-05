@@ -114,7 +114,7 @@ function do_post(){
 	pid = pid.options[pid.selectedIndex].value;
 	
 	if(postmsg.trim().length > 0){
-	
+	preloading2();
 	 jQuery.ajax({ 
 			type: 'post', 
 			async : false,     
@@ -132,7 +132,7 @@ function do_post(){
 			success: function (data) {
 				if (data.status==1)
 				{
-				preloading2();	
+					
 				//alert(data.message);
 				loadnewsfeed();
 				document.getElementById('option1').checked = true;
