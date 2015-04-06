@@ -131,20 +131,20 @@
                 "</div>";	
 		
 				
-				li = document.createElement('div');
-				li.innerHTML  = reload_feed();
-				el.insertBefore(li, el.childNodes[0]);
-	
-		
+				//li = document.createElement('div');
+				//li.innerHTML  = reload_feed();
+				//el.insertBefore(li, el.childNodes[0]);
+	            
+		    loadnewsfeed();
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
 		}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
 	}
 	
 	function pullUpAction () {
 	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-		var el, li, i;
+		//var el, li, i;
 		//el = document.getElementById('streamlist');
-		var newpost = "";
+		//var newpost = "";
 		//for (i=0; i<1; i++) {
 			//li = document.createElement('div');
 			//li.innerHTML  =newpost;
@@ -275,10 +275,10 @@
 	document.getElementById('wrapper').style.left = '0';
 	document.getElementById('commentwrapper').style.left = '0';
 	document.getElementById('postwrapper').style.left = '0';
-	
+	myScroll.refresh(); 
 	}, 10);
 }	
-		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh(); newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();memoscroller.refresh();}, false);
+		document.addEventListener('touchmove', function (e) { e.preventDefault(); projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh(); newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();memoscroller.refresh();}, false);
 		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);			 
      
 

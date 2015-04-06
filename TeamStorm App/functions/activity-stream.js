@@ -172,7 +172,7 @@ function getnewsfeed()
 					}		
 					
 																
-					appendHTML +='<h4 class="media-heading"><a href=""  onclick="viewuserprof('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
+					appendHTML +='<h4 class="media-heading"><a data-toggle="modal" href="#userprof"  onclick="userprofile('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
 													'<small>'+date_posted+'</small>';
 													
 					switch(post_mood){
