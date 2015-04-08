@@ -14,14 +14,15 @@ function init() {
 	  document.getElementById("user_comment_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
 	//$("#con_appsettings").show();
 	window.localStorage["host"] = 'http://teamstormapps.net/';
-	getaddressbook();
+	
 	loadaddress();
 	loadnewsfeed();		
 	 
 	//document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
 	
-	//getprojectlist();
+	
 	getproject();
+	//getprojectlist();
 	loadprojects_select();
 	
 	
@@ -30,63 +31,19 @@ function init() {
 setTimeout(function() {
     $('feednotif').fadeOut('fast');
 	
-}, 1000);
+}, 1000);	
 }); */
 
-$(document).mousedown(function(e) {
+/* $(document).mousedown(function(e) {
     
         $('#postsettings').dialog("close");
     
-});
+}); */
 
 
 function loadaddress()
 {
-	var conlist =  '<table class="table table-responsive" > <tbody ><tr>'+
-                                   '<td>'+
-                                        '<div class="checkbox">'+
-											'<div class="icheckbox_flat checked" style="position: relative;"><input type="checkbox" id="flat-checkbox-1" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>'+
-                                    '</td>'+
-                                   '<td>'+
-                                        '<div class="portrait-status chat">'+
-                                           
-                                            '<img src="img/user/thumb-user-small.jpg" height="35" class="img-circle" ></td>'+
-                                        '</div>'+
-                                        '<td><a href="">ABCDE</a>'+
-                                        '</td>'+
-									 '</td>'+
-								'</tr>'+
-								 '<tr >'+
-                                   '<td>'+
-                                        '<div class="checkbox">'+
-                                           '<input type="checkbox" id="flat-checkbox-1">'+
-                                        '</div>'+
-                                    '</td>'+
-                                   '<td>'+
-                                        '<div class="portrait-status chat">'+
-                                          
-                                            '<img src="img/user/thumb-user-small.jpg" height="35" class="img-circle"> </td>'+
-                                        '</div>'+
-                                        '<td><a href="">FGHIJK</a>'+
-                                        '</td>'+
-									 '</td>'+
-								'</tr>'+
-								 '<tr>'+
-                                   '<td>'+
-                                        '<div class="checkbox">'+
-                                            '<input type="checkbox" id="flat-checkbox-1">'+
-                                        '</div>'+
-                                    '</td>'+
-                                   '<td>'+
-                                        '<div class="portrait-status chat">'+
-                                           
-                                            '<img src="img/user/thumb-user-small.jpg" height="35" class="img-circle"></td>'+
-                                        '</div>'+
-                                        '<td><a href="">LMNOP</a>'+
-                                        '</td>'+
-									 '</td>'+
-								'</tr></tbody></table>';
-	 //document.getElementById("all").innerHTML =conlist;
+	getaddressbook();
 	 document.getElementById("addressall").innerHTML=window.localStorage.getItem('latestcontacts');
 }
 
@@ -105,7 +62,8 @@ function getnewsfeed()
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/newsfeed', 
-			data: { sid: ses_id, mypost: 0 }, 
+			data: { sid: ses_id, mypost: 0 },
+				
 			success: function (data) { 
 			if(data.items > 0){
 				
@@ -172,7 +130,7 @@ function getnewsfeed()
 					}		
 					
 																
-					appendHTML +='<h4 class="media-heading"><a data-toggle="modal" href="#userprof"  onclick="userprofile('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
+					appendHTML +='<h4 class="media-heading"><a href=""  onclick="viewuserprof('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
 													'<small>'+date_posted+'</small>';
 													
 					switch(post_mood){
@@ -328,7 +286,7 @@ function reload_feed()
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/newsfeed', 
-			data: { sid: ses_id, mypost: 0 }, 
+			data: { sid: ses_id, mypost: 0 ,items: numoffeed+100 }, 
 			success: function (data) { 
 			if(data.items > numoffeed){
 				
@@ -523,7 +481,7 @@ function viewpostcomment(id)
 
 	  jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
@@ -581,29 +539,28 @@ function viewpostcomment(id)
 function do_comment()
 {
 	var commentmsg = document.getElementById('inptcomment').value;
-
+	var issuccess;
 	  jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
-			global : false,
-			cache: false,
+			async : true,  
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/comment/new', 
 			data: { sid: ses_id,
 					post_id: cur_postid,
 					comment: commentmsg
 					}, 
+			beforeSend: function () {
+			 preloading2();
+			},						
 			success: function (data) { 
 				
 				if (data.status==1)
 				{
-					preloading2();
-					document.getElementById('inptcomment').value="";
-					viewpostcomment(cur_postid);
-					loadnewsfeed();
-				}
 				
-				 
+				viewpostcomment(cur_postid);
+				document.getElementById('inptcomment').value="";
+				loadnewsfeed(); // Replace if additional api comes
+				}							 
 			},
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
@@ -611,7 +568,8 @@ function do_comment()
 		console.log(err.message);
     }
       	
-});   
+});
+
 }
 function postsettings(id)
 {
@@ -636,26 +594,26 @@ function delete_post(buttonIndex) {
 	
 		if (buttonIndex==1)
 		{
-			preloading2();
-			alertDismissed();
+					
 			jQuery.ajax({ 
 			type: 'post', 
-			async : false, 
+			async : true, 
 			global : false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/post/delete/'+cur_set_postid, 
-			data: { sid: ses_id
-					
-					}, 
+			data: { sid: ses_id},
+			beforeSend: function () {
+			 preloading2();
+			},
 			success: function (data) { 
 				
 				if (data.status==0)
 				{
-
 					//document.getElementById('newsfeed '+cur_set_postid).remove();
 					//navigator.notification.alert('Post Successfully Removed', alertDismissed, 'Message', 'Ok');
 					loadnewsfeed();
+					alertDismissed();
 				}
 				
 				 
@@ -671,7 +629,7 @@ function delete_post(buttonIndex) {
 		
 }
 function alertDismissed() {
-   var parent = document.getElementById("streamlist");
+	var parent = document.getElementById("streamlist");
 	var child = document.getElementById('newsfeed '+cur_set_postid);
 	parent.removeChild(child);
 }
@@ -681,13 +639,16 @@ function postagree(id) {
 	
 	jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/post/agree/'+id, 
 			data: { sid: ses_id
-					}, 
+					},
+			beforeSend: function () {
+			 preloading2();
+			},
 			success: function (data) { 
 				
 				if (data.status==1)
@@ -748,7 +709,7 @@ function loadnewsfeed()
 	 
 	getnewsfeed();
 	document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
-	getprojectlist();
+	//alert("load feed"); 
 }
 
 
@@ -925,7 +886,7 @@ function getaddressbook(){
 
 	  jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',

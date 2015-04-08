@@ -114,10 +114,9 @@ function do_post(){
 	pid = pid.options[pid.selectedIndex].value;
 	
 	if(postmsg.trim().length > 0){
-	preloading2();
 	 jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
@@ -129,6 +128,9 @@ function do_post(){
 			project_id:pid,
 			location: cur_loc
 			}, 
+			beforeSend: function () {
+			 preloading2();
+			},
 			success: function (data) {
 				if (data.status==1)
 				{

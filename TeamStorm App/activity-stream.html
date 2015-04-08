@@ -45,7 +45,7 @@
 	<script type="text/javascript" charset="utf-8" src="functions/getlocation.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/camera.js"></script>
     <script type="text/javascript" charset="utf-8" src="functions/project.js"></script>
-	<script type="text/javascript" charset="utf-8" src="functions/userprofile.js"></script>
+	<script type="text/javascript" charset="utf-8" src="functions/userprofile.js"  async="async" ></script>
 	<script type="text/javascript" charset="utf-8" src="functions/todo.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/memopad.js"></script>
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
@@ -134,14 +134,14 @@
 				//li = document.createElement('div');
 				//li.innerHTML  = reload_feed();
 				//el.insertBefore(li, el.childNodes[0]);
-	            
-		    loadnewsfeed();
+	
+		loadnewsfeed();
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
 		}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
 	}
 	
 	function pullUpAction () {
-	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+	//setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
 		//var el, li, i;
 		//el = document.getElementById('streamlist');
 		//var newpost = "";
@@ -152,7 +152,7 @@
 			//loadnewsfeed();
 		//}
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-		}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+		//}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
 	 }
 	
 	function loaded() {
@@ -184,7 +184,7 @@
 				this.minScrollY = -pullDownOffset;
 			} else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
 				pullUpEl.className = 'flip';
-				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
+				//pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
 				this.maxScrollY = this.maxScrollY;
 			} else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
 				pullUpEl.className = '';
@@ -203,7 +203,7 @@
 				
 			} else if (pullUpEl.className.match('flip')) {
 				pullUpEl.className = 'loading';
-				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
+				//pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
 				pullUpAction();	// Execute custom function (ajax call?)
 				//loadnewsfeed();
 				
@@ -275,10 +275,10 @@
 	document.getElementById('wrapper').style.left = '0';
 	document.getElementById('commentwrapper').style.left = '0';
 	document.getElementById('postwrapper').style.left = '0';
-	myScroll.refresh(); 
+	
 	}, 10);
 }	
-		document.addEventListener('touchmove', function (e) { e.preventDefault(); projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh(); newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();memoscroller.refresh();}, false);
+		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh(); newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();memoscroller.refresh();}, false);
 		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);			 
      
 
@@ -485,7 +485,7 @@ body {
                     </li>
                     <li><a data-toggle="modal" href="#todo" onclick="load_todo();" data-role="button" type="button" ><i class="flaticon-to-do"></i> To-Do</a>
                     </li>
-                    <li><a ><i class="flaticon-address-book"></i> Address Book</a>
+                    <li><a onclick="preloading2();"><i class="flaticon-address-book"   ></i> Address Book</a>
                     </li>
                 </ul>
             </div>
@@ -626,7 +626,7 @@ body {
         </div>
 		</div>
     </div>
-	
+
 	
     <div id="content" class="snap-content">
         <div class="top-head bar-title">
@@ -753,7 +753,7 @@ body {
     </div>
 	
 	<!--Comments-->
-	<div id="comments" class="modal-content modal fade">
+	<div id="comments" class="modal-content modal">
         <div class="top-head-modal bar-title">
             <div class="left-top-head pull-left">
                 <a data-toggle="modal" href="#comments" ><i class="flaticon-arrow-left"></i></a>
@@ -1564,11 +1564,11 @@ body {
                 towards = state.info.towards,
                 opening = state.info.opening;
             if (opening == 'right' && towards == 'left') {
-                $('right-drawer').classList.add('active-drawer');
-                $('left-drawer').classList.remove('active-drawer');
+                //$('right-drawer').classList.add('active-drawer');
+                //$('left-drawer').classList.remove('active-drawer');
             } else if (opening == 'left' && towards == 'right') {
-                $('right-drawer').classList.remove('active-drawer');
-                $('left-drawer').classList.add('active-drawer');
+                //$('right-drawer').classList.remove('active-drawer');
+               // $('left-drawer').classList.add('active-drawer');
             }
         };
 
@@ -1702,18 +1702,12 @@ $('#txt_tododate').datetimepicker({
 	formatDate:'Y/m/d'
 });
 
-$(document).mousedown(function(e) {
-    
-        $('#postsettings').dialog("close");
-    
-});
-
 </script>	
 	
 </body>
 
 	 	<!-- jQuery, Helpers and jqueryIntrLoader -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
 <script src="preloader/dist/helpers/jquery.easing.1.3.js"></script>
 <script src="preloader/dist/helpers/spin.min.js"></script>
 <script src="preloader/dist/jquery.introLoader.js"></script>
@@ -1778,7 +1772,7 @@ $(document).mousedown(function(e) {
                         color: '#00A3DC', // #rgb or #rrggbb or array of colors
                     }
 				});
-                window.setTimeout("stoppreload()", 1000);
+                window.setTimeout("stoppreload()", 100);
 				}
 				function stoppreload()
 				{
@@ -1806,7 +1800,7 @@ $(document).mousedown(function(e) {
 	
 
 
-
+<!-- 
 <script>
 
 
@@ -1852,5 +1846,5 @@ $("#search-contacts").autocomplete({
 }
 
 </script>
-
+ -->
 </html>

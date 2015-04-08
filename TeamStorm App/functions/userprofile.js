@@ -1,3 +1,4 @@
+var ses_id = window.localStorage.getItem('session_id');
 var cur_uid;
 var cur_is_following=0;
 
@@ -27,15 +28,19 @@ function userprofile(uid)
 	
 	var tsid,userlevel,email,name,firstname,middlename,lastname,gender,preview_pic,company,location,contact,last_school,timezone,date_joined,followers,following,projects,tasks,is_following;
 	
-	
-	  jQuery.ajax({ 
-			type: 'post', 
-			async : false,     
-			global : false,
-			cache: false,
-			dataType : 'json',
+
+	   $.ajax({ 
+			type: 'post',      
+			//global : false,
+			//cache: false,
+			async : false, 
+			dataType: 'json',
+            //contentType: 'application/json charset=utf-8',
 			url: 'http://teamstormapps.net/mobile/user', 
-			data: { sid: ses_id, id: cur_uid}, 
+			data: { sid: ses_id, id: cur_uid},
+			 beforeSend: function () {
+			 preloading2();
+			},				 
 			success: function (data) { 
 			tsid = data.id;
 			userlevel = data.userlevel;
@@ -56,10 +61,10 @@ function userprofile(uid)
 			projects=data.projects;
 			tasks=data.tasks;
 			is_following=data.is_following;
-	  },
+	  },  
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
-		//alert(err.message);
+		alert(err.message);
 		console.log(err.message);
     }
       	
@@ -99,9 +104,8 @@ function userprofile(uid)
   document.getElementById("userprof_mobile").innerHTML=contact;
   document.getElementById("userprof_emailadd").innerHTML=email;
   
-   	
+   
 }
-
 
 function follow_unfollow()
 {

@@ -67,7 +67,7 @@ function getproject()
 					
 				 }
 				 
-				appendHTML+= '<li><a data-toggle="modal" href="#project" ><i class="flaticon-folder-close-line"></i>See All</a>';	 				 
+				appendHTML+= '<li><a data-toggle="modal" href="#project" onclick="getprojectlist();"><i class="flaticon-folder-close-line"></i>See All</a>';	 				 
 				if (appendHTML.length >0){
 					
 					window.localStorage["getprojects"]=appendHTML;
@@ -126,14 +126,19 @@ function getprojectlist()
 	
 	var appendHTML = '';
 
+	
+	
 	  jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/getlist', 
-			data: { sid: ses_id }, 
+			data: { sid: ses_id },
+			beforeSend: function () {
+			 preloading2();
+			},				
 			success: function (data) { 
 						 
 				 for(var x = 0; x < data.length; x++){
@@ -159,6 +164,9 @@ function getprojectlist()
 					{
 						isproj_complete=0;
 					}
+						numact=	getcounttask(pid,"active");
+						numpen=getcounttask(pid,"pending");
+						numcomp=getcounttask(pid,"completed");
 					
 					
 					appendHTML+= '<div class="inner-wrapper">'+
@@ -176,9 +184,7 @@ function getprojectlist()
                                 '<div class="task-description">'+project_description+'</div>';
 								
 								
-							numact=	getcounttask(pid,"active");
-							numpen=getcounttask(pid,"pending");
-							numcomp=getcounttask(pid,"completed");
+						
 								
                     appendHTML+='<div class="project-status">'+
                                    '<ul class="clearfix">'+
@@ -218,7 +224,7 @@ function getprojectlist()
 											'</li>';
 									  
 									  
-								 }
+										}
 					   
 					   appendHTML+='</ul>'+
 								
@@ -290,6 +296,9 @@ function get_proj_member(id)
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/memberlist/'+id, 
 			data: { sid: ses_id}, 
+			beforeSend: function () {
+			 preloading2();
+			},
 			success: function (data) { 
 			
 				if(data.status == 1){
@@ -382,7 +391,7 @@ return counttask;
 
 function loadtask(pname,pid)
 {
-	preloading2();
+	//preloading2();
 	document.getElementById("viewtaskhdr").innerHTML=pname+"-Task List";
 	cur_pid=pid;
 	gettask(pid,"active");
@@ -399,13 +408,16 @@ function gettask(pid,type)
 var appendHTML ='';
 		jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/tasklist/'+pid, 
 			data: { sid: ses_id,
 					sort: type}, 
+			 beforeSend: function () {
+			 preloading2();
+			},			
 			success: function (data) { 
 			
 				if(data.status == 1){
@@ -529,7 +541,7 @@ var pdesc=document.getElementById("txt_prj_desc").value;
 	
 	jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
@@ -560,7 +572,7 @@ function dependanttask_select(){
 	
 	 jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
@@ -594,7 +606,7 @@ function get_proj_mem_for_task()
 	var appendHTML = '';
 	jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
