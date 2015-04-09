@@ -126,8 +126,6 @@ function getprojectlist()
 	
 	var appendHTML = '';
 
-	
-	
 	  jQuery.ajax({ 
 			type: 'post', 
 			async : true,     
@@ -147,7 +145,7 @@ function getprojectlist()
 					var project_title= data[x].project_title;   
 					var project_description= data[x].project_description;
 					var date_last_update= data[x].date_last_update;
-					var date_created= new Date(data[x].date_created);  
+					var date_created= data[x].date_created;  
 					var is_deleted= data[x].is_deleted;
 					var status= data[x].status;
 					var creator_name= data[x].creator_name;
@@ -155,7 +153,15 @@ function getprojectlist()
 					var numact,numpen,numcomp;
 					var p_title ="'"+project_title+"'";
 					
-					proj_inf(pid);
+					var parts,dayparts,createdate;
+					parts =date_created.split('-');
+					dayparts =parts[2].split(' ');
+					months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+					createdate =months[parts[1]-1]+" "+dayparts[0]+", "+parts[0];
+					
+				
+					
+					/* proj_inf(pid);
 					if (proj_completed==1)
 					{
 						isproj_complete=100;
@@ -163,7 +169,7 @@ function getprojectlist()
 					else
 					{
 						isproj_complete=0;
-					}
+					} */
 						numact=	getcounttask(pid,"active");
 						numpen=getcounttask(pid,"pending");
 						numcomp=getcounttask(pid,"completed");
@@ -175,12 +181,12 @@ function getprojectlist()
 							'<div class=" left-border" style="width:100%">'+
                                 '<div class="title-task"><a >'+project_title+' </a>'+
                                 '</div>'+
-                                '<div class="sub-title-task">Date Created: '+date_created.toDateString()+' '+ date_created.toLocaleTimeString()+'</div>'+
-                                '<div class="progress">'+
+                                '<div class="sub-title-task">Date Created: '+createdate+'</div>'+
+                               /*  '<div class="progress">'+
                                     '<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+isproj_complete+'%">'+
                                         '<span class="progress-type">'+isproj_complete+'%</span>'+
                                     '</div>'+
-                                '</div>'+
+                                '</div>'+ */
                                 '<div class="task-description">'+project_description+'</div>';
 								
 								
@@ -394,25 +400,30 @@ function loadtask(pname,pid)
 	//preloading2();
 	document.getElementById("viewtaskhdr").innerHTML=pname+"-Task List";
 	cur_pid=pid;
-	gettask(pid,"active");
-	gettask(pid,"pending");
-	gettask(pid,"completed");
+	document.getElementById("active-task").innerHTML="";
+	document.getElementById("pending-task").innerHTML="";
+	document.getElementById("completed-task").innerHTML="";
+	gettaskactive();
+	gettaskpending();
+	gettaskcompleted();
 	document.getElementById("viewnewtaskhdr").innerHTML=pname+"-Create Task";
-	dependanttask_select();
-	
-	get_proj_mem_for_task();
+	//dependanttask_select();
+	//get_proj_mem_for_task();
 	
 }
-function gettask(pid,type)
+function gettaskactive()
 {
 var appendHTML ='';
+var type='active';
+document.getElementById(""+type+"-task").innerHTML="";
+
 		jQuery.ajax({ 
 			type: 'post', 
 			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/tasklist/'+pid, 
+			url: 'http://teamstormapps.net/mobile/project/tasklist/'+cur_pid, 
 			data: { sid: ses_id,
 					sort: type}, 
 			 beforeSend: function () {
@@ -421,7 +432,6 @@ var appendHTML ='';
 			success: function (data) { 
 			
 				if(data.status == 1){
-						
 					
 					 for(var x = 0; x < data.items.length; x++){	
 						var id =data.items[x].id;
@@ -436,7 +446,7 @@ var appendHTML ='';
 						var date_end =data.items[x].date_end;
 						var date_completed =data.items[x].date_completed;
 						var task_status =data.items[x].task_status;
-						var progval=0;
+						/* var progval=0;
 						var progbarclass=""
 						if (type=="completed")
 						{
@@ -446,19 +456,28 @@ var appendHTML ='';
 						else{
 							progval=0;
 							progbarclass="progress-bar-primary";
-						}
+						} */
 						
 						
 						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
 									'<div class="left-border" style="width:100%;">'+
 									'<div class="title-task"><a >'+task_title+'</a>'+
                                     '</div>'+
-                                    '<div class="progress">'+
+                                    /* '<div class="progress">'+
                                         '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
                                             '<span class="progress-type">'+progval+'%</span>'+
                                         '</div>'+
-                                    '</div>'+
+                                    '</div>'+ */
                                     '<div class="task-description">'+task_description+'</div>';
+									
+						switch(priority){
+							
+							case '1': appendHTML += '<label style=" color:white; background:#aeafb1">Low</label>'; break;
+							case '2': appendHTML += '<label style=" color:white; background:#2bbce0">Normal</label>'; break;
+							case '3': appendHTML += '<label style=" color:white; background:#e73c3c">High</label>'; break;
+						
+						}			
+									
 						
 						gettaskprofpic(task_creator_id);			
 						appendHTML +='<div class="task-user">'+
@@ -503,6 +522,231 @@ var appendHTML ='';
 document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
 	
 }
+function gettaskpending()
+{
+var appendHTML ='';
+var type='pending';
+document.getElementById(""+type+"-task").innerHTML="";
+
+
+		jQuery.ajax({ 
+			type: 'post', 
+			async : true,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/tasklist/'+cur_pid, 
+			data: { sid: ses_id,
+					sort: type}, 
+			 beforeSend: function () {
+			 preloading2();
+			},			
+			success: function (data) { 
+			
+				if(data.status == 1){
+					
+					 for(var x = 0; x < data.items.length; x++){	
+						var id =data.items[x].id;
+						var dependent_taskid =data.items[x].dependent_taskid;
+						var task_title =data.items[x].task_title;
+						var task_description =data.items[x].task_description;
+						var task_creator_id =data.items[x].task_creator_id;
+						var task_creator_name =data.items[x].task_creator_name;
+						var priority =data.items[x].priority;
+						var date_created =data.items[x].date_created;
+						var date_start =data.items[x].date_start;
+						var date_end =data.items[x].date_end;
+						var date_completed =data.items[x].date_completed;
+						var task_status =data.items[x].task_status;
+						/* var progval=0;
+						var progbarclass=""
+						if (type=="completed")
+						{
+							progval=100;
+							progbarclass="progress-bar-success";
+						}
+						else{
+							progval=0;
+							progbarclass="progress-bar-primary";
+						} */
+						
+						
+						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
+									'<div class="left-border" style="width:100%;">'+
+									'<div class="title-task"><a >'+task_title+'</a>'+
+                                    '</div>'+
+                                    /* '<div class="progress">'+
+                                        '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
+                                            '<span class="progress-type">'+progval+'%</span>'+
+                                        '</div>'+
+                                    '</div>'+ */
+                                    '<div class="task-description">'+task_description+'</div>';
+									
+						switch(priority){
+							
+							case '1': appendHTML += '<label style=" color:white; background:#aeafb1">Low</label>'; break;
+							case '2': appendHTML += '<label style=" color:white; background:#2bbce0">Normal</label>'; break;
+							case '3': appendHTML += '<label style=" color:white; background:#e73c3c">High</label>'; break;
+						
+						}			
+									
+						
+						gettaskprofpic(task_creator_id);			
+						appendHTML +='<div class="task-user">'+
+                                       '<ul>'+
+                                            '<li>'+
+                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+task_creator_id+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
+                                                '</a>'+
+                                            '</li>'+
+                                        '</ul>'+
+                                    '</div>';
+						appendHTML +='</div>';
+						
+						 appendHTML +='<div class="right-border">'+
+                                    '<div class="link-wrapper">'+
+                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right"></span></a>'+
+                                    '</div>'+
+                                '</div></div></div>';
+						
+						
+					 }
+								
+				}
+				
+				
+				if (appendHTML.length >0){
+				 window.localStorage["get"+type+"task"]= appendHTML; 
+				
+				}
+				else{
+				 window.localStorage["get"+type+"task"]= ""; 
+				
+				}
+				
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});
+document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
+	
+}
+function gettaskcompleted()
+{
+var appendHTML ='';
+var type='completed';
+document.getElementById(""+type+"-task").innerHTML="";
+
+		jQuery.ajax({ 
+			type: 'post', 
+			async : true,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/tasklist/'+cur_pid, 
+			data: { sid: ses_id,
+					sort: type}, 
+			 beforeSend: function () {
+			 preloading2();
+			},			
+			success: function (data) { 
+			
+				if(data.status == 1){
+					
+					 for(var x = 0; x < data.items.length; x++){	
+						var id =data.items[x].id;
+						var dependent_taskid =data.items[x].dependent_taskid;
+						var task_title =data.items[x].task_title;
+						var task_description =data.items[x].task_description;
+						var task_creator_id =data.items[x].task_creator_id;
+						var task_creator_name =data.items[x].task_creator_name;
+						var priority =data.items[x].priority;
+						var date_created =data.items[x].date_created;
+						var date_start =data.items[x].date_start;
+						var date_end =data.items[x].date_end;
+						var date_completed =data.items[x].date_completed;
+						var task_status =data.items[x].task_status;
+						/* var progval=0;
+						var progbarclass=""
+						if (type=="completed")
+						{
+							progval=100;
+							progbarclass="progress-bar-success";
+						}
+						else{
+							progval=0;
+							progbarclass="progress-bar-primary";
+						} */
+						
+						
+						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
+									'<div class="left-border" style="width:100%;">'+
+									'<div class="title-task"><a >'+task_title+'</a>'+
+                                    '</div>'+
+                                    /* '<div class="progress">'+
+                                        '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
+                                            '<span class="progress-type">'+progval+'%</span>'+
+                                        '</div>'+
+                                    '</div>'+ */
+                                    '<div class="task-description">'+task_description+'</div>';
+									
+						switch(priority){
+							
+							case '1': appendHTML += '<label style=" color:white; background:#aeafb1">Low</label>'; break;
+							case '2': appendHTML += '<label style=" color:white; background:#2bbce0">Normal</label>'; break;
+							case '3': appendHTML += '<label style=" color:white; background:#e73c3c">High</label>'; break;
+						
+						}			
+									
+						
+						gettaskprofpic(task_creator_id);			
+						appendHTML +='<div class="task-user">'+
+                                       '<ul>'+
+                                            '<li>'+
+                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+task_creator_id+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
+                                                '</a>'+
+                                            '</li>'+
+                                        '</ul>'+
+                                    '</div>';
+						appendHTML +='</div>';
+						
+						 appendHTML +='<div class="right-border">'+
+                                    '<div class="link-wrapper">'+
+                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right"></span></a>'+
+                                    '</div>'+
+                                '</div></div></div>';
+						
+						
+					 }
+								
+				}
+				
+				
+				if (appendHTML.length >0){
+				 window.localStorage["get"+type+"task"]= appendHTML; 
+				
+				}
+				else{
+				 window.localStorage["get"+type+"task"]= ""; 
+				
+				}
+				
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});
+document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
+	
+}
+
+
 
 
 function gettaskprofpic(tsid)
@@ -566,13 +810,19 @@ var pdesc=document.getElementById("txt_prj_desc").value;
 }); 	
 	
 }
+function new_task()
+{
+	dependanttask_select();
+	get_proj_mem_for_task();
+}
+
 function dependanttask_select(){	
 	var appendHTML = '<option value="0">None</option>';
 	
 	
 	 jQuery.ajax({ 
 			type: 'post', 
-			async : true,     
+			async : false,     
 			global : false,
 			cache: false,
 			dataType : 'json',
@@ -606,7 +856,7 @@ function get_proj_mem_for_task()
 	var appendHTML = '';
 	jQuery.ajax({ 
 			type: 'post', 
-			async : true,     
+			async : false,     
 			global : false,
 			cache: false,
 			dataType : 'json',

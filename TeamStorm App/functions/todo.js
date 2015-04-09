@@ -37,7 +37,7 @@ function load_todo()
 						parts =target_date.split('/');
 						parts2 =create_date.split('/');
 						
-						tododate = new Date(parts[2],parts[0]-1,parts[1]); 
+						//tododate = new Date(parts[2],parts[0]-1,parts[1]); 
 						months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 						var targetdate;
 						

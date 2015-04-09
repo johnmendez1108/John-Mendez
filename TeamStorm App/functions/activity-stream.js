@@ -2,6 +2,7 @@ var ses_id = window.localStorage.getItem('session_id');
 var getnfeeduname ="";
 var getnfeedprofpic="";
 var cur_postid,cur_set_postid;
+var cur_commentid;
 var numoffeed = window.localStorage.getItem('numoffeed');
 
 function init() {
@@ -102,7 +103,7 @@ function getnewsfeed()
 					}
 					if(task_id > 0){
 						
-						projname = ' posted on task <a href="" >' + task_id + '</a>'; 
+						projname = ' posted on task <a >' + task_id + '</a>'; 
 					}
 					
 					appendHTML += '<div class="inner-wrapper" id ="newsfeed '+postid+'">'+
@@ -130,7 +131,7 @@ function getnewsfeed()
 					}		
 					
 																
-					appendHTML +='<h4 class="media-heading"><a href=""  onclick="viewuserprof('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
+					appendHTML +='<h4 class="media-heading"><a   onclick="userprofile('+to_user_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
 													'<small>'+date_posted+'</small>';
 													
 					switch(post_mood){
@@ -233,7 +234,7 @@ function getnewsfeed()
 													'<button id="btn_post_ag_'+postid+'" type="button" class="btn btn-default btn-block '+is_agree_atr+'" onclick="postagree('+postid+');"><i class="flaticon-check-circle"></i> Agree ('+agree_count+')</button>'+
 												'</li>'+
 												'<li>'+
-													'<button type="button" class="btn btn-default btn-block" onclick="viewpostcomment('+postid+');" data-toggle="modal" href="#comments"><i class="flaticon-comment-more"></i> Comments ('+comment_count+')</button>'+
+													'<button type="button" class="btn btn-default btn-block" onclick="viewpostcomment('+postid+','+poster_id+');" data-toggle="modal" href="#comments"><i class="flaticon-comment-more"></i> Comments ('+comment_count+')</button>'+
 												'</li>'+
 											'</ul>'+
 										'</div>'+
@@ -474,11 +475,12 @@ function reload_feed()
 	
 }
 
-function viewpostcomment(id)
+function viewpostcomment(id,pstrid)
 {
 	cur_postid =id;
 	var appendHTML = '';
-
+	document.getElementById("commentlist").innerHTML="";
+	document.getElementById("commentlist").style.display="none";
 	  jQuery.ajax({ 
 			type: 'post', 
 			async : true,     
@@ -498,17 +500,32 @@ function viewpostcomment(id)
 					var commentor= data[x].commentor;
 					var message= data[x].message;
 					var date_commented= data[x].date_commented;
+					var deletehtml="";
+					var edithtml="";
+					 
+					 if(pstrid == localStorage.getItem('ts_myid')){
+						 
+						 deletehtml='<button type="button" class="close" onclick="conf_delete_comment('+com_id+')">×</button>';
+					 }	 
+					 
+					 
+					 if (commentor==window.localStorage.getItem('name'))
+					 {
+						 edithtml = '<button type="button" class="close" style="font-size: 16px;" onclick="comment_edit('+com_id+')" >Edit</button>'
+					 }	 
 					
-					
-					
-                     appendHTML +='<div class="media">'+
+                     appendHTML +='<div class="media" id="comment-'+com_id+'">'+
                             '<a class="pull-left" a href="">'+
                                 '<img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">'+
                             '</a>'+
+							'<div id="delete-button-'+com_id+'">'+deletehtml+'</div>'+	
                             '<div class="media-body">'+
                                 '<h4 class="media-heading"><a href="user-profile.html">'+commentor+'</a> <small>'+date_commented+'</small></h4>'+
-                                '<p class="post">'+message+'</p>'+
-                            '</div>';
+                                '<p class="post" id="comment-content-'+com_id+'">'+message+'</p>'+
+								'<div id="edit-comment-'+com_id+'"></div>'+
+								'<div id="edit-cancel-button-'+com_id+'">'+edithtml+'</div>'+
+                            '</div>'+
+							'</div>';
 										
 				 }
                 
@@ -534,6 +551,111 @@ function viewpostcomment(id)
 
 
 
+}
+
+function comment_edit(id)
+{
+	document.getElementById('edit-comment-'+id+'').innerHTML='<div class="input-group"><input class="form-control" id="inpteditcomment-'+id+'"> <div class="input-group-btn"><button type="button" class="btn" tabindex="-1" onclick="do_editcomment('+id+');" style="background: transparent;color: #00BDFF;"><i class="flaticon-check"></i></button></div></div>';
+	document.getElementById('inpteditcomment-'+id+'').value=document.getElementById('comment-content-'+id+'').innerHTML;
+	document.getElementById('edit-cancel-button-'+id+'').innerHTML='<button type="button" class="close" style="font-size: 16px;" onclick="cancelcomment_edit('+id+')" >Cancel</button>'	
+	document.getElementById('comment-content-'+id+'').style.display="none";
+	document.getElementById('delete-button-'+id+'').innerHTML='';
+}
+
+function cancelcomment_edit(id)
+{
+	document.getElementById('edit-comment-'+id+'').innerHTML='';
+	//document.getElementById('inpteditcomment').value=document.getElementById('comment-content-'+id+'').innerHTML;
+	document.getElementById('edit-cancel-button-'+id+'').innerHTML='<button type="button" class="close" style="font-size: 16px;" onclick="comment_edit('+id+')" >Edit</button>'
+	document.getElementById('comment-content-'+id+'').style.display="block";
+	document.getElementById('delete-button-'+id+'').innerHTML='<button type="button" class="close" onclick="conf_delete_comment('+id+')">×</button>';
+}
+
+function do_editcomment(id)
+{
+	var commentmsg = document.getElementById('inpteditcomment-'+id+'').value
+	
+		  jQuery.ajax({ 
+			type: 'post', 
+			async : false,  
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/comment/update', 
+			data: { sid: ses_id,
+					id: id,
+					comment: commentmsg
+					}, 
+			beforeSend: function () {
+			 preloading2();
+			},						
+			success: function (data) { 
+				
+				if (data.id==id)
+				{
+					
+					document.getElementById('edit-comment-'+id+'').innerHTML='';	
+					document.getElementById('edit-cancel-button-'+id+'').innerHTML='<button type="button" class="close" style="font-size: 16px;" onclick="comment_edit('+id+')" >Edit</button>'
+					document.getElementById('comment-content-'+id+'').innerHTML=commentmsg;
+					document.getElementById('comment-content-'+id+'').style.display="block";
+					document.getElementById('delete-button-'+id+'').innerHTML='<button type="button" class="close" onclick="comment_delete('+id+')">×</button>';
+					
+				}							 
+			},
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});
+		
+}
+
+function conf_delete_comment(id)
+{	 //test_delete();
+	cur_commentid=id;
+	navigator.notification.confirm(
+        'Do you want to remove this comment?', 
+        delete_comment, // <-- no brackets
+        'Confirmation Message',
+        ['Ok','Cancel']
+    );
+	
+	
+}
+
+function delete_comment(buttonIndex) {
+        //alert('You selected button ' + buttonIndex);	
+		if (buttonIndex==1)
+		{
+			
+			jQuery.ajax({ 
+			type: 'post', 
+			async : true,  
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/comment/delete/'+cur_commentid, 
+			data: { sid: ses_id
+					}, 
+			beforeSend: function () {
+			 preloading2();
+			},						
+			success: function (data) { 
+				
+				if (data.status==1)
+				{
+					var parent = document.getElementById("commentlist");
+					var child = document.getElementById('comment-'+cur_commentid);
+					parent.removeChild(child);
+				}							 
+			},
+		  error: function (err) {
+			//navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+			//alert(err.message);
+			console.log(err.message);
+			}
+      	
+		});
+			
+		}
 }
 
 function do_comment()
@@ -597,7 +719,7 @@ function delete_post(buttonIndex) {
 					
 			jQuery.ajax({ 
 			type: 'post', 
-			async : true, 
+			async : false, 
 			global : false,
 			cache: false,
 			dataType : 'json',
@@ -608,7 +730,7 @@ function delete_post(buttonIndex) {
 			},
 			success: function (data) { 
 				
-				if (data.status==0)
+				if (data.status==1)
 				{
 					//document.getElementById('newsfeed '+cur_set_postid).remove();
 					//navigator.notification.alert('Post Successfully Removed', alertDismissed, 'Message', 'Ok');
@@ -679,8 +801,6 @@ function postagree(id) {
 	
 
 }
-
-
 
 function call_emoticons(id)
 {
@@ -914,7 +1034,7 @@ function getaddressbook(){
                                     '</td>'+
                                     '<td>'+
                                         '<div class="portrait-status chat" style="left:20px;">'+
-										 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" height="35" class="img-circle"> </td>'+
+										 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" height="35" class="img-circle" data-toggle="modal" href="#userprof" onclick="userprofile('+user_id+');"> </td>'+
                                         '</div>'+
                                         '<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+user_id+');">'+fullname+'</a>'+
                                         '</td>'+
