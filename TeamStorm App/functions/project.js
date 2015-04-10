@@ -86,6 +86,47 @@ function getproject()
 	
 document.getElementById("collapse-projects-lists").innerHTML=window.localStorage.getItem('getprojects');
 }
+function getmytask()
+{
+	var appendHTML ='';
+	
+	  jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/task/get_active', 
+			data: { sid: ses_id }, 
+			success: function (data) { 
+						 
+				 for(var x = 0; x < data.length; x++){
+					var id= data[x].id;
+					var task_title= data[x].task_title;
+
+							appendHTML+= '<li><a id="mytask-'+id+'">'+task_title+'</a></li>';
+				
+				}
+				 			 
+				if (appendHTML.length >0){
+					
+					window.localStorage["getmytask"]=appendHTML;
+				}
+				
+			
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});  
+	
+	
+document.getElementById("collapse-tasks").innerHTML=window.localStorage.getItem('getmytask');
+}
+
 
 function gettasklist(id)
 {

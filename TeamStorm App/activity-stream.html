@@ -42,6 +42,9 @@
 	<link rel="stylesheet" href="css/search-all.css">
 	
 	
+	 <script src="js/jquery-1.11.1.min.js"></script>
+
+	
 	
 	
 	<script type="text/javascript" src="scroll/iscroll.js"></script>
@@ -54,7 +57,7 @@
 	<script type="text/javascript" charset="utf-8" src="functions/todo.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/memopad.js"></script>
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-
+	<script type="text/javascript" charset="utf-8" src="functions/connection.js"></script>
 	<!-- <link rel="stylesheet" href="kendo/styles/kendo.common.min.css" />
     <link rel="stylesheet" href="kendo/styles/kendo.default.min.css" />
     <link rel="stylesheet" href="kendo/styles/kendo.dataviz.min.css" />
@@ -298,7 +301,7 @@
 	
 	}, 10);
 }	
-		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh(); commentScroll.refresh(); newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();memoscroller.refresh();}, false);
+		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh();  newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();memoscroller.refresh(); commentScroll.refresh();}, false);
 		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);			 
      
 
@@ -461,17 +464,17 @@ body {
 			
                 <ul class="main">
 
-                    <li><a data-toggle="modal" href="#userprof" onclick="userprofile(0);" data-role="button" type="button"><i class="flaticon-user-profile"></i> Profile</a>
+                    <li><a data-toggle="modal" href="#userprof" onclick="userprofile(0);" data-role="button" type="button"  ><i class="flaticon-user-profile"></i> Profile</a>
                     </li>
-                    <li><a onclick="appsettings();" data-role="button" type="button"><i class="flaticon-settings"></i> Settings</a>
+                    <li><a onclick="appsettings();" data-role="button" type="button" ><i class="flaticon-settings"></i> Settings</a>
                     </li>
                 </ul>
                 <ul class="sub" id="accordion1">
                     <li>
                         <a data-toggle="collapse" data-parent="#accordion1" href="#collapse-tasks"><i class="flaticon-task"></i> My Tasks  <i class="flaticon-menu pull-right"></i></a>
                         <ul id="collapse-tasks" class="panel-collapse collapse">
-                            <li><a ><i class="flaticon-filter"></i> Filtered Tasks</a>
-                            </li>
+							   <!--  <li><a ><i class="flaticon-filter"></i> Filtered Tasks</a>
+								</li> -->
                         </ul>
                     </li>
                     <li>
@@ -646,7 +649,7 @@ body {
         </div>
 		</div>
     </div>
-
+</div>
 	
     <div id="content" class="snap-content">
         <div class="top-head bar-title">
@@ -676,98 +679,23 @@ body {
             <div id="wrapper"  class="main-wrapper" style="overflow: hidden; left: 0px; top:15px;">
 			<div id="scroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">	
 				
-				<div id="pullDown" class="">
+						<div id="pullDown" class="">
 						<span class="pullDownIcon"></span> <center><span class="pullDownLabel">Pull down to refresh...</span></center>
 				</div>
 						<div id="streamlist">
 						
-                <!-- <div class="inner-wrapper">
-
-                    <div class="main-user-post">
-                        <div class="media">
-                            <a class="pull-left" a >
-                                <img class="media-object img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><a >Willem den Toom</a></h4>
-                                <small>Just now via public</small>
-                            </div>
-
-                        </div>
-                        <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin. This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin. This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.</p>
-                        <ul class="half-2 clearfix">
-                            <li>
-                                <button type="button" class="btn btn-default btn-block"><i class="flaticon-check-circle"></i> Agree (8)</button>
-                            </li>
-                            <li>
-                                <button type="button" class="btn btn-default btn-block"><i class="flaticon-comment-more"></i> Comments (23)</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="comment-user-post">
-                        <div class="media">
-                            <a class="pull-left" a >
-                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><a >Jay Quinto</a> <small>2 minutes</small></h4>
-                                <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <a class="pull-left" a >
-                                <img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><a >Jay Quinto</a> <small>1 minute</small></h4>
-                                <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin.</p>
-                                <img class="img-responsive" src="img/post-images/image1.jpg" alt="Image">
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-				<!--  <div class="inner-wrapper">
-                    <div class="main-user-post">
-                        <div class="media">
-                            <a class="pull-left" a >
-                                <img class="media-object img-circle" src="img/user/thumb-user-medium.jpg" width="50" alt="Image">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><a >Jay Quinto</a></h4>
-                                <small>4 hours ago via public</small>
-                            </div>
-
-                        </div>
-                        <p class="post">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet.</p>
-                        <ul class="half-2 clearfix">
-                            <li>
-                                <button type="button" class="btn btn-default btn-block"><i class="flaticon-check-circle"></i> Agree (5)</button>
-                            </li>
-                            <li>
-                                <button type="button" class="btn btn-default btn-block"><i class="flaticon-comment-more"></i> Comments (23)</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div> -->
-							<!-- <div class="inner-wrapper">
-							<div class="main-user-post">
-								<div class="media">
-								 </div>
-								  <p class="post">No More Post to show</p>
-							</div>
-							</div> -->
+               
 						</div>
-					<div id="pullUp">
+						<div id="pullUp">
 						<!-- <span class="pullUpIcon"></span> <center><span class="pullUpLabel">Pull up to refresh...</span></center> -->
 					</div>
 				
-			</div>
+				</div>
 				<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
-				
+                </div>
 				<div id = "feednotif" style="display:none;position: absolute; z-index: 100; border: 1px solid rgba(255, 255, 255, 0.901961); box-sizing: border-box; width: 100%; border-radius: 3px; pointer-events: none; transition: transform 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: transform 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform: translate(0px, 7.14492753623189px) translateZ(0px); height: 30px; background: padding-box padding-box rgba(0, 0, 0, 0.498039);">
 				<center><strong><p style="color:white;font-weight: 900;font-size: 18px;text-align: center">No Internet Connection</p></strong></center>
-				</div>
-                </div>    
+				</div>	
             </div>
         </div>
     </div>
@@ -776,12 +704,12 @@ body {
 	<div id="comments" class="modal-content modal">
         <div class="top-head-modal bar-title">
             <div class="left-top-head pull-left">
-                <a data-toggle="modal" href="#comments" ><i class="flaticon-arrow-left"></i></a>
+                <button data-toggle="modal" href="#comments" class="btn btn-default btn-lg" ><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title" style="font-size: 25px;">Comments</div>
 
         </div>
-        <div class="bottom-controls bar-footer-modal">
+        <div class="bottom-controls bar-footer">
             <div class="chat-write-message">
                
                 <div class="input-group">
@@ -790,14 +718,14 @@ body {
                     </div>
                     <input class="form-control" placeholder="Reply on this storm thread..." id="inptcomment" >
                     <div class="input-group-btn">
-                        <button type="button" class="btn" tabindex="-1" onclick="do_comment();"><i class="flaticon-comment"></i></button>
+                        <button type="button" class="btn btn-default btn-lg" tabindex="-1" onclick="do_comment();"><i class="flaticon-comment"></i></button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="content-modal">
 				
-				 <div id="commentwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 120px;bottom: 10px;">
+				 <div id="commentwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px;bottom: 100px;">
 				 <div id="commentscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">	
 				
 					<div class="inner-wrapper chat-box-wrapper" id="commentlist">
@@ -806,7 +734,7 @@ body {
 						
                
 			
-				</div>
+					</div>
 
                </div>
 				<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
@@ -841,21 +769,21 @@ body {
 	<div id="newpost" class="modal-content modal" >
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a data-toggle="modal" href="#newpost" data-role="button" type="button"><i class="flaticon-arrow-left"></i></a>
+                <button data-toggle="modal" href="#newpost" data-role="button"  class="btn btn-default btn-lg" type="button"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title">New Post</div>
             <div class="right-top-head pull-right">
-                <button class="" id=""><i class="flaticon-check"></i>
+                <button data-toggle="modal" href="#newpost" class="btn btn-default btn-lg" onclick="do_post();" ><i class="flaticon-check"></i>
                 </button>
             </div>
 
         </div>
-        <div class="bottom-controls bar-footer">
+   <!--      <div class="bottom-controls bar-footer">
             <ul class="full-control clearfix">
                 <li><a  data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" onclick="do_post();" ><i class="flaticon-post"></i> Post</a>
                 </li>
             </ul>
-        </div>
+        </div> -->
         <div class="content-modal">
 			
 			<div id="postwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px;">
@@ -953,7 +881,7 @@ body {
 	<div id="project" class="modal-content modal">
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a data-toggle="modal" href="#project" ><i class="flaticon-arrow-left"></i></a>
+                <button data-toggle="modal" href="#project"  class="btn btn-default btn-lg" ><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title">Project List</div>
 
@@ -1045,7 +973,7 @@ body {
 	<div id="newproject"  class="modal-content modal" >
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a data-toggle="modal" href="#newproject" data-role="button" type="button" onclick="clearprj_text(1);"><i class="flaticon-arrow-left"></i></a>
+                <button data-toggle="modal" href="#newproject" data-role="button"  class="btn btn-default btn-lg" type="button" onclick="clearprj_text(1);"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title">Create Project</div>
           
@@ -1101,7 +1029,7 @@ body {
 	<div id="task" class="modal-content modal">
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a data-toggle="modal" href="#task" data-role="button" type="button" onclick="clearprj_text(1);"><i class="flaticon-arrow-left"></i></a>
+                <button data-toggle="modal" href="#task" data-role="button"  class="btn btn-default btn-lg" type="button" onclick="clearprj_text();"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title" id="viewtaskhdr" style="font-size: 14px;">Task List</div>
 
@@ -1154,7 +1082,7 @@ body {
 	<div id="newtask" class="modal-content modal" >
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a data-toggle="modal" href="#newtask" data-role="button" type="button" onclick="cleartsk_text();"><i class="flaticon-arrow-left"></i></a>
+                <button data-toggle="modal" href="#newtask" data-role="button" type="button"  class="btn btn-default btn-lg" onclick="cleartsk_text();"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title" id="viewnewtaskhdr" style="font-size: 14px;">Create Task</div>
           
@@ -1242,7 +1170,7 @@ body {
 	  <div id="todo" class="modal-content modal">
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a  data-toggle="modal" href="#todo" data-role="button" type="button"><i class="flaticon-arrow-left"></i></a>
+                <button  data-toggle="modal" href="#todo" data-role="button"  class="btn btn-default btn-lg" type="button"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title">To-Do</div>
         </div>
@@ -1320,7 +1248,7 @@ body {
 	<div id="newtodo" class="modal-content modal" >
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a data-toggle="modal" href="#newtodo" data-role="button" type="button" ><i class="flaticon-arrow-left"></i></a>
+                <button data-toggle="modal" href="#newtodo" data-role="button"  class="btn btn-default btn-lg" type="button" ><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title" >New Todo</div>
           
@@ -1375,11 +1303,11 @@ body {
 	<div id="memo" class="modal-content modal">
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a data-toggle="modal" href="#memo" data-role="button" type="button"  onclick="clearnote();"><i class="flaticon-arrow-left"></i></a>
+                <button data-toggle="modal" href="#memo" data-role="button" type="button"  class="btn btn-default btn-lg"  onclick="clearnote();"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title">Memo Pad</div>
             <div class="right-top-head pull-right">
-                <button class="" id="btn_savememo"  onclick="do_memo();" ><i class="flaticon-check"></i>
+                <button id="btn_savememo" lass="btn btn-default btn-lg" type="button" class="btn btn-default btn-lg"  onclick="do_memo();" ><i class="flaticon-check"></i>
                 </button>
             </div>
 
@@ -1458,7 +1386,7 @@ body {
 	 <div id="calendar" class="modal-content modal">
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a data-toggle="modal" href="#calendar" data-role="button"><i class="flaticon-arrow-left"></i></a>
+                <button data-toggle="modal" href="#calendar" class="btn btn-default btn-lg" data-role="button"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title">Calendar</div>
 
@@ -1500,7 +1428,7 @@ body {
 	 <div id="userprof" class="modal-content modal">
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <a  data-toggle="modal" href="#userprof" data-role="button" type="button" ><i class="flaticon-arrow-left"></i></a>
+                <button  data-toggle="modal" href="#userprof" data-role="button" class="btn btn-default btn-lg"  type="button" ><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title" id ="usernamehdr" ></div>
 

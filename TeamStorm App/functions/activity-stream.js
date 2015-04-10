@@ -3,6 +3,7 @@ var getnfeeduname ="";
 var getnfeedprofpic="";
 var cur_postid,cur_set_postid;
 var cur_commentid;
+var cur_posterid;
 var numoffeed = window.localStorage.getItem('numoffeed');
 
 function init() {
@@ -21,7 +22,7 @@ function init() {
 	 
 	//document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
 	
-	
+	getmytask();
 	getproject();
 	//getprojectlist();
 	loadprojects_select();
@@ -55,7 +56,7 @@ document.getElementById("feednotif").style.display="none";
 function getnewsfeed()
 {
 	var appendHTML = '';
-
+if (checkConnection() >2){
 	 jQuery.ajax({ 
 			type: 'post', 
 			async : false,     
@@ -106,7 +107,7 @@ function getnewsfeed()
 						projname = ' posted on task <a >' + task_id + '</a>'; 
 					}
 					
-					appendHTML += '<div class="inner-wrapper" id ="newsfeed '+postid+'">'+
+					appendHTML += '<div class="inner-wrapper" id ="newsfeed-'+postid+'">'+
 										'<div class="main-user-post">'+
 											'<div class="media">'+
 												'<a class="pull-left" data-toggle="modal" href="#userprof"  onclick="userprofile('+poster_id+');"  >'+
@@ -244,7 +245,7 @@ function getnewsfeed()
 				if (appendHTML.length >0){
 					
 				 window.localStorage["latestnewsfeed"]= appendHTML;
-				 window.localStorage["numoffeed"]= data.items-1;
+				 //window.localStorage["numoffeed"]= data.items-1;
 				}			
 				/* else
 				{
@@ -270,7 +271,13 @@ function getnewsfeed()
     }
       	
 });   
-	
+
+}
+else{
+
+document.getElementById('feednotif').style.display = "block";
+window.setTimeout("hideMessage()", 4000);
+}
 	
 }
 
@@ -478,12 +485,13 @@ function reload_feed()
 function viewpostcomment(id,pstrid)
 {
 	cur_postid =id;
+	cur_posterid =pstrid;
 	var appendHTML = '';
 	document.getElementById("commentlist").innerHTML="";
 	document.getElementById("commentlist").style.display="none";
 	  jQuery.ajax({ 
 			type: 'post', 
-			async : true,     
+			async : false,     
 			global : false,
 			cache: false,
 			dataType : 'json',
@@ -494,7 +502,8 @@ function viewpostcomment(id,pstrid)
 				
 				  
 				 
-				 for(var x = 0; x < data.length; x++){
+				 for(var x = data.length-1; x >= 0; x--){
+				
 					//alert("Mine is " + i + "|" + item.user_id + "|" + item.fullname);
 					var com_id= data[x].id;
 					var commentor= data[x].commentor;
@@ -515,12 +524,12 @@ function viewpostcomment(id,pstrid)
 					 }	 
 					
                      appendHTML +='<div class="media" id="comment-'+com_id+'">'+
-                            '<a class="pull-left" a href="">'+
+                            '<a class="pull-left" a >'+
                                 '<img class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" alt="Image">'+
                             '</a>'+
 							'<div id="delete-button-'+com_id+'">'+deletehtml+'</div>'+	
                             '<div class="media-body">'+
-                                '<h4 class="media-heading"><a href="user-profile.html">'+commentor+'</a> <small>'+date_commented+'</small></h4>'+
+                                '<h4 class="media-heading"><a  >'+commentor+'</a> <small>'+date_commented+'</small></h4>'+
                                 '<p class="post" id="comment-content-'+com_id+'">'+message+'</p>'+
 								'<div id="edit-comment-'+com_id+'"></div>'+
 								'<div id="edit-cancel-button-'+com_id+'">'+edithtml+'</div>'+
@@ -679,7 +688,7 @@ function do_comment()
 				if (data.status==1)
 				{
 				
-				viewpostcomment(cur_postid);
+				viewpostcomment(cur_postid,cur_posterid);
 				document.getElementById('inptcomment').value="";
 				loadnewsfeed(); // Replace if additional api comes
 				}							 
@@ -709,7 +718,7 @@ function conf_delete_post()
         ['Ok','Cancel']
     );
 	
-	
+
 }
 function delete_post(buttonIndex) {
         //alert('You selected button ' + buttonIndex);
@@ -734,8 +743,8 @@ function delete_post(buttonIndex) {
 				{
 					//document.getElementById('newsfeed '+cur_set_postid).remove();
 					//navigator.notification.alert('Post Successfully Removed', alertDismissed, 'Message', 'Ok');
-					loadnewsfeed();
-					alertDismissed();
+					
+					removepost();
 				}
 				
 				 
@@ -750,10 +759,12 @@ function delete_post(buttonIndex) {
 }		
 		
 }
-function alertDismissed() {
+function removepost() {
 	var parent = document.getElementById("streamlist");
-	var child = document.getElementById('newsfeed '+cur_set_postid);
+	var child = document.getElementById('newsfeed-'+cur_set_postid);
 	parent.removeChild(child);
+	
+	
 }
 
 function postagree(id) {
@@ -829,7 +840,7 @@ function loadnewsfeed()
 	 
 	getnewsfeed();
 	document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
-	//alert("load feed"); 
+
 }
 
 

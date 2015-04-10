@@ -16,14 +16,18 @@ function login(){
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     
+	if (checkConnection() >2){
     jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+			//async : false,     
 			global : false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/auth/login', 
       data: { username:username , password: password }, 
+	  	beforeSend: function () {
+			preloading2();
+			},
       success: function (data) { 
         if(data.status ==0) {
 			//navigator.notification.alert(data.status_message, function() {}); 
@@ -39,18 +43,15 @@ function login(){
 		 //$.mobile.changePage($('#modalview-login'));
 		 //$.mobile.changePage("Index2.html");
 		 //alert(data.session_id);
-          
+         
 		 window.localStorage["session_id"] = data.session_id;
 		 window.localStorage["name"] = data.name;
 		  
 		 window.localStorage["islogin"] = 1;
 		 window.localStorage["username"] = username;
-		 window.localStorage["password"] = password;
-		 //
-         preload();
-         window.location.replace("activity-stream.html");
-		
-         
+		 window.localStorage["password"] = password;  
+		 window.location.replace("activity-stream.html");
+		 //window.location = "activity-stream.html";
       }
 	  },
 	  error: function (err) {
@@ -64,6 +65,12 @@ function login(){
       
     });
 
+	}
+	else {
+		//alert('Network Connection Error Kindly Check your Internet Connection');
+		navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
+	}
+	
 	
   //getmyprofile();
   }
@@ -72,8 +79,8 @@ function login(){
 {
     
 }
-
-/*function preload()
+/*
+function preload()
 {
    document.getElementById("formsubmitbutton").style.display = "none"; // to undisplay
    document.getElementById("buttonreplacement").style.display = ""; // to display
@@ -92,6 +99,7 @@ function RestoreSubmitButton()
 }
 // To disable restoring submit button, disable or delete next line.
 document.onfocus = RestoreSubmitButton;   */
+
   
  
   

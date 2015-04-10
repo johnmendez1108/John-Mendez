@@ -45,7 +45,7 @@ $(document).ready(function() {
 
 //document.getElementById('select_projlists').options.add(new Option("0", "Project List"))
 	 //var ptype = $('input[type="radio"][name="post_type"]:checked').val();
-search_post_user();
+
 });
 function newpost()
 {
@@ -114,7 +114,9 @@ function do_post(){
 	pid = pid.options[pid.selectedIndex].value;
 	
 	if(postmsg.trim().length > 0){
-	 jQuery.ajax({ 
+		
+	if (checkConnection() >2){
+		jQuery.ajax({ 
 			type: 'post', 
 			async : true,     
 			global : false,
@@ -140,19 +142,28 @@ function do_post(){
 				document.getElementById('option1').checked = true;
 				document.getElementById('chk_txt_post').checked	= false;
 				document.getElementById('txt_post').value="";
-				pid.options[pid.selectedIndex].value=0;
 				}
 		
 			},				
 			error: function (err) {
         
 		console.log(err.message);
-    }}); 
+		}}); 
+	}
+	else{
+		navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
 	
+	}
+	}
+	else{
+		navigator.notification.alert('Please type message before posting',alertDismissed,'TeamStorm Post','Ok');
 	}
       	
 }
-
+ function alertDismissed()
+{
+    
+}
 
 
 
