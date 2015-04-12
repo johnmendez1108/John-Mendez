@@ -56,6 +56,8 @@
 	<script type="text/javascript" charset="utf-8" src="functions/userprofile.js"  async="async" ></script>
 	<script type="text/javascript" charset="utf-8" src="functions/todo.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/memopad.js"></script>
+	<script type="text/javascript" charset="utf-8" src="functions/myprofile.js"></script>
+	<script type="text/javascript" charset="utf-8" src="functions/appsettings.js"></script>
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/connection.js"></script>
 	<!-- <link rel="stylesheet" href="kendo/styles/kendo.common.min.css" />
@@ -106,7 +108,7 @@
 
 	
 			 
-	var myScroll,leftScroll,rightScroll,commentScroll,postScroll,projectScroll,newprjScroll,newtskscroll,loadtskscroller,userprofscroller,addtodoscroller,newtodoscroller,memoscroller,calendarscroller,
+	var myScroll,leftScroll,rightScroll,commentScroll,postScroll,projectScroll,newprjScroll,newtskscroll,loadtskscroller,userprofscroller,addtodoscroller,newtodoscroller,memoscroller,calendarscroller,myprofscroller,appsettingsscroller,taskinfoscroller,projectinfoscroller,
 	pullDownEl, pullDownOffset,
 	pullUpEl, pullUpOffset,
 	generatedCount = 0;
@@ -238,7 +240,10 @@
 	newtodoscroller= new iScroll('newtodowrapper');
 	memoscroller= new iScroll('memowrapper');
 	calendarscroller= new iScroll('calendarwrapper');
-	
+	myprofscroller= new iScroll('myprofwrapper');
+	appsettingsscroller= new iScroll('appsettingswrapper');
+	taskinfoscroller= new iScroll('taskinfowrapper');
+	projectinfoscroller= new iScroll('projectinfowrapper');	
 	postScroll.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
 
@@ -292,7 +297,22 @@
         }
    }
    
-   
+   myprofscroller.options.onBeforeScrollStart = function(e) {                
+        var target = e.target;
+
+        while (target.nodeType != 1) target = target.parentNode;
+        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+            e.preventDefault();
+        }
+   }
+    appsettingsscroller.options.onBeforeScrollStart = function(e) {                
+        var target = e.target;
+
+        while (target.nodeType != 1) target = target.parentNode;
+        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+            e.preventDefault();
+        }
+   }
 	
 	setTimeout(function () { 
 	document.getElementById('wrapper').style.left = '0';
@@ -301,7 +321,7 @@
 	
 	}, 10);
 }	
-		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh(); userprofscroller.refresh();  newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();memoscroller.refresh(); commentScroll.refresh();}, false);
+		document.addEventListener('touchmove', function (e) { e.preventDefault();projectScroll.refresh();leftScroll.refresh();leftScroll.refresh(); rightScroll.refresh();postScroll.refresh(); userprofscroller.refresh();  newtskscroll.refresh(); loadtskscroller.refresh();addtodoscroller.refresh();newtodoscroller.refresh();memoscroller.refresh(); commentScroll.refresh(); myprofscroller.refresh(); appsettingsscroller.refresh();  taskinfoscroller.refresh();}, false);
 		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);			 
      
 
@@ -325,7 +345,7 @@ body {
 	font-family: 'Roboto', sans-serif !important;
 }
  
-#wrapper, #commentwrapper,#postwrapper,#projectwrapper,#newprjwrapper,#loadtskwrapper,#newtskwrapper,#userprofwrapper,#addtodowrapper,#newtodowrapper,#memowrapper, #calendarwrapper{
+#wrapper, #commentwrapper,#postwrapper,#projectwrapper,#newprjwrapper,#loadtskwrapper,#newtskwrapper,#userprofwrapper,#addtodowrapper,#newtodowrapper,#memowrapper, #calendarwrapper, #myprofwrapper, #appsettingswrapper,#taskinfowrapper,#projectinfowrapper{
 	position:absolute; z-index:1;
 	top: 0px; bottom:0px; left:-9999px;
 	width:100%;
@@ -347,7 +367,7 @@ body {
  * Scroller
  *
  */	  	  
-#scroller,#commentscroller,#postscroller,#projectscroller,#newprjscroller,#newtskscroller,#loadtskscroller,#userprofscroller,#leftscroller,#rightscroller,#addtodoscroller,#newtodoscroller,#memoscroller,#calendarscroller {
+#scroller,#commentscroller,#postscroller,#projectscroller,#newprjscroller,#newtskscroller,#loadtskscroller,#userprofscroller,#leftscroller,#rightscroller,#addtodoscroller,#newtodoscroller,#memoscroller,#calendarscroller,#myprofscroller,#appsettingsscroller,#taskinfoscroller,#projectinfoscroller {
 	position:absolute; z-index:1;
 	-webkit-touch-callout:none;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
@@ -431,6 +451,21 @@ body {
 	to { -webkit-transform:rotate(360deg) translateZ(0); }
 }
 
+.table{
+position:relative;  /*so children div can use 100% height and not go over */
+/* width:100%; as long as this div's parent is body it will take up whole screen */
+ /*height:250px;make whatever you want */
+padding:8px; /* will make that spacing you wanted */
+}
+
+
+.table .cell{
+width:90%;
+height:70%;
+margin-bottom: 3px;
+/*display:inline-block; so they display inline */
+display:none;
+}
 
 
 
@@ -446,11 +481,11 @@ body {
 			
           	<div class="user-menu">
                 <div class="media">
-                    <a class="pull-right" onclick="myprofile();" data-role="button" type="button">
+                    <a class="pull-right" data-toggle="modal" href="#myprofile" onclick="load_myprofile();"  data-role="button" type="button">
                         <img id="user_menu_profpic" class="media-object img-circle" src="img/user/thumb-user-medium.jpg" width="50"  height="50" alt="Image">
                     </a>
                     <div class="media-body text-right">
-                        <h4 class="media-heading"><a id="main_prof_fullname" onclick="myprofile();" data-role="button" type="button">Willem den Toom</a></h4>
+                        <h4 class="media-heading"><a id="main_prof_fullname"  data-toggle="modal" href="#myprofile"   onclick="load_myprofile();" data-role="button" type="button"></a></h4>
                         <!-- <p>Administrator</p> -->
                     </div>
                 </div>
@@ -466,7 +501,7 @@ body {
 
                     <li><a data-toggle="modal" href="#userprof" onclick="userprofile(0);" data-role="button" type="button"  ><i class="flaticon-user-profile"></i> Profile</a>
                     </li>
-                    <li><a onclick="appsettings();" data-role="button" type="button" ><i class="flaticon-settings"></i> Settings</a>
+                    <li><a data-toggle="modal" href="#appsettings" onclick="" data-role="button" type="button" ><i class="flaticon-settings"></i> Settings</a>
                     </li>
                 </ul>
                 <ul class="sub" id="accordion1">
@@ -508,8 +543,7 @@ body {
                     </li>
                     <li><a data-toggle="modal" href="#todo" onclick="load_todo();" data-role="button" type="button" ><i class="flaticon-to-do"></i> To-Do</a>
                     </li>
-                    <li><a onclick="preloading2();"><i class="flaticon-address-book"   ></i> Address Book</a>
-                    </li>
+                   
                 </ul>
             </div>
 		    </div>
@@ -649,7 +683,7 @@ body {
         </div>
 		</div>
     </div>
-</div>
+
 	
     <div id="content" class="snap-content">
         <div class="top-head bar-title">
@@ -844,9 +878,30 @@ body {
 						
                         <div class="form-post-wrapper">
                             <textarea rows="5" class="form-control" placeholder="Share your Updates..." id="txt_post"></textarea>
-							<div id="upld_img">
-							<!-- <img style="display:none;width:100px;height:100px;" id="post_image" src="" /> -->
+
+						
+							<div id="upld_img" class ="table" > 
+									<div class="cell" id="pstimg1" >
+									
+									<img  id="post_image1"   />
+									<button type="button" data-dismiss="alert" class="close" style="float:none;" aria-hidden="true">X</button>
+									</div>
+									
+									<div class="cell" id="pstimg2"  >
+									
+									<img  id="post_image2"  />
+									<button type="button" data-dismiss="alert" class="close" style="float:none;" aria-hidden="true">X</button>
+									</div>
+									
+									<div class="cell" id="pstimg3" >
+									
+									<img   id="post_image3"   />
+									<button type="button" data-dismiss="alert" class="close" style="float:none;" aria-hidden="true">X</button>
+									</div>
 							</div>
+							
+						</div>	
+						
                         </div>
 							
                         <ul class="btn-list-bottom">
@@ -863,8 +918,12 @@ body {
 							
                         </ul>
 						<div class="chk">
-												<input type="checkbox" value="None" id="chk_txt_post" name="sendtoemail">
+									 <div class="checkbox">
+                                           <input type="checkbox" value="None" id="chk_txt_post" name="sendtoemail">
+                                        </div>
+												
 												<label class="lbl-check" for="chk_txt_post"></label><span><label for="chk_txt_post">Send email to team</label></span>
+						
 						</div>
 					</div>
                 </div>
@@ -874,7 +933,7 @@ body {
 			</div>
 			</div>
 		</div>
-    </div>
+    
 	
 	
 	<!--Projects-->
@@ -1164,8 +1223,199 @@ body {
 		</div>
 	</div>   
 	   
-	   
-	 	   
+	   <!--task info-->
+	 <div id="taskinfo" class="modal-content modal">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <button  data-toggle="modal" href="#taskinfo" data-role="button" class="btn btn-default btn-lg" type="button" ><i class="flaticon-arrow-left"></i></button>
+            </div>
+            <div class="title" id ="taskhdr" ></div>
+
+        </div>
+        
+		
+		<div class="bottom-controls bar-footer" >
+                <ul class="half-control-3 clearfix">
+					<li>
+                       <button class="btn btn-block btn-primary" id="btn_taskcomplete" ><span class="flaticon-Check"></span> Complete
+                       </button>
+                    </li>
+					<li>
+                       <button class="btn btn-block btn-primary" id="btn_taskedit" ><span class="flaticon-memo-pad"></span> Edit
+                       </button>
+                    </li>
+					<li>
+                       <button class="btn btn-block btn-primary" id="btn_taskdelete" onclick="conf_delete_task();" >&times; Delete
+                       </button>
+                    </li>
+					
+                </ul>
+        </div>
+		
+		<div class="content-modal">
+           
+            <div id="taskinfowrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px;">
+			<div id="taskinfoscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">
+			 <div class="media profile-status" >
+                
+                <div class="media-body">
+                      <center><h4 class="media-heading"><a id="taskinfo_title"></a></h4>
+					   <p id="taskinfo_desc"></p></center>					   
+                </div>
+				
+				
+				<a class="pull-right main" >
+					
+				</a>
+				<a class="pull-left" >
+					<li>
+                    <div id="priority_inf"> </div>
+					</li>
+					<li>
+					<div id="taskdate_inf"> </div>
+					</li>
+					<li>
+					<div id="taskstat_inf"> </div>
+					</li>
+					<li>
+					<div id="taskmaster_inf"> </div>
+					</li>
+                </a>
+				
+            </div>
+			
+			
+			
+               <div class="tab-wrapper">
+                    <ul id="task-tab" class="nav nav-tabs nav-justified">
+                        <li class="active"><a href="#task-assigned" data-toggle="tab" >Assigned</a>
+                        </li>
+                        <li><a href="#task-request" data-toggle="tab">Request</a>
+                        </li>
+                    </ul>
+                </div>
+               <div id="task-tab-content" class="tab-content">
+                    <div class="tab-pane fade active in" id="task-assigned">
+                    </div>
+                    <div class="tab-pane fade" id="task-reques">
+                    </div>
+                </div>
+			   
+			   
+                    
+			
+            </div>
+			</div>
+			<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+			</div>	
+            </div>
+		
+    </div>
+		
+	<!--projectinfo-->
+	 <div id="projectinfo" class="modal-content modal">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <button  data-toggle="modal" href="#projectinfo" data-role="button" class="btn btn-default btn-lg" type="button" ><i class="flaticon-arrow-left"></i></button>
+            </div>
+            <div class="title" id ="prjhdr" style="font-size: 14px;"></div>
+
+        </div>
+        
+		
+		<div class="bottom-controls bar-footer" >
+                <ul class="half-control-3 clearfix">
+					<li>
+                       <button class="btn btn-block btn-primary" id="btn_projectcomplete" ><span class="flaticon-Check"></span> Archive
+                       </button>
+                    </li>
+					<li>
+                       <button class="btn btn-block btn-primary" id="btn_projectedit" ><span class="flaticon-memo-pad"></span> Edit
+                       </button>
+                    </li>
+					<li>
+                       <button class="btn btn-block btn-primary" id="btn_projectdelete" onclick="conf_delete_project();" >&times; Delete Project
+                       </button>
+                    </li>
+					
+                </ul>
+        </div>
+		
+		<div class="content-modal">
+           
+            <div id="projectinfowrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px;">
+			<div id="projectinfoscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">
+			 <div class="media profile-status" >
+                
+                <div class="media-body">
+                      <center><h4 class="media-heading"><a id="projectinfo_title"></a></h4>
+					   <p id="projectinfo_desc"></p></center>					   
+                </div>
+				
+				
+				<a class="pull-right main" >
+					
+				</a>
+				<a class="pull-left" >
+				
+					<div class="portrait-status" style="display:table; padding-bottom:20px">
+						<div style="display: table-cell;vertical-align: top;">
+						<img id="userpicPL_inf" class="media-object img-circle" src="data:image/gif;base64,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" width="65" height="65" alt="Image">
+						</div>
+						<div style="display: table-cell;vertical-align: top; width:75%">
+						<h3 class="media-heading" id="PLname_inf"></h3>
+						<span >Project Creator</span>
+						<span id="PLemail_inf"></span>
+						</div>
+					</div>
+						
+				
+				
+					<li>
+                    <div id="taskcount_inf"> </div>
+					</li>
+					<li>
+					<div id="membercount_inf"> </div>
+					</li>
+					<li>
+					<div id="postcount_inf"> </div>
+					</li>
+					<li>
+					<div id="filescount_inf"> </div>
+					</li>
+                </a>
+				
+            </div>
+			
+			
+			
+           <!--     <div class="tab-wrapper">
+                    <ul id="task-tab" class="nav nav-tabs nav-justified">
+                        <li class="active"><a href="#task-assigned" data-toggle="tab" >Assigned</a>
+                        </li>
+                        <li><a href="#task-request" data-toggle="tab">Request</a>
+                        </li>
+                    </ul>
+                </div>
+               <div id="task-tab-content" class="tab-content">
+                    <div class="tab-pane fade active in" id="task-assigned">
+                    </div>
+                    <div class="tab-pane fade" id="task-reques">
+                    </div>
+                </div> -->
+			   
+			   
+                    
+			
+            </div>
+			</div>
+			<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+			</div>	
+            </div>
+		
+    </div>  
+		
+	 
 	 <!--TODO-->
 	  <div id="todo" class="modal-content modal">
         <div class="top-head bar-title">
@@ -1520,6 +1770,248 @@ body {
 
 
 	 
+	 
+	  <!--My Profile-->
+	 <div id="myprofile" class="modal-content modal">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <button  data-toggle="modal" href="#myprofile"  data-role="button" data-role="button" class="btn btn-default btn-lg" type="button"><i class="flaticon-arrow-left"></i></button>
+            </div>
+            <div class="title">My Profile</div>
+
+        </div>
+        <div class="content-modal">
+            <div class="media profile-status"  style="padding-top:65px">
+                <a class="pull-left" href="">
+                    <div class="portrait-status">
+                       <!--  <img class="status" src="img/status/online.png" alt="Image"> -->
+                        <!-- <img class="status" src="img/status/offline.png" alt="Image"> -->
+                        <!-- <img class="status" src="img/status/busy.png" alt="Image"> -->
+                        <!-- <img class="media-object img-circle" src="http://lorempixel.com/90/90/people/" width="90" alt="Image"> -->
+						<img id="my_profpic" class="media-object img-circle" src="data:image/gif;base64,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" width="90" height="90"  alt="Image">
+                    </div>
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading"><a id="my_profname" >Willem den Toom</a></h4>
+                    <!-- <p>Administrator</p> -->
+                </div>
+            </div>
+            <div id="myprofwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 175px;">
+			<div id="myprofscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">
+			
+			<div class="main-wrapper">
+                <div class="inner-wrapper">
+                    <div class="info-profile">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">TeamStorm ID</div>
+                            <ul class="list-group">
+                                <li class="list-group-item" id="my_id">
+                                    willem_toom
+                                </li>
+                            </ul>
+                        </div>
+						
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Basic Info</div>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                  <!--   <label>Full Name</label> -->
+                                    <div class="info">
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Action</a>
+                                            </li>
+                                            <li><a href="#">Another action</a>
+                                            </li>
+                                            <li><a href="#">Something else here</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Separated link</a>
+                                            </li>
+                                        </ul>
+										<label>First Name</label>
+                                        <input type="text" name="" id="txt_myproffirstname" class="form-control" value="">
+										<label>Middle Name</label>
+										<input type="text" name="" id="txt_myprofmiddlename" class="form-control" value="">
+										<label>Last Name</label>
+										<input type="text" name="" id="txt_myproflastname" class="form-control" value="">
+                                        
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Gender</label>
+                                    <div class="info">
+                                        <select name="" id="slct_myprofgender" class="form-control" required="required">
+                                            <option value="0">Male</option>
+                                            <option value="1">Female</option>
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Address</label>
+                                    <!-- <div class="info"><a href="">Not Specified</a> -->
+									<input type="text" name="" id="txt_myprofaddress" class="form-control" value="">
+                                    <!-- </div> -->
+                                </li>
+								<li class="list-group-item">
+                                    <label>Company</label>
+                                    <!-- <div class="info"><a href="">Not Specified</a> -->
+									<input type="text" name="" id="txt_myprofcompany" class="form-control" value="">
+                                    <!-- </div> -->
+                                </li>
+								<li class="list-group-item">
+                                    <label>School Graduated</label>
+                                   
+                                   
+									<input type="text" name="" id="txt_myprofschoolgrad" class="form-control" value="">
+                                  
+                                </li>
+                               
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Contact info</div>
+                                    <ul class="list-group">
+										<li class="list-group-item">
+                                            <label>Mobile Number</label>
+                                            <input type="mobile" name="" id="txt_myprofcontact" class="form-control" value="">
+                                            
+                                        </li>
+										
+                                        <li class="list-group-item">
+                                            <label>Email Address</label>
+                                            <div class="info">
+
+                                                <input type="email" name="" id="txt_myprofemail" class="form-control" value="">
+                                            </div>
+                                        </li>
+                                      
+                                        <li class="list-group-item" id="pass_group">
+                                            <label>Change Password</label>
+											<div class="info">
+												<a data-toggle="collapse" data-parent="#pass_group" href="#change-password"  >●●●●●●●●●<i class="flaticon-memo-pad pull-right"></i></a>
+											</div>	
+												<ul id="change-password" class="panel-collapse collapse">
+													<li>
+													<input placeholder="Old Password" type="password" name="" id="txt_myprofoldpass" class="form-control" value="">
+													<input placeholder="New Password" type="password" name="" id="txt_myprofnewpass1" class="form-control" value="">
+													<input placeholder="Confirm Password" type="password" name="" id="txt_myprofnewpass2" class="form-control" value="">
+													</li>
+												</ul>
+											
+                                        </li>
+                                      
+                                    </ul>
+                                </div>
+								<div class="alert alert-danger" id="allert_error" hidden >
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<strong>
+								<p id="sup_statmessage">Alert</p>
+								</strong>
+								</div>
+								<div class="alert alert-success" id="allert_success" hidden >
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<strong><i class="flaticon-check"></i><p id="suc_message">Success!</p></strong>
+								</div>
+								
+								<button type="button" class="btn btn-primary btn-block" tabindex="-1" onclick="updatemyprofile();"><span class="glyphicon glyphicon-ok"></span> Save</button>
+							</ul>
+                                
+					   </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+			<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+			</div>	
+            </div>
+		
+		</div>
+       </div>
+	 
+	
+	  <!--App Settings-->
+	  <div id="appsettings" class="modal-content modal">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <button  data-toggle="modal" href="#appsettings"  data-role="button" class="btn btn-default btn-lg" type="button"><i class="flaticon-arrow-left"></i></button>
+            </div>
+            <div class="title">App Settings</div>
+
+        </div>
+        <div class="content-modal">
+           <div id="appsettingswrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 60px;">
+			<div id="appsettingsscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">
+		   <div class="main-wrapper">
+                <div class="inner-wrapper">
+                    <div class="info-profile">
+                        <div class="panel panel-default">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <label>General Settings</label>
+                                    <div class="info">
+                                    <div class="row">
+                                            <div class="col-xs-8">Sign in automatically</div>
+                                            <div class="col-xs-4 text-right">
+                                                <label class="toggle">
+                                                    <input type="checkbox" id="auto_signin" name ="auto_signin" onclick="togglecheckbox(this);"> <span class="handle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Notification Settings</label>
+                                    <div class="info">
+                                        <div class="row">
+                                            <div class="col-xs-8">
+                                                Notifications
+                                                <br>
+                                                <small>Get alerts from new tasks/projects and chat messages</small>
+                                            </div>
+                                            <div class="col-xs-4 text-right">
+                                                <label class="toggle">
+                                                    <input type="checkbox" id ="notif_settings" name ="notif_settings"  onclick="togglecheckbox(this);"> <span class="handle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Contacts</label>
+                                    <div class="info">
+                                    <div class="row">
+                                            <div class="col-xs-8">Automatically add employee</div>
+                                            <div class="col-xs-4 text-right">
+                                                <label class="toggle">
+                                                    <input type="checkbox" id ="auto_addemp" name ="auto_addemp"  onclick="togglecheckbox(this);"> <span class="handle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Privacy</label>
+                                    <div class="info">
+                                    <div class="row">
+                                            <div class="col-xs-8">Show profile as private</div>
+                                            <div class="col-xs-4 text-right">
+                                                <label class="toggle">
+                                                    <input type="checkbox" id ="show_prof" name ="show_prof"  onclick="togglecheckbox(this);"> <span class="handle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+			</div>
+			<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+			</div>
+			</div>
+	   </div>
+	 </div>
 	
     <!-- SNAP -->
     <script type="text/javascript" src="js/snap.js"></script>

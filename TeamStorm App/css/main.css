@@ -265,6 +265,15 @@ bottom: 0;
 overflow: scroll;
 -webkit-overflow-scrolling: touch; */
 }
+
+.user-links   a:hover {
+ background: #82dfff;
+ color:	#ffffff;
+}
+.user-links   a:active {
+ background: #82dfff;
+ color:	#ffffff;
+}
 .additional-menu {
     padding-bottom: 20px;
 }
@@ -743,3 +752,4 @@ color: #FFF;
   left: 10px;
   border-radius: 2px;
 }
+

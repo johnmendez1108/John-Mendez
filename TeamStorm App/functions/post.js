@@ -142,6 +142,8 @@ function do_post(){
 				document.getElementById('option1').checked = true;
 				document.getElementById('chk_txt_post').checked	= false;
 				document.getElementById('txt_post').value="";
+				document.getElementById('select_projlists').value=0;
+				clearimg_count();
 				}
 		
 			},				
@@ -166,6 +168,63 @@ function do_post(){
 }
 
 
+function uploadfile(src)
+{
+		
+   /*  var imageURI = src;
+    var options = new FileUploadOptions();
+    options.fileKey = "file";
+    options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+    options.mimeType = "image/jpeg";
+    options.chunkedMode = false;
+    var params = new Object();
+	params.sid=ses_id;
+    options.params = params;
+    var ft = new FileTransfer();
+    ft.upload(imageURI, "http://teamstormapps.net/upload", upwin, upfail,
+        options);
+	alert(imageURI); */	
+		
+	/* var url = 'http://teamstormapps.net/upload';
+	var params = { sid: ses_id,files: src};
+		
+		
+	$.post(url, params, function(data) {
+
+           alert(data.files[0].deleteUrl);
+
+        });	 */	
+		
+		//var fd = new FormData(document.getElementById("pic_map"));
+		jQuery.ajax({ 
+			type: 'post', 
+			enctype: 'multipart/form-data',
+			processData: false,  // tell jQuery not to process the data
+			contentType: fals,  // tell jQuery not to set contentType
+			url: 'hhttp://teamstormapps.net/upload', 
+			data: { sid: ses_id,files: src}, 
+			beforeSend: function () {
+			 preloading2();
+			}}).done(function( data ) {
+            console.log("PHP Output:");
+            console.log( data );
+        }); 
+		
+		
+	
+}
+function upwin(r) {
+	alert("Sent = " + r.bytesSent);
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+}
+
+function  upfail(error)  {
+    alert("An error has occurred: Code = " + error.code + error.source + error.target);
+    console.log("upload error source " + error.source);
+    console.log("upload error target " + error.target);
+}
 
 
 

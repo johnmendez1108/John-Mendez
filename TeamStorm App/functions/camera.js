@@ -1,6 +1,7 @@
-
+var ses_id = window.localStorage.getItem('session_id');
 var pictureSource;   
 var destinationType; 
+var imgcount=1;
 
 document.addEventListener("deviceready",onDeviceReady,false);
 function startActivity(className) {
@@ -49,30 +50,67 @@ function encodeImage(src, callback) {
       }
       img.src = src;;
 }
-
 function onPhotoDataSuccess(imageData) {
-	var based64img = "";
-  var img = document.createElement("img");
+  var based64img = "";
+   
+  if (imgcount<=3) { 
+  var img = document.getElementById('post_image'+imgcount);
   //img.style.display = 'block';
+  	encodeImage(imageData, function(encodedImage) { 
+		based64img= "data:image/gif;base64," + encodedImage;
+	});
+  
   img.setAttribute('src', imageData);
-  img.setAttribute("height", "10%");
-   img.setAttribute("width", "15%");
-   img.setAttribute("margins", "1px");
+  img.setAttribute('height', '40%');
+  img.setAttribute('width', '70%');
+ // img.setAttribute('margin', '30px');
+  img.setAttribute('border', '4');
+     
+    
   //smallImage.src = "data:image/gif;base64," + imageData;
 	//img.src = imageData;
 	
-	document.getElementById("upld_img").appendChild(img);
+      document.getElementById('pstimg'+imgcount).style.display='block';
+	//document.getElementById("upld_img").appendChild(img);
+	//alert(document.getElementById("upld_img").innerhtml);
+
 	
-	encodeImage(imageData, function(encodedImage) { 
-		based64img=encodedImage;
-	});
-   
-   
+	 
+    imgcount +=1;  
+	 uploadfile(imageData);
+ /*    var options = new FileUploadOptions();
+    options.fileKey = "file";
+    options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+    options.mimeType = "image/jpeg";
+    options.chunkedMode = false;
+	 options.httpMethod = "POST";
+	options.headers = {
+          Connection: "close"
+        };
+    var params = new Object();
+	params.sid=ses_id;
+    options.params = params;
+    var ft = new FileTransfer();
+    ft.upload(imageData, "http://teamstormapps.net/upload", upwin, upfail,
+        options); */
+
+
+	
+   }
+   else {
+       navigator.notification.alert('Exceeded maximum attachment',alertDismissed,'New Post','Ok');
+   }
    
 }
 function onFail(message) 
 {
-    alert('Failed because: ' + message);
+    
+    navigator.notification.alert('Failed because: ' + message,alertDismissed,'New Post','Ok');
+}
+
+function clearimg_count()
+{
+    imgcount=1;
 }
 
 function movePic(file)

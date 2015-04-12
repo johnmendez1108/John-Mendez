@@ -28,7 +28,7 @@ function userprofile(uid)
 	
 	var tsid,userlevel,email,name,firstname,middlename,lastname,gender,preview_pic,company,location,contact,last_school,timezone,date_joined,followers,following,projects,tasks,is_following;
 	
-
+if (checkConnection() >2){
 	   $.ajax({ 
 			type: 'post',      
 			//global : false,
@@ -66,6 +66,19 @@ function userprofile(uid)
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
 		//alert(err.message);
 		console.log(err.message);
+	navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
+	document.getElementById("usernamehdr").innerHTML='';
+	document.getElementById("userprof_pic").src='img/user/thumb-user-medium.jpg';
+	document.getElementById("userprof_name").innerHTML='';
+	document.getElementById("btn_follow_unfollow").style.display="none";
+	document.getElementById("userprof_id").innerHTML='';
+	document.getElementById("userprof_fullname").innerHTML='';
+	document.getElementById("userprof_gender").innerHTML='';
+	document.getElementById("userprof_address").innerHTML='';
+	document.getElementById("userprof_company").innerHTML='';
+	document.getElementById("userprof_school").innerHTML='';
+	document.getElementById("userprof_mobile").innerHTML='';
+	document.getElementById("userprof_emailadd").innerHTML='';
     }
       	
 });
@@ -104,7 +117,23 @@ function userprofile(uid)
   document.getElementById("userprof_mobile").innerHTML=contact;
   document.getElementById("userprof_emailadd").innerHTML=email;
   
-   
+}
+else{
+	
+	navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
+	document.getElementById("usernamehdr").innerHTML='';
+	document.getElementById("userprof_pic").src='img/user/thumb-user-medium.jpg';
+	document.getElementById("userprof_name").innerHTML='';
+	document.getElementById("btn_follow_unfollow").style.display="none";
+	document.getElementById("userprof_id").innerHTML='';
+	document.getElementById("userprof_fullname").innerHTML='';
+	document.getElementById("userprof_gender").innerHTML='';
+	document.getElementById("userprof_address").innerHTML='';
+	document.getElementById("userprof_company").innerHTML='';
+	document.getElementById("userprof_school").innerHTML='';
+	document.getElementById("userprof_mobile").innerHTML='';
+	document.getElementById("userprof_emailadd").innerHTML='';
+}  
 }
 
 function follow_unfollow()

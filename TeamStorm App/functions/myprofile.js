@@ -1,9 +1,10 @@
 var passwordok =1;
 
-$(document).ready(function() {
-	
-	
-	 document.getElementById("my_profname").innerHTML = window.localStorage.getItem('name');
+
+function load_myprofile()
+{
+	getmyprofile();
+	document.getElementById("my_profname").innerHTML = window.localStorage.getItem('name');
 	//$("#con_appsettings").show();
 	
 	 
@@ -18,10 +19,8 @@ $(document).ready(function() {
 	 document.getElementById("txt_myprofschoolgrad").value =  window.localStorage.getItem('ts_mylast_school') ;
 	 document.getElementById("txt_myprofcontact").value =  window.localStorage.getItem('ts_mycontact') ;
 	 document.getElementById("txt_myprofemail").value =  window.localStorage.getItem('ts_myemail') ;
-	 
-	 
-	  
-});
+}
+
 
 /* $(function() {
 setTimeout(function() {
