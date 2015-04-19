@@ -1,7 +1,13 @@
 $(document).ready(function() {
 	 document.getElementById('username').value =window.localStorage.getItem('username');
+	  window.localStorage["auto_signin"]=0;
 	 window.localStorage["session_id"]="";
-	
+	 window.localStorage["getmytask"]="";
+	 window.localStorage["getprojects"]="";
+	 window.localStorage["latestcontacts"]="";
+	 window.localStorage["latestnewsfeed"]="";
+	 window.localStorage["getprojectlist"]="";
+	 
 });
 
 function forgotpass(){

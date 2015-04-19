@@ -13,8 +13,8 @@ var task_mem_profpic1="";
 
 function getproject()
 {
-	var appendHTML ='<li><a data-toggle="modal" href="#newproject" ><i class="flaticon-folder-plus"></i> Create New Project</a></li>';
-	
+	var appendHTML ='<li><a data-toggle="modal" href="#newproject" onclick="newproject();" ><i class="flaticon-folder-plus"></i> Create New Project</a></li>';
+	var list_prj_count=0;
 	  jQuery.ajax({ 
 			type: 'post', 
 			async : false,     
@@ -24,7 +24,8 @@ function getproject()
 			url: 'http://teamstormapps.net/mobile/project/getlist', 
 			data: { sid: ses_id }, 
 			success: function (data) { 
-						 
+				
+				list_prj_count=data.length;		
 				 for(var x = 0; x < data.length; x++){
 					var pid= data[x].id;
 					var project_creator= data[x].project_creator;
@@ -44,10 +45,13 @@ function getproject()
 					
 					gettasklist(pid);
 					
-					if (numoftask>0){
+					/* if (numoftask>0){ */
 						
 						appendHTML+= '<i class="flaticon-menu pull-right"></i></a>';
 						appendHTML+= '<ul id="collapse-projects-task-lists-'+pid+'" class="panel-collapse collapse">';
+					
+						appendHTML+= '<li><a data-toggle="modal" href="#projectinfo"  onclick="projectinfo('+pid+');"  ><span class="flaticon-folder-open-line"> </span> Project Info</a></li>';
+						appendHTML+= '<li><a data-toggle="modal" href="#newtask"  onclick="new_task('+pid+');"  ><span class="glyphicon glyphicon-plus-sign"> </span> Add New Task</a></li>';
 					
 						for(var i = 0; i < numoftask; i++){	
 						
@@ -56,11 +60,11 @@ function getproject()
 						}
 						
 						appendHTML+= '</ul>';
-					}
+/* 					}
 					else{
 						appendHTML+= '</a>';
 						
-					}
+					} */
 										
 					
 					appendHTML+= '</li>';
@@ -86,11 +90,12 @@ function getproject()
 	
 	
 document.getElementById("collapse-projects-lists").innerHTML=window.localStorage.getItem('getprojects');
+document.getElementById("list_prj_cont").innerHTML='('+list_prj_count+')';
 }
 function getmytask()
 {
 	var appendHTML ='';
-	
+	var list_mytsk_count=0;
 	  jQuery.ajax({ 
 			type: 'post', 
 			async : false,     
@@ -100,7 +105,7 @@ function getmytask()
 			url: 'http://teamstormapps.net/mobile/task/get_active', 
 			data: { sid: ses_id }, 
 			success: function (data) { 
-						 
+				list_mytsk_count=data.length;
 				 for(var x = 0; x < data.length; x++){
 					var id= data[x].id;
 					var task_title= data[x].task_title;
@@ -136,6 +141,7 @@ function getmytask()
 	
 	
 document.getElementById("collapse-tasks").innerHTML=window.localStorage.getItem('getmytask');
+document.getElementById("list_mytsk_count").innerHTML='('+list_mytsk_count+')';
 }
 
 
@@ -206,8 +212,14 @@ if (checkConnection() >2){
 							}
 							document.getElementById("priority_inf").innerHTML='<label>Priority  </label> '+prior;
 							 
-													
-							 
+							if (task_creator_id==localStorage.getItem('ts_myid'))
+							{
+								document.getElementById('t_request').style.display="block";
+							}								
+							else
+							{
+								document.getElementById('t_request').style.display="none";
+							}								
 							
 						}							
 					 }
@@ -223,6 +235,8 @@ if (checkConnection() >2){
 });
 	
 document.getElementById("taskhdr").innerHTML=proj_inf(pid);	
+gettaskmembers(tid);
+getrequesttask(tid);
 }
 else{
 	
@@ -291,23 +305,18 @@ function projectinfo(id)
 		
 if (checkConnection() >2){
 	cur_pid=id;
-	jQuery.ajax({ 
+			jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
-			global : false,
-			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/info/'+cur_pid, 
 			data: { sid: ses_id}, 
-			beforeSend: function () {
-			 preloading2();
-			},
-			success: function (data) { 
 			
+			success: function (data) { 
+				alert(data.status);
 				if(data.status == 1){
 						
 							
-					 var x = 0;	
+						var x = 0;	
 						
 						var creator_id = data.data[x].creator_id;
 						var creator_name = data.data[x].creator_name;
@@ -323,7 +332,7 @@ if (checkConnection() >2){
 						document.getElementById("prjhdr").innerHTML=title;
 						document.getElementById("projectinfo_title").innerHTML='<span class="flaticon-folder-open"> </span>'+title;
 						document.getElementById("projectinfo_desc").innerHTML=project_description;
-						document.getElementById("PLname_inf").innerHTML ='<a data-toggle="modal" href="#userprof" onclick="userprofile('+creator_id+');"><span data-toggle="modal" href="#projectinfo">'+creator_name+'</a>';
+						document.getElementById("PLname_inf").innerHTML ='<a data-toggle="modal" href="#userprof" onclick="userprofile('+creator_id+');"><span data-toggle="modal" href="#projectinfoprojectinfoprojectinfo">'+creator_name+'</a>';
 						document.getElementById("PLemail_inf").innerHTML =creator_email;
 						
 						
@@ -499,9 +508,9 @@ function getprojectlist()
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/getlist', 
 			data: { sid: ses_id },
-			beforeSend: function () {
+			/* beforeSend: function () {
 			 preloading2();
-			},				
+			}, */				
 			success: function (data) { 
 						 
 				 for(var x = 0; x < data.length; x++){
@@ -648,7 +657,7 @@ function proj_inf(id)
 					pname=data.data[0].title;
 								
 				}
-	  },
+			},
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
 		//alert(err.message);
@@ -669,9 +678,9 @@ function get_proj_member(id)
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/memberlist/'+id, 
 			data: { sid: ses_id}, 
-			beforeSend: function () {
+			/* beforeSend: function () {
 			 preloading2();
-			},
+			}, */
 			success: function (data) { 
 			
 				if(data.status == 1){
@@ -834,13 +843,13 @@ document.getElementById(""+type+"-task").innerHTML="";
 						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
 									'<div class="left-border" style="width:100%;">'+
 									'<div class="title-task"><a data-toggle="modal" href="#taskinfo"  onclick="getmytaskinfo('+cur_pid+','+id+');"> <i data-toggle="modal" href="#task"><i/>'+task_title+'</a>'+
-                                    '</div>'+
+                                    '</div>';
                                     /* '<div class="progress">'+
                                         '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
                                             '<span class="progress-type">'+progval+'%</span>'+
                                         '</div>'+
                                     '</div>'+ */
-                                    '<div class="task-description">'+task_description+'</div>';
+                                   /*  '<div class="task-description">'+task_description+'</div>'; */
 									
 						switch(priority){
 							
@@ -875,11 +884,13 @@ document.getElementById(""+type+"-task").innerHTML="";
 				
 				
 				if (appendHTML.length >0){
-				 window.localStorage["get"+type+"task"]= appendHTML; 
+				 //window.localStorage["get"+type+"task"]= appendHTML; 
+				 document.getElementById(""+type+"-task").innerHTML=appendHTML;
 				
 				}
 				else{
-				 window.localStorage["get"+type+"task"]= ""; 
+				 //window.localStorage["get"+type+"task"]= ""; 
+				 document.getElementById(""+type+"-task").innerHTML="";
 				
 				}
 				
@@ -891,7 +902,7 @@ document.getElementById(""+type+"-task").innerHTML="";
     }
       	
 });
-document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
+//document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
 	
 }
 function gettaskpending()
@@ -946,13 +957,13 @@ document.getElementById(""+type+"-task").innerHTML="";
 						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
 									'<div class="left-border" style="width:100%;">'+
 									'<div class="title-task"><a data-toggle="modal" href="#taskinfo"  onclick="getmytaskinfo('+cur_pid+','+id+');"> <i data-toggle="modal" href="#task"><i/>'+task_title+'</a>'+
-                                    '</div>'+
+                                    '</div>';
                                     /* '<div class="progress">'+
                                         '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
                                             '<span class="progress-type">'+progval+'%</span>'+
                                         '</div>'+
                                     '</div>'+ */
-                                    '<div class="task-description">'+task_description+'</div>';
+                                    /* '<div class="task-description">'+task_description+'</div>'; */
 									
 						switch(priority){
 							
@@ -987,11 +998,13 @@ document.getElementById(""+type+"-task").innerHTML="";
 				
 				
 				if (appendHTML.length >0){
-				 window.localStorage["get"+type+"task"]= appendHTML; 
+				 //window.localStorage["get"+type+"task"]= appendHTML; 
+				 document.getElementById(""+type+"-task").innerHTML=appendHTML;
 				
 				}
 				else{
-				 window.localStorage["get"+type+"task"]= ""; 
+				 //window.localStorage["get"+type+"task"]= ""; 
+				 document.getElementById(""+type+"-task").innerHTML="";
 				
 				}
 				
@@ -1003,7 +1016,7 @@ document.getElementById(""+type+"-task").innerHTML="";
     }
       	
 });
-document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
+//document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
 	
 }
 function gettaskcompleted()
@@ -1057,13 +1070,13 @@ document.getElementById(""+type+"-task").innerHTML="";
 						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
 									'<div class="left-border" style="width:100%;">'+
 									'<div class="title-task"><a data-toggle="modal" href="#taskinfo"  onclick="getmytaskinfo('+cur_pid+','+id+');"> <i data-toggle="modal" href="#task" ><i/>'+task_title+'</a>'+
-                                    '</div>'+
+                                    '</div>';
                                     /* '<div class="progress">'+
                                         '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
                                             '<span class="progress-type">'+progval+'%</span>'+
                                         '</div>'+
                                     '</div>'+ */
-                                    '<div class="task-description">'+task_description+'</div>';
+                                   /*  '<div class="task-description">'+task_description+'</div>'; */
 									
 						switch(priority){
 							
@@ -1098,11 +1111,13 @@ document.getElementById(""+type+"-task").innerHTML="";
 				
 				
 				if (appendHTML.length >0){
-				 window.localStorage["get"+type+"task"]= appendHTML; 
+				 //window.localStorage["get"+type+"task"]= appendHTML; 
+				 document.getElementById(""+type+"-task").innerHTML=appendHTML;
 				
 				}
 				else{
-				 window.localStorage["get"+type+"task"]= ""; 
+				 //window.localStorage["get"+type+"task"]= ""; 
+				 document.getElementById(""+type+"-task").innerHTML="";
 				
 				}
 				
@@ -1114,12 +1129,110 @@ document.getElementById(""+type+"-task").innerHTML="";
     }
       	
 });
-document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
+//document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
 	
 }
 
+function getrequesttask(tid)
+{
+	var appendHTML="";
+	 jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/task/member_requests/'+tid, 
+			data: { sid: ses_id}, 
+			success: function (data) { 
+			
+			if(data.status == 1){
+					
+				
+			    for(var x = 0; x < data.items.length; x++){
+						 
+						var id=data.items[x].id;
+						var project_id= data.items[x].project_id;
+						var assigned_by= data.items[x].assigned_by;
+						var display_name= data.items[x].display_name;
+						var email= data.items[x].email;
+						var profile_pic= data.items[x].profile_pic;
+						
+						 appendHTML +='<tr class="checked-list">'; 
+						 appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#newtask" src="data:image/gif;base64,'+profile_pic+'" height="45" width="45" class="img-circle"></a></div>';
+						  
+						appendHTML +='<td><a ><i data-toggle="modal" href="#newtask" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" >'+
+										
+									'<span class="actions">'+
+													'<div class="options btn-group">'+
+														'<button class="btn btn-success btn-xs tooltips" data-title="Accept" data-original-title="" title=""><span class="flaticon-check"></span></button>'+
+														'<button  class="btn btn-default btn-xs tooltips" data-title="Decline" data-original-title="" title="">X</button>'+
+													'</div>'+
+													'</span>'+	
+									'</div></td></tr>';
+					}			
+				}
+			
+			
+			
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});   
+document.getElementById("task-request-list").innerHTML=appendHTML;
 
+	
+}
+function gettaskmembers(tid)
+{
+	var appendHTML="";
+	 jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/task/members/'+tid, 
+			data: { sid: ses_id}, 
+			success: function (data) { 
+			
+			if(data.status == 1){
+					
+				
+			    for(var x = 0; x < data.items.length; x++){
+						 
+						var id=data.items[x].id;
+						var project_id= data.items[x].project_id;
+						var assigned_by= data.items[x].assigned_by;
+						var display_name= data.items[x].display_name;
+						var email= data.items[x].email;
+						var profile_pic= data.items[x].profile_pic;
+						
+						 appendHTML +='<tr class="checked-list">'; 
+						 appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#newtask" src="data:image/gif;base64,'+profile_pic+'" height="45" width="45" class="img-circle"></a></div>';
+						  
+						appendHTML +='<td><a ><i data-toggle="modal" href="#newtask" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><button type="button" class="close" onclick="delete_assignedtask('+id+')">×</button></div></td></tr>';
+					}			
+				}
+			
+			
+			
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});   
+document.getElementById("task-assigned-list").innerHTML=appendHTML;
 
+	
+}
 
 function gettaskprofpic(tsid)
 {
@@ -1154,7 +1267,7 @@ function create_project()
 {
 var pname=document.getElementById("txt_prj_name").value;
 var pdesc=document.getElementById("txt_prj_desc").value;
-	
+var members=document.getElementById("txtmember").value;	
 	jQuery.ajax({ 
 			type: 'post', 
 			async : true,     
@@ -1164,13 +1277,17 @@ var pdesc=document.getElementById("txt_prj_desc").value;
 			url: 'http://teamstormapps.net/mobile/project/create', 
 			data: { sid: ses_id,
 					name:pname,
-					description:pdesc}, 
+					description:pdesc,
+					members:members}, 
+			beforeSend: function () {
+			 preloading2();
+			},
 			success: function (data) { 
 			
 				if(data.status == 1){
 					clearprj_text();
 					getproject();
-					
+					navigator.notification.alert('New Project Created',alertDismissed,'TeamStorm App','Ok');
 				}
 	  },
 	  error: function (err) {
@@ -1182,8 +1299,10 @@ var pdesc=document.getElementById("txt_prj_desc").value;
 }); 	
 	
 }
-function new_task()
-{
+function new_task(id)
+{	
+	cur_pid=id;
+	preloading2();
 	dependanttask_select();
 	get_proj_mem_for_task();
 }
@@ -1208,9 +1327,10 @@ function dependanttask_select(){
 					 for(var x = 0; x < data.items.length; x++){
 				
 					appendHTML += '<option value="'+data.items[x].id+'">'+data.items[x].task_title+'</option>';
-			
+					
 					}
 				}
+				
 			
 			},				
 			error: function (err) {
@@ -1245,10 +1365,11 @@ function get_proj_mem_for_task()
 						var role= data.items[x].role;
 						var email= data.items[x].email;
 						var name= data.items[x].name;
+						var profile_pic= data.items[x].profile_pic;
 						
 						 appendHTML +='<tr class="checked-list">'; 
-						 getmemprofpic(id);
-						 appendHTML +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" ><img data-toggle="modal" href="#newtask" src="data:image/gif;base64,'+task_mem_profpic1+'" height="45" width="45" class="img-circle"></a></div>';
+						 //getmemprofpic(id);
+						 appendHTML +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" ><img data-toggle="modal" href="#newtask" src='+profile_pic+' height="45" width="45" class="img-circle"></a></div>';
 						  
 						appendHTML +='<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');"><i data-toggle="modal" href="#newtask" ></i>'+name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><input type="checkbox" id="flat-checkbox-1" name="chk_members" class="icheckbox_flat" value="'+id+'"></div></td></tr>';
 					}			
@@ -1381,4 +1502,112 @@ function cleartsk_text(){
 	document.getElementById('select_deptask').value="";
 }
 
+function newproject()
+{
+	
+	member_search();
+	document.getElementById("txt_prj_name").value='';
+	document.getElementById("txt_prj_desc").value='';
+	document.getElementById("txtmember").value='';	
+	document.getElementById('search-prj-member').innerHTML='';
+}
+
+function member_search()
+{
+	/* project member search */
+	 $('.txt-search-member').keyup(function(){
+		$(".mem-list .mem-list-content .mem-list-info-name ").each(function() {
+			$(this).text().toLowerCase().search($('.txt-search-member').val().toLowerCase()) > -1 ?	$(this).parent().parent().fadeIn(200) :	$(this).parent().parent().fadeOut(200)
+		});
+	}); 
+	
+	/* member search addressbook */
+/* 	$('#txt-search-directory').keyup(function(){
+		$(".member-list .panel-comments li").each(function() {
+			$(this).text().toLowerCase().search($('#txt-search-directory').val().toLowerCase()) > -1 ?	$(this).parent().parent().fadeIn(200) :	$(this).parent().parent().fadeOut(200)
+		});
+	}); */
+	
+	var site_url = 'http://teamstormapps.net/';
+
+	/* autocomplete search for header */
+	$("#txt_prj_emailadd").autocomplete({
+		source: site_url + "search/member",
+		selectFirst: true,
+		autoFocus: true,
+		search: function (e, u) {$('.btn-proj-add-member > span').removeClass('fa-search').addClass('fa-spinner fa-spin'); $('.btn-proj-add-member > span').click(function(){return false;});},
+		response: function (e, u) {	$('.btn-proj-add-member > span').addClass('fa-plus').removeClass('fa-spinner fa-spin');!u.content.length ? $(".no-result").text('No match found.') : $(".no-result").text('')},
+		select: function (e,u) { /* $("#txtmember").val(u.item.email); */	
+								var email="'"+u.item.email+"'";
+								var pm = document.getElementById('txtmember').value;
+								var pm_arr = pm.split(',');
+								
+								if(u.item.email== window.localStorage.getItem('username'))
+								{
+									navigator.notification.alert('You cannot add yourself!.',alertDismissed,'TeamStorm App','Ok');
+								}				
+								else{
+										if(jQuery.inArray(u.item.email, pm_arr ) > -1){
+										navigator.notification.alert(u.item.email+' is already in the list.',alertDismissed,'TeamStorm App','Ok');
+									}
+									else{
+									var htmldata;
+									htmldata ='<tr class="checked-list">'; 
+									htmldata +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" onclick="userprofile('+u.item.id+');"  ><img data-toggle="modal" href="#newproject" src="'+site_url+'thumbs/profile?id='+ u.item.id +'&hash=' + u.item.image + '" height="45" width="45" class="img-circle"></a></div>';
+									htmldata +='<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+u.item.id+');"><i data-toggle="modal" href="#newproject" ></i>'+u.item.fullname+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+u.item.email+'</i></p></td></td><td><div class="checkbox" name="chk_members" >'+
+										'<span class="actions">'+
+														'<div class="options btn-group">'+
+															'<button  class="btn btn-default btn-xs tooltips" data-title="Decline" data-original-title="" onclick="delete_member('+email+')" title="">X</button>'+
+														'</div>'+
+														'</span>'+	
+										'</div></td></tr>';
+									
+									
+										var e = document.createElement('tr');
+										e.id = 'tr_'+u.item.email;
+										e.innerHTML = htmldata;
+										document.getElementById('search-prj-member').insertBefore(e,document.getElementById('search-prj-member').childNodes[0]);
+										
+										$("#txt_prj_emailadd").val('');
+										document.getElementById('txtmember').value = pm + ',' + u.item.email  ;
+									}
+								}	
+								$('.btn-proj-add-member > span').removeClass('fa-search').removeClass('fa-spinner fa-spin').addClass('fa-plus');
+								$('.btn-proj-add-member > span').click(function(){return true;});
+								return false; 
+								},
+		}).focus(function() {
+			$(this).autocomplete("search", this.value);
+		}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+			/* var inner_html = '<a href="javascript:void(0);"><div class="dv-search-list">';
+			inner_html +='<div class="image"><img class="media-object img-circle" src="'+site_url+'thumbs/profile?id='+ item.id +'&hash=' + item.image + '" width="50" height="50"  alt="Image"/></div>';
+			inner_html +='<div class="info"><span class="name">' + item.fullname + '</span><span class="email">' + item.email + '</span></div>';
+			inner_html +='</div></a>'; */
+			
+			
+			var inner_html ='<a href="javascript:void(0);"><img src="'+site_url+'thumbs/profile?id='+ item.id +'&hash=' + item.image + '" width="45" height="45" class="img-circle" />  <td>'+item.fullname +'</a><p style="font-size:10px;"><i class="flaticon-email" > '+item.email+'</i></p></td>'; 
+						
+			
+			return $( "<li></li>" )
+				.data( "item.autocomplete", item )
+				.append(inner_html)
+				.appendTo( ul );
+				
+	};
+	$("#txt_prj_emailadd").keypress(function(e){
+        if(e.which == 13){//Enter key pressed
+            $('.btn-info.prj_btn_add').click();//Trigger search button click event
+        }
+    });
+}
+function delete_member(li_id){
+	var txtmember = document.getElementById('txtmember').value;
+	document.getElementById('txtmember').value = txtmember.replace(li_id+",","");
+	//document.getElementById("li_"+li_id).remove();
+			
+	var holder = document.getElementById("search-prj-member");
+	var old_data = document.getElementById("tr_"+li_id);
+			
+	holder.removeChild(old_data);
+}
 
