@@ -9,7 +9,7 @@ function load_myprofile()
 	
 	 
 	 document.getElementById("my_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
-	 document.getElementById("my_id").innerHTML  =  window.localStorage.getItem('ts_myid') ;
+	 //document.getElementById("my_id").innerHTML  =  window.localStorage.getItem('ts_myid') ;
 	 document.getElementById("txt_myproffirstname").value =  window.localStorage.getItem('ts_myfname') ;
 	 document.getElementById("txt_myprofmiddlename").value =  window.localStorage.getItem('ts_mymname') ;
 	 document.getElementById("txt_myproflastname").value =  window.localStorage.getItem('ts_mylname') ;
@@ -41,7 +41,7 @@ document.getElementById("allert_success").style.display="none";
  function updatemyprofile(){
 var ses_id = window.localStorage.getItem('session_id');
 
-
+ if (checkConnection() >2){
 	  jQuery.ajax({ 
 			type: 'post', 
 			async : false,     
@@ -60,6 +60,9 @@ var ses_id = window.localStorage.getItem('session_id');
 					contact:document.getElementById("txt_myprofcontact").value
 				
 					}, 
+			beforeSend: function () {
+			 preloading2();
+			},		
 			success: function (data) { 
 			
 			if(data.status ==0) {
@@ -90,7 +93,11 @@ var ses_id = window.localStorage.getItem('session_id');
     }
   
 });   
-
+ }
+  else{
+		navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
+	
+	}
 
 
 	

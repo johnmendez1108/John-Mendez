@@ -50,6 +50,7 @@ $(document).ready(function() {
 function newpost()
 {
 loadprojects_select();
+document.getElementById("searchpostuser").style.display="block"; 
 }
 
 function loadprojects_select(){	
@@ -200,7 +201,7 @@ function uploadfile(src)
 			type: 'post', 
 			enctype: 'multipart/form-data',
 			processData: false,  // tell jQuery not to process the data
-			contentType: fals,  // tell jQuery not to set contentType
+			contentType: false ,  // tell jQuery not to set contentType
 			url: 'hhttp://teamstormapps.net/upload', 
 			data: { sid: ses_id,files: src}, 
 			beforeSend: function () {

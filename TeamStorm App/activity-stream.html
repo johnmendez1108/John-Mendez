@@ -92,11 +92,11 @@
       function startActivity(className) {
           cordova.exec(function() {console.log("Success");}, function(e) {console.log("Error: "+e);}, "Activity", "start", [className]);
       };    
-      localStorage.lifecyclestatus = "";
-      localStorage.backgroundstatus = "";		
-		document.addEventListener("deviceready", onDeviceReady, true);
-		function onDeviceReady()
-             {     
+			localStorage.lifecyclestatus = "";
+			localStorage.backgroundstatus = "";		
+			document.addEventListener("deviceready", onDeviceReady, true);
+			function onDeviceReady()
+             {     preloading();
                    document.addEventListener("backbutton", BackKeyDown, true);
              }
              function BackKeyDown()
@@ -537,7 +537,7 @@ display:none;
 </head>
 
 <body onload="init();">
-    <div id="element"></div>
+    <div id="spinload"></div>
 	<div id="element2"></div>
     <div class="snap-drawers">
      <div class="snap-drawer snap-drawer-left" id="left-drawer">
@@ -1087,7 +1087,7 @@ display:none;
             <ul class="half-control-2 clearfix">
                 <li><button data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" onclick="newpost()" ><i class="flaticon-post"></i> Post</button>
                 </li>
-                <li><button data-toggle="modal" href="#chat" class="btn btn-block btn-primary btn-lg"  ><i class="flaticon-chat"></i> Chat</button>
+                <li><button data-toggle="modal" href="#chat" class="btn btn-block btn-primary btn-lg" onclick="callchat();" ><i class="flaticon-chat"></i> Chat</button>
 		
                 </li>
             </ul>
@@ -1208,7 +1208,7 @@ display:none;
             <div class="post-wrapper">
                 <div class="inner-wrapper thin-padding">
                     <div class="post-wrapper">
-                        <div class="input-group search-address"><span class="input-group-addon"><i class="flaticon-address-book"></i></span>
+                        <div class="input-group search-address"id="searchpostuser" ><span class="input-group-addon"><i class="flaticon-address-book"></i></span>
                             <input id="search-contacts" class="form-control ui-autocomplete-input" placeholder="To:" type="text" autocomplete="off">
 							<span class="search-all-loading fa-spin-fast ico ico-spinner-10 fa-ts-color"></span>
                         </div>
@@ -1673,7 +1673,7 @@ display:none;
 			</div>	
             </div>
 		</div>
-    
+   
 		
 	<!--projectinfo-->
 	 <div id="projectinfo" class="modal-content modal">
@@ -2555,8 +2555,8 @@ $('#txt_tododate').datetimepicker({
 
 </script>
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>		
+<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>	 -->	
 
 <script>
 
@@ -2580,7 +2580,7 @@ $('#txt_tododate').datetimepicker({
 				
 				function preloading()
 				{
-				var loader = $("#element").introLoader({
+				var loader = $("#spinload").introLoader({
 					animation: {
                         name: 'simpleLoader',
                         options: {

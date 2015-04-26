@@ -12,6 +12,7 @@ function init() {
 	
 	
 	getmyprofile();
+	load_myprofile();
 	document.getElementById("main_prof_fullname").innerHTML = window.localStorage.getItem('name');
 	document.getElementById("user_menu_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
 	  document.getElementById("user_comment_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
@@ -29,6 +30,8 @@ function init() {
 	loadprojects_select();
 	
 	
+	setCookie('PHPSESSID','eutg1jbdbi6uu6gnt506b57mv2',90)
+	setCookie('cc_loggedin','1',90)
 }
 /* $(function() {
 setTimeout(function() {
@@ -44,6 +47,12 @@ setTimeout(function() {
 }); */
 
 
+function setCookie(cname,cvalue,exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + (exdays*24*60*60*1000));
+				var expires = "expires=" + d.toGMTString();
+				document.cookie = cname+"="+cvalue+"; "+expires;
+}
 function loadaddress()
 {
 	getaddressbook();
@@ -957,9 +966,6 @@ function getaddressbookperletter(){
 
 
 
-
-
-
 function conf_signout()
 {
 	 navigator.notification.confirm(
@@ -973,9 +979,35 @@ function conf_signout()
 function signout(buttonIndex)
 {
 	if (buttonIndex==1){
-	 window.location.replace("login.html");
+	
+	 
+	 		 jQuery.ajax({ 
+				type: 'post', 
+				//async : false,     
+				global : false,
+				cache: false,
+				dataType : 'json',
+				url: 'http://teamstormapps.net/mobile/auth/logout', 
+		  data: { sid:ses_id }, 
+		
+		  success: function (data, textStatus,XMLHttpRequest) { 
+			if(data.status ==0) {
+
+				}
+		   else  if(data.status ==1) {
+			   window.location.replace("login.html");
+		  }
+		  },
+		  error: function (XMLHttpRequest, textStatus,err) {
+			 navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');  
+			  console.log(err.description);
+		}
+		  
+		});
 	}
 }
 
-
+function callchat(){
+	 window.location.replace("chat.html");
+}
  

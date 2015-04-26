@@ -1,11 +1,17 @@
 var ses_id = window.localStorage.getItem('session_id');
 var proj_completed = 0;
 var allmemberid = new Array();
+var allmemberpic = new Array();
 var alltaskid= new Array();
 var alltaskname= new Array();
+
+var taskmemid= new Array();
+var taskmempic= new Array();
+var numtaskmem;
+
 var numoftask;
 var numofmembers;
-var proj_mem_profpic="";
+
 var task_mem_profpic="";
 var cur_pid;
 var cur_tid;
@@ -234,9 +240,10 @@ if (checkConnection() >2){
       	
 });
 	
-document.getElementById("taskhdr").innerHTML=proj_inf(pid);	
+
 gettaskmembers(tid);
 getrequesttask(tid);
+document.getElementById("taskhdr").innerHTML=proj_inf(pid);	
 }
 else{
 	
@@ -304,13 +311,15 @@ function projectinfo(id)
 {
 		
 if (checkConnection() >2){
-	cur_pid=id;
+			cur_pid=id;
 			jQuery.ajax({ 
 			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/info/'+cur_pid, 
 			data: { sid: ses_id}, 
-			
 			success: function (data) { 
 				alert(data.status);
 				if(data.status == 1){
@@ -363,6 +372,7 @@ if (checkConnection() >2){
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
 		//alert(err.message);
 		console.log(err.message);
+	
     }
       	
 });
@@ -502,15 +512,15 @@ function getprojectlist()
 
 	  jQuery.ajax({ 
 			type: 'post', 
-			async : true,     
+			async : false,     
 			global : false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/getlist', 
 			data: { sid: ses_id },
-			/* beforeSend: function () {
+			beforeSend: function () {
 			 preloading2();
-			}, */				
+			},				
 			success: function (data) { 
 						 
 				 for(var x = 0; x < data.length; x++){
@@ -535,19 +545,6 @@ function getprojectlist()
 					
 				
 					
-					/* proj_inf(pid);
-					if (proj_completed==1)
-					{
-						isproj_complete=100;
-					}
-					else
-					{
-						isproj_complete=0;
-					} */
-						numact=getcounttask(pid,"active");
-						numpen=getcounttask(pid,"pending");
-						numcomp=getcounttask(pid,"completed");
-					
 					
 					appendHTML+= '<div class="inner-wrapper">'+
 							'<div class="task-wrapper">'+
@@ -555,13 +552,13 @@ function getprojectlist()
 							'<div class=" left-border" style="width:100%">'+
                                 '<div class="title-task"><a data-toggle="modal" href="#projectinfo" data-role="button" type="button" onclick="projectinfo('+pid+');" ><span data-toggle="modal" href="#project">'+project_title+'</span></a>'+
                                 '</div>'+
-                                '<div class="sub-title-task">Date Created: '+createdate+'</div>'+
+                                '<div class="sub-title-task">Date Created: '+createdate+'</div>';
                                /*  '<div class="progress">'+
                                     '<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+isproj_complete+'%">'+
                                         '<span class="progress-type">'+isproj_complete+'%</span>'+
                                     '</div>'+
                                 '</div>'+ */
-                                '<div class="task-description">'+project_description+'</div>';
+                              /*   '<div class="task-description">'+project_description+'</div>'; */
 								
 								
 						
@@ -573,37 +570,28 @@ function getprojectlist()
                                         '</li>'+
                                         '<li>'+
                                             '<div class="stats">Active</div>'+
-                                            '<div class="count">'+numact+'</div>'+
+                                            '<div class="count">'+getcounttask(pid,"active")+'</div>'+
                                        '</li>'+
                                         '<li>'+
                                             '<div class="stats">Pending</div>'+
-                                            '<div class="count">'+numpen+'</div>'+
+                                            '<div class="count">'+getcounttask(pid,"pending")+'</div>'+
                                         '</li>'+
                                         '<li>'+
                                             '<div class="stats">Completed</div>'+
-                                            '<div class="count">'+numcomp+'</div>'+
+                                            '<div class="count">'+getcounttask(pid,"completed")+'</div>'+
                                         '</li>'+
                                     '</ul>'+
-                                '</div>';
-								
-								
-								
+                                '</div>';																					
                        appendHTML+='<div class="task-user">'+
                                     '<ul>';
 								
 								get_proj_member(pid);
 									
 								 for(var i = 0; i < numofmembers; i++){	
-                                     
-									 
-									 
-									 getprofpic(allmemberid[i]);
-									 
+
 									 appendHTML+='<li>'+
-                                            '<a data-toggle="modal" href="#userprof" onclick="userprofile('+allmemberid[i]+');"><img data-toggle="modal" href="#project" class="img-circle" src="data:image/gif;base64,'+proj_mem_profpic+'" width="50" height="50" alt="Image"></a>'+
-											'</li>';
-									  
-									  
+                                            '<a data-toggle="modal" href="#userprof" onclick="userprofile('+allmemberid[i]+');"><img data-toggle="modal" href="#project" class="img-circle" src="'+allmemberpic[i]+'" width="50" height="50" alt="Image"></a>'+
+											'</li>';		  
 								}
 					   
 					   appendHTML+='</ul>'+
@@ -613,7 +601,7 @@ function getprojectlist()
                 appendHTML+='</div>'+
                             '<div class="right-border">'+
                                 '<div class="link-wrapper">'+
-                                    '<a  data-role="button" type="button" class="arrow-link" ><span class="flaticon-arrow-right"></span></a>'+
+                                    '<a  data-role="button" type="button" class="arrow-link" data-toggle="modal" href="#newpost" onclick="postproject('+pid+');"  ><span class="flaticon-arrow-right"></span><i data-toggle="modal" href="#project"><i/></a>'+
                                 '</div>'+
                             '</div>'+
                      
@@ -638,10 +626,19 @@ function getprojectlist()
 document.getElementById("projectlist").innerHTML=window.localStorage.getItem('getprojectlist');	
 }
 
+
+function postproject(id)
+{
+	loadprojects_select();
+	document.getElementById('select_projlists').value=id;
+	document.getElementById("searchpostuser").style.display="none"; 
+}
+
 function proj_inf(id)
 {
 	var pname="";
-	jQuery.ajax({ 
+
+jQuery.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -649,15 +646,19 @@ function proj_inf(id)
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/info/'+id, 
 			data: { sid: ses_id}, 
+			/* beforeSend: function () {
+			 preloading2();
+			}, */
 			success: function (data) { 
 			
+				
 				if(data.status == 1){
 					
 					proj_completed = data.data[0].is_completed;
 					pname=data.data[0].title;
 								
 				}
-			},
+	  },
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
 		//alert(err.message);
@@ -665,6 +666,7 @@ function proj_inf(id)
     }
       	
 }); 
+ 
   return pname;
 }
 
@@ -685,12 +687,15 @@ function get_proj_member(id)
 			
 				if(data.status == 1){
 					
-				numofmembers=data.items.length;
+				numofmembers=0;
 			    for(var x = 0; x < data.items.length; x++){
-						 
-						allmemberid[x] = data.items[x].id;
 						
-					
+					  if (data.items[x].role=='Project Leader' || data.items[x].role=='Co Leader' )	{
+							
+						allmemberid[numofmembers] = data.items[x].id;
+						allmemberpic[numofmembers] = data.items[x].profile_pic;
+						numofmembers+=1;
+					  }
 					}			
 				}
 	  },
@@ -705,7 +710,7 @@ function get_proj_member(id)
 
 function getprofpic(tsid)
 {
-
+	var pic="img/user/thumb-user-medium.jpg";
 	  jQuery.ajax({ 
 			type: 'post', 
 			async : false,     
@@ -717,7 +722,7 @@ function getprofpic(tsid)
 			success: function (data) { 
 			
 		
-			proj_mem_profpic = data.preview_pic;
+			 pic= data.profile_pic;
 			
 			
 	  },
@@ -728,7 +733,7 @@ function getprofpic(tsid)
     }
       	
 });   
-	
+return pic;
 }
 
 function clearprj_text()
@@ -860,20 +865,27 @@ document.getElementById(""+type+"-task").innerHTML="";
 						}			
 									
 						
-						gettaskprofpic(task_creator_id);			
+						//gettaskprofpic(task_creator_id);
+						gettaskmemberspic(id);
+						
 						appendHTML +='<div class="task-user">'+
-                                       '<ul>'+
-                                            '<li>'+
-                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+task_creator_id+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
+                                       '<ul>';
+
+						 for(var i = 0; i < numtaskmem; i++){	
+
+									 appendHTML+='<li>'+
+                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+taskmemid[i]+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+taskmempic[i]+'" width="50" height="50" width="50" alt="Image">'+
                                                 '</a>'+
-                                            '</li>'+
-                                        '</ul>'+
-                                    '</div>';
-						appendHTML +='</div>';
+                                            '</li>';		  
+								}	
+						
+						appendHTML +='</ul></div></div>';
+						
+						
 						
 						 appendHTML +='<div class="right-border">'+
                                     '<div class="link-wrapper">'+
-                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right"></span></a>'+
+                                       ' <a class="arrow-link"><span class="flaticon-arrow-right" ></span></a>'+
                                     '</div>'+
                                 '</div></div></div>';
 						
@@ -974,16 +986,18 @@ document.getElementById(""+type+"-task").innerHTML="";
 						}			
 									
 						
-						gettaskprofpic(task_creator_id);			
+						gettaskmemberspic(id);
 						appendHTML +='<div class="task-user">'+
-                                       '<ul>'+
-                                            '<li>'+
-                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+task_creator_id+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
+                                       '<ul>';
+						 for(var i = 0; i < numtaskmem; i++){	
+
+									 appendHTML+='<li>'+
+                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+taskmemid[i]+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+taskmempic[i]+'" width="50" height="50" width="50" alt="Image">'+
                                                 '</a>'+
-                                            '</li>'+
-                                        '</ul>'+
-                                    '</div>';
-						appendHTML +='</div>';
+                                            '</li>';			  
+								}	
+						
+						appendHTML +='</ul></div></div>';
 						
 						 appendHTML +='<div class="right-border">'+
                                     '<div class="link-wrapper">'+
@@ -1087,16 +1101,18 @@ document.getElementById(""+type+"-task").innerHTML="";
 						}			
 									
 						
-						gettaskprofpic(task_creator_id);			
+						gettaskmemberspic(id);
 						appendHTML +='<div class="task-user">'+
-                                       '<ul>'+
-                                            '<li>'+
-                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+task_creator_id+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+task_mem_profpic+'" width="50" height="50" width="50" alt="Image">'+
+                                       '<ul>';
+						 for(var i = 0; i < numtaskmem; i++){	
+
+								 appendHTML+='<li>'+
+                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+taskmemid[i]+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+taskmempic[i]+'" width="50" height="50" width="50" alt="Image">'+
                                                 '</a>'+
-                                            '</li>'+
-                                        '</ul>'+
-                                    '</div>';
-						appendHTML +='</div>';
+                                            '</li>';			  
+								}	
+						
+						appendHTML +='</ul></div></div>';
 						
 						 appendHTML +='<div class="right-border">'+
                                     '<div class="link-wrapper">'+
@@ -1132,6 +1148,49 @@ document.getElementById(""+type+"-task").innerHTML="";
 //document.getElementById(""+type+"-task").innerHTML=window.localStorage.getItem('get'+type+'task');
 	
 }
+function gettaskmemberspic(tid)
+{
+	
+	
+	 jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/task/members/'+tid, 
+			data: { sid: ses_id}, 
+			success: function (data) { 
+			
+			if(data.status == 1){
+					
+				numtaskmem=data.items.length;
+			    for(var x = 0; x < data.items.length; x++){
+						 
+					 taskmemid[x]= data.items[x].id;
+					 taskmempic[x]= data.items[x].profile_pic;
+						
+					
+					}			
+				}
+			
+			
+			
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});   
+
+
+	
+}
+
+
+
 
 function getrequesttask(tid)
 {
@@ -1161,7 +1220,7 @@ function getrequesttask(tid)
 						 appendHTML +='<tr class="checked-list">'; 
 						 appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#newtask" src="data:image/gif;base64,'+profile_pic+'" height="45" width="45" class="img-circle"></a></div>';
 						  
-						appendHTML +='<td><a ><i data-toggle="modal" href="#newtask" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" >'+
+						appendHTML +='<td><a ><i data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" >'+
 										
 									'<span class="actions">'+
 													'<div class="options btn-group">'+
@@ -1213,9 +1272,12 @@ function gettaskmembers(tid)
 						var profile_pic= data.items[x].profile_pic;
 						
 						 appendHTML +='<tr class="checked-list">'; 
-						 appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#newtask" src="data:image/gif;base64,'+profile_pic+'" height="45" width="45" class="img-circle"></a></div>';
+						 appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" src="data:image/gif;base64,'+profile_pic+'" height="45" width="45" class="img-circle"></a></div>';
 						  
-						appendHTML +='<td><a ><i data-toggle="modal" href="#newtask" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><button type="button" class="close" onclick="delete_assignedtask('+id+')">×</button></div></td></tr>';
+						appendHTML +='<td><a  ><i data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><button type="button" class="close" onclick="delete_assignedtask('+id+')">×</button></div></td></tr>';
+						
+						
+					
 					}			
 				}
 			
