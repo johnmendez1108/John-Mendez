@@ -28,7 +28,7 @@ var e=e||window.event;var delta=0;if(e.wheelDelta){delta=-e.wheelDelta/120;}
 if(e.detail){delta=e.detail/3;}
 scrollContent(delta,true);if(e.preventDefault&&!releaseScroll){e.preventDefault();}
 if(!releaseScroll){e.returnValue=false;}}
-function scrollContent(y,isWheel,isJump)
+function scrollContent(y,isWheel,isJump) 
 {var delta=y;if(isWheel)
 {delta=parseInt(bar.css('top'))+y*wheelStep/100*bar.outerHeight();var maxTop=me.outerHeight()-bar.outerHeight();delta=Math.min(Math.max(delta,0),maxTop);bar.css({top:delta+'px'});}
 percentScroll=parseInt(bar.css('top'))/(me.outerHeight()-bar.outerHeight());delta=percentScroll*(me[0].scrollHeight-me.outerHeight());if(isJump)

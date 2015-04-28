@@ -30,8 +30,8 @@ function login(){
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/auth/login', 
-      data: { username:username , password: password }, 
-	  	beforeSend: function () {
+			data: { username:username , password: password }, 
+			beforeSend: function () {
 			preloading2();
 			},
       success: function (data, textStatus,XMLHttpRequest) { 
@@ -58,7 +58,7 @@ function login(){
 		 window.localStorage["password"] = password;  
 		 window.location.replace("activity-stream.html");
 		 //window.location = "activity-stream.html";
-	
+		forcc_login();
 		  
       }
 	  },
@@ -69,10 +69,11 @@ function login(){
 		
           
           console.log(err.description);
-    }
+		}
       
     });
-
+	
+	
 	}
 	else {
 		//alert('Network Connection Error Kindly Check your Internet Connection');
@@ -82,6 +83,33 @@ function login(){
 	
   //getmyprofile();
   }
+  
+
+
+function forcc_login()
+{
+
+		jQuery.ajax({ 
+			type: 'post', 
+			//async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/login', 
+			data: { username:document.getElementById('username').value , password: document.getElementById('password').value }, 
+			
+      success: function (data, textStatus,XMLHttpRequest) { 
+	  },
+	  error: function (XMLHttpRequest, textStatus,err) {
+ 
+          
+			console.log(err.description);
+			}
+      
+    });
+
+}  
+  
 
  function alertDismissed()
 {
