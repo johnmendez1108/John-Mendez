@@ -78,7 +78,7 @@ function onPhotoDataSuccess(imageData) {
 	 
     imgcount +=1;  
 	 uploadfile(imageData);
- /*    var options = new FileUploadOptions();
+   /*  var options = new FileUploadOptions();
     options.fileKey = "file";
     options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
     options.mimeType = "image/jpeg";

@@ -12,7 +12,7 @@
 		<link type="text/css" href="css/main.css" rel="stylesheet" charset="utf-8">
 		<script src="Chat Service/js/jquery.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="Chat Service/js/comet_js.js"></script>
-			<script type="text/javascript" charset="utf-8" src="Chat Service/js/cometchatroom_js.js"></script>
+		<script type="text/javascript" charset="utf-8" src="Chat Service/js/cometchatroom_js.js"></script>
 
 		<script>
             var isPhoneTouched = 0;
@@ -64,6 +64,8 @@
 					}
 				});
 			});
+			
+			
         </script>
 	</head>
 
@@ -138,8 +140,8 @@
 				</div>
 			</div>
 			<div id="opt" style="height: 35px;">
-				<div id="clear"><img src="./Chat_files/clearconversation.png">&nbsp;&nbsp;&nbsp;Clear Conversation</div>
-				<div id="report" style="display: none;"><img src="./Chat_files/report.png">&nbsp;&nbsp;Report Conversation</div>
+				<div id="clear"><img src="Chat Service/img/clearconversation.png">&nbsp;&nbsp;&nbsp;Clear Conversation</div>
+				<div id="report" style="display: none;"><img src="Chat Service/img/report.png">&nbsp;&nbsp;Report Conversation</div>
 			</div>
 			<div id="chatcontent" tabindex="5000" style="height: 362px; min-height: 362px; max-height: 362px; overflow-y: hidden; outline: none;">
 				<div id="scroller">
@@ -245,7 +247,7 @@
                 <div id="endoftext"></div>
             </div>
   			<div id="chatroomfooter" class="row">
-                <div id="chatroommessageForm" onsubmit="" data-ajax="false">
+                <div id="chatroommessageForm" onsubmit="#" data-ajax="false">
 					<div class="small-9 columns" id="chattxt">
 						<input id="chatroommessage" type="text" name="chatmessage" placeholder="Type your message">
 					</div>

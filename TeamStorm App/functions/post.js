@@ -50,7 +50,7 @@ $(document).ready(function() {
 function newpost()
 {
 loadprojects_select();
-document.getElementById("searchpostuser").style.display="block"; 
+document.getElementById("searchpostuser").style.display="table-row"; 
 }
 
 function loadprojects_select(){	
@@ -172,7 +172,7 @@ function do_post(){
 function uploadfile(src)
 {
 		
-   /*  var imageURI = src;
+  /*   var imageURI = src;
     var options = new FileUploadOptions();
     options.fileKey = "file";
     options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
@@ -184,7 +184,7 @@ function uploadfile(src)
     var ft = new FileTransfer();
     ft.upload(imageURI, "http://teamstormapps.net/upload", upwin, upfail,
         options);
-	alert(imageURI); */	
+	alert(imageURI);	 */
 		
 	/* var url = 'http://teamstormapps.net/upload';
 	var params = { sid: ses_id,files: src};
@@ -197,20 +197,37 @@ function uploadfile(src)
         });	 */	
 		
 		//var fd = new FormData(document.getElementById("pic_map"));
-		jQuery.ajax({ 
+	/* 	jQuery.ajax({ 
 			type: 'post', 
 			enctype: 'multipart/form-data',
 			processData: false,  // tell jQuery not to process the data
 			contentType: false ,  // tell jQuery not to set contentType
-			url: 'hhttp://teamstormapps.net/upload', 
+			url: 'http://teamstormapps.net/upload', 
 			data: { sid: ses_id,files: src}, 
 			beforeSend: function () {
 			 preloading2();
 			}}).done(function( data ) {
             console.log("PHP Output:");
             console.log( data );
-        }); 
+        });  */
 		
+		
+	jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/upload', 
+			data: { sid: ses_id,files: src}, 
+			success: function (data) {
+				alert(data.files[0].url);
+			
+			},				
+			error: function (err) {
+        alert(err.message);
+		console.log(err.message);
+    }});	
 		
 	
 }
@@ -264,11 +281,8 @@ document.addEventListener("deviceready",function(){
                     console.log(error.code);
                 });
 
-
             }, function(evt){ // error get file system
                  console.log(evt.target.error.code);
             });
-
-
 
         } , true);
