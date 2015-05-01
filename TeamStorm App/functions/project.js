@@ -227,6 +227,7 @@ if (checkConnection() >2){
 								document.getElementById('t_request').style.display="none";
 							}								
 							
+							posttask(pid,tid,task_title);
 						}							
 					 }
 								
@@ -244,6 +245,8 @@ if (checkConnection() >2){
 gettaskmembers(tid);
 getrequesttask(tid);
 document.getElementById("taskhdr").innerHTML=proj_inf(pid);	
+
+
 }
 else{
 	
@@ -314,9 +317,9 @@ if (checkConnection() >2){
 			cur_pid=id;
 			jQuery.ajax({ 
 			type: 'post', 
-			async : false,     
+		/* 	async : false,     
 			global : false,
-			cache: false,
+			cache: false, */
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/info/'+cur_pid, 
 			data: { sid: ses_id}, 
@@ -370,7 +373,7 @@ if (checkConnection() >2){
 	  },
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
-		//alert(err.message);
+		alert(err.message);
 		console.log(err.message);
 	
     }
@@ -507,7 +510,6 @@ function gettasklist(id)
 function getprojectlist()
 {
 	
-	
 	var appendHTML = '';
 
 	  jQuery.ajax({ 
@@ -543,9 +545,7 @@ function getprojectlist()
 					months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 					createdate =months[parts[1]-1]+" "+dayparts[0]+", "+parts[0];
 					
-				
-					
-					
+
 					appendHTML+= '<div class="inner-wrapper">'+
 							'<div class="task-wrapper">'+
 							
@@ -553,20 +553,13 @@ function getprojectlist()
                                 '<div class="title-task"><a data-toggle="modal" href="#projectinfo" data-role="button" type="button" onclick="projectinfo('+pid+');" ><span data-toggle="modal" href="#project">'+project_title+'</span></a>'+
                                 '</div>'+
                                 '<div class="sub-title-task">Date Created: '+createdate+'</div>';
-                               /*  '<div class="progress">'+
-                                    '<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+isproj_complete+'%">'+
-                                        '<span class="progress-type">'+isproj_complete+'%</span>'+
-                                    '</div>'+
-                                '</div>'+ */
-                              /*   '<div class="task-description">'+project_description+'</div>'; */
-								
-								
-						
+                       
+																					
 								
                     appendHTML+='<div class="project-status">'+
                                    '<ul class="clearfix">'+
                                         '<li>'+
-                                            '<div class="title" ><a data-toggle="modal" href="#task" data-role="button" type="button" onclick="loadtask('+p_title+','+pid+');"><p data-toggle="modal" href="#project" style="margin: 0 0 0px;">Tasks</p></a></div>'+
+                                            '<div class="title" ><a data-toggle="modal" href="#task" data-role="button" type="button" onclick="loadtask('+p_title+','+pid+');"><span data-toggle="modal" href="#project" style="margin: 0 0 0px;"></span>Tasks</a></div>'+
                                         '</li>'+
                                         '<li>'+
                                             '<div class="stats">Active</div>'+
@@ -630,9 +623,24 @@ document.getElementById("projectlist").innerHTML=window.localStorage.getItem('ge
 function postproject(id)
 {
 	loadprojects_select();
+	clearposttext();
+	document.getElementById("divselectproject").style.display="block"; 
 	document.getElementById('select_projlists').value=id;
 	document.getElementById("searchpostuser").style.display="none"; 
 }
+
+
+function posttask(pid,id,name)
+{
+	clearposttext();
+	document.getElementById("divselectproject").style.display="none"; 
+	document.getElementById("searchpostuser").style.display="none"; 
+	document.getElementById("tasknamepost").innerHTML='Post to Task  <span class="flaticon-task"> </span>'+name;
+	document.getElementById('txtposttotaskid').value =id;
+	document.getElementById('txtposttotaskprjid').value =pid;
+}
+
+
 
 function proj_inf(id)
 {
@@ -695,6 +703,7 @@ function get_proj_member(id)
 						allmemberid[numofmembers] = data.items[x].id;
 						allmemberpic[numofmembers] = data.items[x].profile_pic;
 						numofmembers+=1;
+						
 					  }
 					}			
 				}
@@ -832,6 +841,8 @@ document.getElementById(""+type+"-task").innerHTML="";
 						var date_end =data.items[x].date_end;
 						var date_completed =data.items[x].date_completed;
 						var task_status =data.items[x].task_status;
+						
+						var task_name ="'"+task_title+"'";
 						/* var progval=0;
 						var progbarclass=""
 						if (type=="completed")
@@ -885,7 +896,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						
 						 appendHTML +='<div class="right-border">'+
                                     '<div class="link-wrapper">'+
-                                       ' <a class="arrow-link"><span class="flaticon-arrow-right" ></span></a>'+
+                                       ' <a class="arrow-link"><span class="flaticon-arrow-right"  data-toggle="modal" href="#newpost" onclick="posttask('+cur_pid+','+id+','+task_name+');" ></span></a>'+
                                     '</div>'+
                                 '</div></div></div>';
 						
@@ -953,6 +964,8 @@ document.getElementById(""+type+"-task").innerHTML="";
 						var date_end =data.items[x].date_end;
 						var date_completed =data.items[x].date_completed;
 						var task_status =data.items[x].task_status;
+						
+						var task_name ="'"+task_title+"'";
 						/* var progval=0;
 						var progbarclass=""
 						if (type=="completed")
@@ -1001,7 +1014,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						
 						 appendHTML +='<div class="right-border">'+
                                     '<div class="link-wrapper">'+
-                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right"></span></a>'+
+                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right" data-toggle="modal" href="#newpost" onclick="posttask('+cur_pid+','+id+','+task_name+');"></span></a>'+
                                     '</div>'+
                                 '</div></div></div>';
 						
@@ -1068,6 +1081,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						var date_end =data.items[x].date_end;
 						var date_completed =data.items[x].date_completed;
 						var task_status =data.items[x].task_status;
+						var task_name ="'"+task_title+"'";
 						/* var progval=0;
 						var progbarclass=""
 						if (type=="completed")
@@ -1116,7 +1130,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						
 						 appendHTML +='<div class="right-border">'+
                                     '<div class="link-wrapper">'+
-                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right"></span></a>'+
+                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right" data-toggle="modal" href="#newpost" onclick="posttask('+cur_pid+','+id+','+task_name+');"></span></a>'+
                                     '</div>'+
                                 '</div></div></div>';
 						

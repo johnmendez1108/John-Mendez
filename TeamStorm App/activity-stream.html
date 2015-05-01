@@ -1170,10 +1170,10 @@ display:none;
 									 <a data-toggle="modal" href="#postsettings" ><i class="flaticon-arrow-top"></i></a>
 								</div>
 								<ul class=''>
-								<li>
+								<!-- <li>
 								<button type="button" data-toggle="modal" href="#postsettings"  class="btn  btn-block">Edit</button>
-								<!-- <a href='javascript:void(0);' data-id='001' data-type='edit' class='btn btn-xs btn-block'>Edit</a> -->
-								</li>
+								<!-- <a href='javascript:void(0);' data-id='001' data-type='edit' class='btn btn-xs btn-block'>Edit</a> 
+								</li> -->
 								<li>
 								<button type="button" data-toggle="modal" href="#postsettings" class="btn  btn-block" onclick="conf_delete_post();">Remove</button>
 								<!-- <a href='javascript:void(0);' data-id='001'  class='btn btn-xs btn-block'>Remove</a></li> -->
@@ -1209,35 +1209,21 @@ display:none;
                 <div class="inner-wrapper thin-padding">
                     <div class="post-wrapper">
                         <div class="input-group search-address"id="searchpostuser" ><span class="input-group-addon"><i class="flaticon-address-book"></i></span>
+							<input id="txtposttoid" type="hidden" value="">
                             <input id="search-contacts" class="form-control ui-autocomplete-input" placeholder="To:" type="text" autocomplete="off">
 							<span class="search-all-loading fa-spin-fast ico ico-spinner-10 fa-ts-color"></span>
                         </div>
-					
+				
+						<div class="btn-list pull-left dp-proj" id="divselectproject"  >
 						
-                       <!--  <ul class="btn-list" id="btn‬Group">
-						 	
-                            <li>
-                                <button class="btn btn-default btn-block" value=0  ><i class="flaticon-normal"></i>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-default btn-block"  value=1><i class="flaticon-lamp"></i>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-default btn-block"  value=2><i class="flaticon-amplifier"></i>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-default btn-block"  value=3><i class="flaticon-important"></i>
-                                </button>
-                            </li>
-                        </ul> -->
-						<div class="btn-list pull-left dp-proj">
-						
-													<select class="btn-default btn-default form-control" id="select_projlists">
-													</select>
+							<select class="btn-default btn-default form-control" id="select_projlists">
+							</select>
 										
+						</div>
+						 <div class="media-body">
+							  <h4 class="media-heading"><a id="tasknamepost"></a></h4>
+								<input id="txtposttotaskid" type="hidden" value="">
+								<input id="txtposttotaskprjid" type="hidden" value="">							 
 						</div>
 						<div class="btn-list pull-right " data-toggle="buttons">
 											
@@ -1388,22 +1374,9 @@ display:none;
 							<input rows="3" class="form-control"  placeholder="Your project objectives / desciption goes here" id="txt_prj_desc" >
                         </div>
 						<div class="form-post-wrapper">
-						
 							<label>Project Members</label>
-							<div class=" mem-search dv-add-member">	
-								<div class="input-group">
 									<input id="txtmember" type="hidden" value="">	
 									<input  class="form-control ui-autocomplete-input" type="text"  placeholder="Email Address" id="txt_prj_emailadd" autocomplete="off">
-									
-									<div class="input-group-btn">
-										<button type="button" class="btn btn-block btn-primary" ><i class="flaticon-adduser"></i></button>
-									</div>	
-									
-								</div>
-									<div class="input-group">
-										<span class="help-block no-result"></span>
-									</div>			
-							</div>
 						</div>
 						<div class="form-post-wrapper">							
 							<div >
@@ -1573,8 +1546,11 @@ display:none;
             <div class="left-top-head pull-left">
                 <button  data-toggle="modal" href="#taskinfo" data-role="button" class="btn btn-default btn-lg" type="button" ><i class="flaticon-arrow-left"></i></button>
             </div>
+			
             <div class="title" id ="taskhdr" ></div>
-
+			<div class="right-top-head pull-right">
+                <button  data-toggle="modal" href="#newpost" data-role="button" class="btn btn-default btn-lg" type="button" ><i class="flaticon-arrow-right"data-toggle="modal" href="#taskinfo" ></i></button>
+            </div>
         </div>
         
 		
@@ -1673,7 +1649,7 @@ display:none;
 			</div>	
             </div>
 		</div>
-    </div>
+    
 		
 	<!--projectinfo-->
 	 <div id="projectinfo" class="modal-content modal">
@@ -2387,6 +2363,7 @@ display:none;
 	   </div>
 	 </div>
 	
+	
     <!-- SNAP -->
     <script type="text/javascript" src="js/snap.js"></script>
 
@@ -2706,4 +2683,3 @@ $("#search-contacts").autocomplete({
 </script>
  -->
 </html>
- 

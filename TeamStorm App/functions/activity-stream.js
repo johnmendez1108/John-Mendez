@@ -11,18 +11,16 @@ function init() {
 	
 	
 	
-	getmyprofile();
 	load_myprofile();
 	document.getElementById("main_prof_fullname").innerHTML = window.localStorage.getItem('name');
 	document.getElementById("user_menu_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
-	  document.getElementById("user_comment_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
-	//$("#con_appsettings").show();
+	document.getElementById("user_comment_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
 	window.localStorage["host"] = 'http://teamstormapps.net/';
 	
 	loadaddress();
 	loadnewsfeed();		
 	 
-	//document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
+
 	
 	getmytask();
 	getproject();
@@ -30,8 +28,8 @@ function init() {
 	loadprojects_select();
 	
 	
-	setCookie('PHPSESSID','eutg1jbdbi6uu6gnt506b57mv2',90)
-	setCookie('cc_loggedin','1',90)
+	setCookie('PHPSESSID','eutg1jbdbi6uu6gnt506b57mv2',90);
+	setCookie('cc_loggedin','1',90);
 }
 /* $(function() {
 setTimeout(function() {
@@ -383,7 +381,7 @@ function viewpostcomment(id,pstrid)
 					
                      appendHTML +='<div class="media" id="comment-'+com_id+'">'+
                             '<a class="pull-left" a >'+
-                                '<img class="media-object img-circle" src="data:image/gif;base64,'+prjleaderpic(commentor_id)+'" width="35" alt="Image">'+
+                                '<img class="media-object img-circle" src="'+showprofpic(commentor_id)+'" width="35" alt="Image">'+
                             '</a>'+
 							'<div id="delete-button-'+com_id+'">'+deletehtml+'</div>'+	
                             '<div class="media-body">'+
@@ -419,6 +417,36 @@ function viewpostcomment(id,pstrid)
 
 
 }
+
+function showprofpic(tsid)
+{
+var pic="img/user/thumb-user-medium.jpg";
+	  jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/user', 
+			data: { sid: ses_id, id: tsid}, 
+			success: function (data) { 
+			
+		
+			pic = data.profile_pic;
+			
+			
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+});   
+return 	pic;
+}
+
+
 
 function comment_edit(id)
 {
@@ -797,9 +825,7 @@ function getposterpic(tsid){
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/user', 
 			data: { sid: ses_id },
-			beforeSend: function () {
-			 preloading2();
-			},
+			
 			success: function (data) { 
 			
 			 window.localStorage["ts_myid"] = data.id;
@@ -827,7 +853,7 @@ function getposterpic(tsid){
  
  }
  else{
-		navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
+		//navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
 	
 	}
   
@@ -999,7 +1025,7 @@ function signout(buttonIndex)
 		  }
 		  },
 		  error: function (XMLHttpRequest, textStatus,err) {
-			 navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');  
+			 //navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');  
 			  console.log(err.description);
 		}
 		  

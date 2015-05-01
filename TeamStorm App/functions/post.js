@@ -49,8 +49,18 @@ $(document).ready(function() {
 });
 function newpost()
 {
+clearposttext();
 loadprojects_select();
+document.getElementById("divselectproject").style.display="block"; 
 document.getElementById("searchpostuser").style.display="table-row"; 
+postmember_search();
+
+}
+function clearposttext()
+{
+document.getElementById('select_projlists').value='';
+document.getElementById("tasknamepost").innerHTML='';
+document.getElementById('txtposttoid').value ='';
 }
 
 function loadprojects_select(){	
@@ -96,7 +106,11 @@ function do_post(){
 	var ptype = 0;
 	var sendtoemail = document.getElementById('chk_txt_post').checked;
 	var postmsg = document.getElementById('txt_post').value;
-	var pid = document.getElementById('select_projlists');
+	var e = document.getElementById('select_projlists');
+	
+	var uid=0;
+	var tid=0;
+	var pid=0;
 	
 	 if (document.getElementById('option1').checked) {
 		ptype = document.getElementById('option1').value;
@@ -110,9 +124,22 @@ function do_post(){
 	 if (document.getElementById('option4').checked) {
 		ptype = document.getElementById('option4').value;
 	 }
-	 
-	 
-	pid = pid.options[pid.selectedIndex].value;
+	  
+
+	tid= document.getElementById('txtposttotaskid').value;
+	uid= document.getElementById('txtposttoid').value;
+	
+	
+	if (tid>0)
+	{
+	pid = document.getElementById('txtposttotaskprjid').value;
+	}
+	else if (tid==0)
+	{
+	pid = e.options[e.selectedIndex].value;	
+	}
+	
+	
 	
 	if(postmsg.trim().length > 0){
 		
@@ -129,6 +156,8 @@ function do_post(){
 			message : postmsg,
 			sendtomail: sendtoemail,
 			project_id:pid,
+			to_uid :uid,
+			task_id:tid,
 			location: cur_loc
 			}, 
 			beforeSend: function () {
@@ -144,6 +173,12 @@ function do_post(){
 				document.getElementById('chk_txt_post').checked	= false;
 				document.getElementById('txt_post').value="";
 				document.getElementById('select_projlists').value=0;
+				document.getElementById('txtposttoid').value=0;
+				document.getElementById('search-contacts').value="";
+				document.getElementById('txtposttotaskprjid').value=0;
+				document.getElementById('txtposttotaskid').value=0;
+				document.getElementById('txtposttoid').value=0;
+				document.getElementById('search-contacts').value="";
 				clearimg_count();
 				}
 		
@@ -244,6 +279,63 @@ function  upfail(error)  {
     console.log("upload error target " + error.target);
 }
 
+function postmember_search()
+{
+	/* project member search */
+	 $('.txt-search-member').keyup(function(){
+		$(".mem-list .mem-list-content .mem-list-info-name ").each(function() {
+			$(this).text().toLowerCase().search($('.txt-search-member').val().toLowerCase()) > -1 ?	$(this).parent().parent().fadeIn(200) :	$(this).parent().parent().fadeOut(200)
+		});
+	}); 
+	
+	/* member search addressbook */
+/* 	$('#txt-search-directory').keyup(function(){
+		$(".member-list .panel-comments li").each(function() {
+			$(this).text().toLowerCase().search($('#txt-search-directory').val().toLowerCase()) > -1 ?	$(this).parent().parent().fadeIn(200) :	$(this).parent().parent().fadeOut(200)
+		});
+	}); */
+	
+	var site_url = 'http://teamstormapps.net/';
+
+	/* autocomplete search for header */
+	$("#search-contacts").autocomplete({
+		source: site_url + "search/member",
+		selectFirst: true,
+		autoFocus: true,
+		search: function (e, u) {$('.btn-proj-add-member > span').removeClass('fa-search').addClass('fa-spinner fa-spin'); $('.btn-proj-add-member > span').click(function(){return false;});},
+		response: function (e, u) {	$('.btn-proj-add-member > span').addClass('fa-plus').removeClass('fa-spinner fa-spin');!u.content.length ? $(".no-result").text('No match found.') : $(".no-result").text('')},
+		select: function (e,u) {  $("#search-contacts").val(u.item.fullname); 	
+								document.getElementById('txtposttoid').value = u.item.id; 
+								$('.btn-proj-add-member > span').removeClass('fa-search').removeClass('fa-spinner fa-spin').addClass('fa-plus');
+								$('.btn-proj-add-member > span').click(function(){return true;});
+								return false; 
+								},
+		}).focus(function() {
+			$(this).autocomplete("search", this.value);
+		}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+			/* var inner_html = '<a href="javascript:void(0);"><div class="dv-search-list">';
+			inner_html +='<div class="image"><img class="media-object img-circle" src="'+site_url+'thumbs/profile?id='+ item.id +'&hash=' + item.image + '" width="50" height="50"  alt="Image"/></div>';
+			inner_html +='<div class="info"><span class="name">' + item.fullname + '</span><span class="email">' + item.email + '</span></div>';
+			inner_html +='</div></a>'; */
+			
+			
+			var inner_html ='<a href="javascript:void(0);"><img src="'+site_url+'thumbs/profile?id='+ item.id +'&hash=' + item.image + '" width="45" height="45" class="img-circle" />  <td>'+item.fullname +'</a></td>'; 
+						
+			
+			return $( "<li></li>" )
+				.data( "item.autocomplete", item )
+				.append(inner_html)
+				.appendTo( ul );
+				
+	};
+	$("#search-contacts").keypress(function(e){
+        if(e.which == 13){//Enter key pressed
+            $('.btn-info.prj_btn_add').click();//Trigger search button click event
+        }
+    });
+}
+
+
 
 
 document.addEventListener("deviceready",function(){
@@ -281,8 +373,11 @@ document.addEventListener("deviceready",function(){
                     console.log(error.code);
                 });
 
+
             }, function(evt){ // error get file system
                  console.log(evt.target.error.code);
             });
+
+
 
         } , true);
