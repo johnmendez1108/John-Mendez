@@ -34,7 +34,7 @@ function login(){
 			beforeSend: function () {
 			preloading2();
 			},
-      success: function (data, textStatus,XMLHttpRequest) { 
+			success: function (data, textStatus,XMLHttpRequest) { 
         if(data.status ==0) {
 			//navigator.notification.alert(data.status_message, function() {}); 
             navigator.notification.alert(data.status_message,alertDismissed,'Login Error','Ok');
@@ -101,6 +101,42 @@ function forcc_login()
       success: function (data, textStatus,XMLHttpRequest) { 
 	  },
 	  error: function (XMLHttpRequest, textStatus,err) {
+ 
+          
+			console.log(err.description);
+			}
+      
+    });
+	
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+		var response = xmlhttp.responseText; //if you need to do something with the returned value
+		}
+	}
+
+xmlhttp.open("GET","http://teamstormapps.net/",true);
+xmlhttp.send();
+	
+
+}  
+
+function testprj()
+{
+
+		jQuery.ajax({ 
+			type: 'post', 
+			//async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/info/1', 
+			data: {  }, 
+			
+      success: function (data) {
+		
+	  },
+	  error: function (Xerr) {
  
           
 			console.log(err.description);
