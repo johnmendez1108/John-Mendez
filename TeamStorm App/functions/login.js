@@ -108,15 +108,7 @@ function forcc_login()
       
     });
 	
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange=function() {
-	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-		var response = xmlhttp.responseText; //if you need to do something with the returned value
-		}
-	}
 
-xmlhttp.open("GET","http://teamstormapps.net/",true);
-xmlhttp.send();
 	
 
 }  

@@ -31,7 +31,18 @@ function init() {
 	setCookie('PHPSESSID','eutg1jbdbi6uu6gnt506b57mv2',90);
 	setCookie('cc_loggedin','1',90);
 	
+	
+		var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+		var response = xmlhttp.responseText; //if you need to do something with the returned value
+		}
+	}
 
+xmlhttp.open("GET","http://teamstormapps.net/",true);
+xmlhttp.send();
+	
+	
 }
 /* $(function() {
 setTimeout(function() {
