@@ -77,13 +77,13 @@ function onPhotoDataSuccess(imageData) {
 	
 	 
     imgcount +=1;  
-	 uploadfile(imageData);
-   /*  var options = new FileUploadOptions();
+	// uploadfile(imageData);
+     var options = new FileUploadOptions();
     options.fileKey = "file";
     options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
     options.mimeType = "image/jpeg";
     options.chunkedMode = false;
-	 options.httpMethod = "POST";
+	options.httpMethod = "POST";
 	options.headers = {
           Connection: "close"
         };
@@ -92,7 +92,7 @@ function onPhotoDataSuccess(imageData) {
     options.params = params;
     var ft = new FileTransfer();
     ft.upload(imageData, "http://teamstormapps.net/upload", upwin, upfail,
-        options); */
+        options); 
 
 
 	
