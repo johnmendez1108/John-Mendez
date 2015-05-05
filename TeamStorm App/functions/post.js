@@ -47,6 +47,20 @@ $(document).ready(function() {
 	 //var ptype = $('input[type="radio"][name="post_type"]:checked').val();
 
 });
+
+function postonwrite()
+{
+	var content = document.getElementById('txt_post').value;
+
+	if (content.length<1)
+	{
+	document.getElementById("bttndopost").disabled = true; 
+	}
+	else{
+	document.getElementById("bttndopost").disabled = false; 
+	}
+
+}
 function newpost()
 {
 clearposttext();

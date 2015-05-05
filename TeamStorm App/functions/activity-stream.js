@@ -58,6 +58,10 @@ setTimeout(function() {
 }); */
 
 
+
+
+
+
 function setCookie(cname,cvalue,exdays) {
 				var d = new Date();
 				d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -341,8 +345,19 @@ function gettaskname(pid,tid)
 
 return cur_taskname;
 }
+function commentonwrite()
+{
+	var content = document.getElementById('inptcomment').value;
 
+	if (content.length<1)
+	{
+	document.getElementById("bttndocomment").disabled = true; 
+	}
+	else{
+	document.getElementById("bttndocomment").disabled = false; 
+	}
 
+}
 
 function viewpostcomment(id,pstrid)
 {
@@ -997,13 +1012,8 @@ function getaddressbookperletter(){
     }
       	
 });
-
-
-
 	
 }
-
-
 
 function conf_signout()
 {
@@ -1047,6 +1057,7 @@ function signout(buttonIndex)
 }
 
 function callchat(){
-	 window.location.replace("chat.html");
+	preloading();
+	window.location.replace("chat.html");
 }
  

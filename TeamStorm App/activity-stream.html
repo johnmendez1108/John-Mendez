@@ -2,9 +2,10 @@
 <head>
  <meta charset="utf-8">
     <title>Activity Stream - TeamStorm</title>
-
+   
 	 <!-- Sets initial viewport load and disables zooming    -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">	
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+	
     <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -18,6 +19,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500italic,500,700,700italic' rel='stylesheet' type='text/css'>
     <!-- Include the base Snap.js CSS -->
     <link rel="stylesheet" href="css/snap.css">
+
 	
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/bootstrap-mod.css">
@@ -1130,9 +1132,9 @@ display:none;
                     <div class="input-group-btn" style="right:2px;">
                          <img id="user_comment_profpic" class="media-object img-circle" class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" height="35" alt="Image">
                     </div>
-                    <input class="form-control" placeholder="Reply on this storm thread..." id="inptcomment" >
+                    <input class="form-control" placeholder="Reply on this storm thread..." id="inptcomment" onkeyUp="commentonwrite();" >
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-lg" tabindex="-1" onclick="do_comment();"><i class="flaticon-comment"></i></button>
+                        <button id="bttndocomment" type="button" class="btn btn-default btn-lg" tabindex="-1" onclick="do_comment();" disabled><i class="flaticon-comment"></i></button>
                     </div>
                 </div>
             </div>
@@ -1187,7 +1189,7 @@ display:none;
             </div>
             <div class="title">New Post</div>
             <div class="right-top-head pull-right">
-                <button data-toggle="modal" href="#newpost" class="btn btn-default btn-lg" onclick="do_post();" ><i class="flaticon-check"></i>
+                <button id="bttndopost" data-toggle="modal" href="#newpost" class="btn btn-default btn-lg" onclick="do_post();" disabled ><i class="flaticon-check"></i>
                 </button>
             </div>
 
@@ -1243,7 +1245,7 @@ display:none;
 						
 						
                         <div class="form-post-wrapper">
-                            <textarea rows="5" class="form-control" placeholder="Share your Updates..." id="txt_post"></textarea>
+                            <textarea rows="5" class="form-control" placeholder="Share your Updates..." id="txt_post" onkeyUp="postonwrite();" ></textarea>
 
 						
 							<div id="upld_img" class ="table" > 
@@ -1284,11 +1286,12 @@ display:none;
 							
                         </ul>
 						<div class="chk">
-									 <div class="checkbox">
+									 
                                            <input type="checkbox" value="None" id="chk_txt_post" name="sendtoemail">
-                                        </div>
+										   <label class="lbl-check" for="chk_txt_post"></label><span><label for="chk_txt_post">Send email to team</label></span>
+                                      
 												
-												<label class="lbl-check" for="chk_txt_post"></label><span><label for="chk_txt_post">Send email to team</label></span>
+												
 						
 						</div>
 					</div>
@@ -1646,7 +1649,7 @@ display:none;
 			</div>	
             </div>
 		</div>
-    
+    </div>
 		
 	<!--projectinfo-->
 	 <div id="projectinfo" class="modal-content modal">
