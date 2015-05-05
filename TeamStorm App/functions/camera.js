@@ -88,10 +88,10 @@ function onPhotoDataSuccess(imageData) {
           Connection: "close"
         };
     var params = new Object();
-	params.sid=ses_id;
+	//params.sid=ses_id;
     options.params = params;
     var ft = new FileTransfer();
-    ft.upload(imageData, "http://teamstormapps.net/upload", upwin, upfail,
+    ft.upload(imageData, encodeURI("http://teamstormapps.net/upload"), upwin, upfail,
         options); 
 
 
