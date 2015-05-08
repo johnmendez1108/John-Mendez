@@ -82,8 +82,8 @@ function onPhotoDataSuccess(imageData) {
     options.fileKey = "file";
     options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
     options.mimeType = "image/jpeg";
-    options.chunkedMode = false;
 	options.httpMethod = "POST";
+    options.chunkedMode = false;
 	options.headers = {
           Connection: "close"
         };
