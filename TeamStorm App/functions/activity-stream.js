@@ -31,7 +31,6 @@ function init() {
 	
 	setCookie('PHPSESSID','eutg1jbdbi6uu6gnt506b57mv2',90);
 	setCookie('cc_loggedin','1',90);
-	call_emoticons('streamlist');
 	
 	
 	
@@ -496,6 +495,7 @@ if (checkConnection() >2){
 					var e = document.createElement('div');
 					e.innerHTML = appendHTML;
 					document.getElementById("streamlist").appendChild(e);
+                    call_emoticons('streamlist');
 				 //window.localStorage["latestnewsfeed"]= appendHTML;
 				 //window.localStorage["numoffeed"]= data.items-1;
 			
@@ -988,6 +988,7 @@ function loadnewsfeed()
 	 
 	getnewsfeed();
 	document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
+    call_emoticons('streamlist');
 
 }
 
