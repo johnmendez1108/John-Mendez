@@ -1,0 +1,264 @@
+/*notif dropdown*/
+.dropdown-menu.notifications li .dv-notif.new,
+.dropdown-menu.messages li .dv-notif.new {
+  color: #1a1a1a !important;
+  background:#FFFFE6 !important;
+}
+
+.dropdown-menu.notifications li .dv-notif.un-read,
+.dropdown-menu.messages li .dv-notif.un-read {
+  color: #1a1a1a ;
+  background:#EDEFF5;
+}
+.dropdown-menu.notifications li .dv-notif.un-read:hover,
+.dropdown-menu.messages li .dv-notif.un-read:hover {
+  color: #1a1a1a ;
+  background:#E7EAF1 
+}
+
+
+.dropdown-menu.notifications li .dv-notif.new:hover,
+.dropdown-menu.messages li .dv-notif.new:hover
+{
+  color: #1a1a1a !important;
+  background:#FFFFe0 !important;
+}
+
+
+.dropdown-menu.notifications .time
+{
+  color: #b3b3b3;
+  font-size: 0.85em;
+  white-space: nowrap;
+  text-align: right;
+  vertical-align: top;
+}
+
+.dropdown-menu.notifications .time i
+{
+  color: #b3b3b3;
+  font-size: 1em;
+  white-space: nowrap;
+}
+
+
+.dropdown-menu.notifications li img
+{
+  float: left !important;
+  margin-right: 10px;
+/*   height: 30px;
+  width: 30px; */
+  border-radius: 100%;
+  padding:1px;
+  border:1px solid #ccc;
+}
+
+.dropdown-menu.notifications .msg
+{
+  display: inline;
+  color: #777;
+  left:35px;
+  
+}
+
+.dropdown-menu.notifications .msg span
+{
+font-size:12px;
+font-weight:600;
+color: #555;
+}
+
+.btn-group.btn-tasks
+{
+position:relative;
+top:-15px;
+height:0px;
+}
+
+.btn-group.btn-tasks .btn
+{
+padding:1px 5px;
+font-size:11px;
+}
+
+.dropdown-menu.notifications.notif-task li .dv-notif
+{
+min-height:70px;
+}
+
+.dropdown-menu.notifications.notif-task li.dd-footer a
+{
+min-height:0px;
+}
+
+
+
+.dropdown-menu.notifications li .n-time
+{
+  color: #b3b3b3;
+  font-size: 12px;
+  white-space: nowrap;
+  text-align: left;
+  vertical-align: top;
+  display:block;
+  
+}
+.dropdown-menu.notifications li span
+{
+white-space:no-wrap;
+}
+.dropdown-menu.notifications li .dv-notif
+{
+overflow:hidden;
+background-color:#FFFFFF
+}
+.dropdown-menu.notifications li .dv-notif .tooltip.fade
+{
+font-size:10px;
+}
+.dropdown-menu.notifications li .dv-notif a
+{
+display:inline;
+padding:0px;
+font-weight:bold;
+line-height:13px;
+font-size:12px;
+}
+.dropdown-menu.notifications li .dv-notif .dv-info
+{
+margin-left:40px;
+color:#777;
+font-size:18px;
+}
+.dropdown-menu.notifications li .dv-notif a:hover
+{
+font-weight:bold;
+text-decoration:underline;
+background:transparent!important;
+}
+
+.dropdown-menu.notifications li .dv-notif .name
+{
+color:#4f8edc;
+font-weight:bold;
+}
+.dropdown-menu.notifications li > a
+{
+padding:0px!important;
+}
+.dropdown-menu.notifications li.dd-footer > a
+{
+padding:5px!important;
+}
+/*notif page*/
+.dv-notifs
+{
+margin-bottom:10px;
+}
+.dv-notifs .loader
+{
+text-align:center;
+}
+.dv-notifs .dv-notifs-content
+{
+margin-top:5px;
+margin-bottom:5px;
+}
+.dv-notifs .dv-notifs-content .title
+{
+font-size:16px;
+color:#111;
+font-weight:bold;
+font-family: 'Advent Pro', sans-serif;
+display:block;
+padding-left:15px;
+padding-bottom:5px;
+padding-top:15px;
+}
+.dv-notifs .dv-notifs-content ul
+{
+border-top:1px solid #ccc;
+}
+.dv-notifs .dv-notifs-content ul li,
+.dv-notifs .dv-notifs-content ul
+{
+font-size:0px;
+padding:0px;
+margin:0px;
+list-style:none;
+}
+.dv-notifs .dv-notifs-content ul li
+{
+display:block;
+font-size:12px;
+font-family: Arial, sans-serif;
+color:#333;
+border-bottom:1px dotted #ccc;
+}
+.dv-notifs.pt .dv-notifs-content ul li
+{
+padding:12px 10px 10px 10px;
+}
+.dv-notifs .dv-notifs-content ul li > div > a
+{
+text-decoration:none;
+color:#333!important;
+padding:12px 10px 10px 10px;
+display:block;
+}
+.dv-notifs .dv-notifs-content ul li.un-read
+{
+background:#EDEFF5;
+}
+.dv-notifs .dv-notifs-content ul li.un-read:hover
+{
+background:#e6EFF5;
+}
+.dv-notifs .dv-notifs-content ul li a
+{
+color:#0F5975;
+}
+.dv-notifs .dv-notifs-content ul li:hover
+{
+background:#eee;
+}
+.dv-notifs .dv-notifs-content ul li .fa,
+.dv-notifs .dv-notifs-content ul li .ico
+{
+font-size:15px;
+color:#666;
+position:relative;
+top:1px;
+margin-right:5px;
+}
+.dv-notifs .dv-notifs-content ul li .time
+{
+position:relative;
+float:right;
+color:#777;
+font-size:10px;
+}
+.dv-notifs .dv-notifs-content ul li  img
+{
+width:30px;
+height:30px;
+box-shadow:0 0 0 1px white, 0 0 0 2px #ccc;
+border-radius:100%;
+-webkit-border-radius:100%;
+-moz-border-radius:100%;
+margin-right:5px;
+}
+
+.dv-notifs .dv-notifs-content ul li .b
+{
+font-weight:bold;
+color:#0F5975;
+}
+
+
+
+
+
+
+
+

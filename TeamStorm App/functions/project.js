@@ -373,7 +373,7 @@ if (checkConnection() >2){
 	  },
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
-		alert(err.message);
+	
 		console.log(err.message);
 	
     }

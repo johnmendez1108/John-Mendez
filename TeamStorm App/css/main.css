@@ -753,3 +753,161 @@ color: #FFF;
   border-radius: 2px;
 }
 
+.badge {
+
+  left: 22px;
+  position: absolute;
+  background-color: #e73c3c;
+  text-align: center;
+  text-shadow: none !important;
+}
+.badge:empty {
+  display: none;
+}
+.dropdown-menu.notifications {
+
+  background-color: #FFFFFF;
+}
+.dropdown-menu.notifications, .dropdown-menu.messages {
+  padding: 0;
+  z-index: 1300;
+}
+.dropdown-menu.notifications li.dd-header, .dropdown-menu.messages li.dd-header {
+  padding: 6px 10px;
+  font-size: 0.85em;
+}
+.dropdown-menu.notifications li, .dropdown-menu.messages li {
+  border-bottom: 1px solid #e6e7e8;
+  color: #000 !important;
+}
+
+.dropdown-menu.notifications,
+.dropdown-menu.messages {
+  padding: 0;
+  z-index: 1300;
+}
+.dropdown-menu.notifications {
+  
+}
+.dropdown-menu.notifications li,
+.dropdown-menu.messages li {
+  border-bottom: 1px solid #e6e7e8;
+  color: #000 !important;	
+}
+.dropdown-menu.notifications li a,
+.dropdown-menu.messages li a {
+  white-space: normal;
+}
+.dropdown-menu.notifications li a.active,
+.dropdown-menu.messages li a.active,
+.dropdown-menu.notifications li a:hover,
+.dropdown-menu.messages li a:hover {
+  color: #1a1a1a !important;
+  background:#fff !important;
+}
+
+
+.dropdown-menu.notifications li .time,
+.dropdown-menu.messages li .time {
+  color: #b3b3b3;
+  font-size: 0.85em;
+  white-space: nowrap;
+  text-align: right;
+  vertical-align: top;
+}
+.dropdown-menu.notifications li.dd-header a,
+.dropdown-menu.messages li.dd-header a,
+.dropdown-menu.notifications li.dd-footer a,
+.dropdown-menu.messages li.dd-footer a {
+  color: #4f8edc;
+}
+.dropdown-menu.notifications li.dd-header,
+.dropdown-menu.messages li.dd-header {
+  padding: 6px 10px;
+  font-size: 0.85em;
+}
+.dropdown-menu.notifications li.dd-header:before,
+.dropdown-menu.messages li.dd-header:before,
+.dropdown-menu.notifications li.dd-header:after,
+.dropdown-menu.messages li.dd-header:after {
+  content: " ";
+  display: table;
+}
+.dropdown-menu.notifications li.dd-header:after,
+.dropdown-menu.messages li.dd-header:after {
+  clear: both;
+}
+.dropdown-menu.notifications li.dd-header:before,
+.dropdown-menu.messages li.dd-header:before,
+.dropdown-menu.notifications li.dd-header:after,
+.dropdown-menu.messages li.dd-header:after {
+  content: " ";
+  display: table;
+}
+.dropdown-menu.notifications li.dd-header:after,
+.dropdown-menu.messages li.dd-header:after {
+  clear: both;
+}
+.dropdown-menu.notifications li.dd-header span:first-child,
+.dropdown-menu.messages li.dd-header span:first-child {
+  float: left !important;
+  float: left;
+  font-weight: 400;
+}
+.dropdown-menu.notifications li.dd-header span:last-child,
+.dropdown-menu.messages li.dd-header span:last-child {
+  float: right !important;
+  float: right;
+}
+.dropdown-menu.notifications li.dd-header span:last-child a,
+.dropdown-menu.messages li.dd-header span:last-child a {
+  padding: 0 !important;
+}
+.dropdown-menu.notifications li.dd-header a,
+.dropdown-menu.messages li.dd-header a {
+  background: none !important;
+}
+.dropdown-menu.notifications li.dd-header a:hover,
+.dropdown-menu.messages li.dd-header a:hover {
+  color: #4f8edc;
+}
+.dropdown-menu.notifications li.dd-footer,
+.dropdown-menu.messages li.dd-footer {
+  font-size: 0.85em;
+}
+.dropdown-menu.notifications li.dd-footer a,
+.dropdown-menu.messages li.dd-footer a {
+  text-align: center;
+  padding: 7px 10px;
+}
+
+.dropdown-menu.notifications li .notification-user i {
+  background-color: #34495e;
+}
+.dropdown-menu.notifications li .notification-warning i {
+  background-color: #f1c40f;
+}
+.dropdown-menu.notifications li .notification-danger i {
+  background-color: #e73c3c;
+}
+.dropdown-menu.notifications li .notification-fix i {
+  background-color: #4f5259;
+}
+.dropdown-menu.notifications li .notification-success i {
+  background-color: #85c744;
+}
+.dropdown-menu.notifications li .notification-failure i {
+  background-color: #e73c3c;
+}
+.dropdown-menu.notifications li .notification-order i {
+  background-color: #2bbce0;
+}
+.dropdown-menu.notifications li .dv-notif,
+.dropdown-menu.notifications li a {
+  padding: 12px 15px;
+  line-height: 16px;
+}
+.scrollthis {
+ /*  height: 300px; */
+  overflow-y: scroll;
+}
