@@ -663,12 +663,13 @@ function viewpostcomment(id,pstrid)
                 
 			if (data.length<=0){
 				document.getElementById("commentlist").style.display="none";
-				call_emoticons('commentlist');
+				
 			}
 			else
 			{
 			document.getElementById("commentlist").style.display="block";
-			document.getElementById("commentlist").innerHTML=appendHTML;	
+			document.getElementById("commentlist").innerHTML=appendHTML;
+			call_emoticons('commentlist');
 			}
 	  },
 	  error: function (err) {
