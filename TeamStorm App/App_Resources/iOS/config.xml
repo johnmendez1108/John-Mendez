@@ -44,5 +44,10 @@
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
     </plugins>
 
+     <feature name="LocalNotification">
+                <param name="ios-package" value="APPLocalNotification" onload="true" />
+                <param name="onload" value="true" />
+      </feature>
+
     <access origin="http://teamstormapps.net/" />
 </widget>

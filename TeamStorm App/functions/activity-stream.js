@@ -1304,8 +1304,3 @@ function callchat(){
 	preloading();
 	window.location.replace("chat.html");
 }
- function testnotif(){
-
-window.location.replace("localnotification/index.html");
- 
-}

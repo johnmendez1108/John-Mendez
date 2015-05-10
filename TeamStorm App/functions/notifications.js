@@ -2,6 +2,7 @@ var ses_id = window.localStorage.getItem('session_id');
 var cur_notifcount=0;
 var cur_notifcount2=0;
 var first_notif_id;
+var  mess;
 	//NOTIFICATION AUTO REFRESH
 	setInterval(function(){ notification_refresh() }, 20000);
 
@@ -69,6 +70,7 @@ var first_notif_id;
 							{
 								navigator.notification.vibrate(2000);
 								cur_notifcount2=data.count;
+								pushnotification();
 							}
 						}
 						
@@ -79,7 +81,9 @@ var first_notif_id;
 		console.log(err.message);
     }
       	
-});  
+}); 
+
+ 
 }
 
 function notif_click(id){
@@ -131,3 +135,51 @@ function notif_click(id){
 	});
 	}	
 }
+
+
+document.addEventListener('deviceready', function () {
+    window.plugin.notification.local.registerPermission(function (granted) {
+    alert('Permission has been granted: ' + granted);
+});
+}, true);
+
+
+ function pushnotification(){
+
+ 
+ 
+ $.ajax({ 
+		type: 'post', 
+		async : false,     
+		global : false,
+		cache: false,
+		dataType : 'json',
+		url: 'http://teamstormapps.net/mobile/notification', 
+		data: { sid: ses_id }, 
+		success: function (data) {
+ 			
+			mess=data[0].description
+		}
+	});
+ 
+
+var now                  = new Date().getTime(),
+    _5_seconds_from_now = new Date(now + 5*1000);
+
+window.plugin.notification.local.add({
+    id:      1,
+    title:   'TeamStorm App',
+    message: mess,
+	badge:  1,
+	icon:'file://favicon.png',
+	autoCancel: true,
+	sound: 'beep.caf',
+    date:   _5_seconds_from_now
+});
+ 
+ 
+}
+
+
+
+

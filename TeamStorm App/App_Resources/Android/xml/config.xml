@@ -14,6 +14,11 @@
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
 
+    <feature name="LocalNotification">
+        <param name="android-package" value="de.appplant.cordova.plugin.localnotification.LocalNotification" />
+    </feature>
+    
+
     <!-- For projects that target Apache Cordova 3.0 and later, comment out or delete the <plugins></plugins> block and its contents. -->
     <plugins>
         <plugin name="App" value="org.apache.cordova.App"/>

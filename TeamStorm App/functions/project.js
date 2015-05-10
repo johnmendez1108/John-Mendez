@@ -4,6 +4,7 @@ var allmemberid = new Array();
 var allmemberpic = new Array();
 var alltaskid= new Array();
 var alltaskname= new Array();
+var mytask= new Array();
 
 var taskmemid= new Array();
 var taskmempic= new Array();
@@ -17,6 +18,10 @@ var cur_pid;
 var cur_tid;
 var del_assid,del_uid,del_tid;
 var task_mem_profpic1="";
+
+var onedit_id,onedit_title,onedit_description,onedit_priority,onedit_start_date,onedit_end_date,onedit_task_status,onedit_dependent; 
+var isnewtask=0;
+var ismytask=0;
 
 function getproject()
 {
@@ -128,12 +133,17 @@ function getmytask()
 					
 										
 							appendHTML+= '<li><a id="mytask-'+id+'"  data-toggle="modal" href="#taskinfo" onclick="getmytaskinfo('+project_id+','+id+')"   ><span class="flaticon-task"> </span> '+task_title+'</a></li>';
-				
+							mytask[x]=id;
+							
 				}
 				 			 
 				if (appendHTML.length >0){
 					
 					window.localStorage["getmytask"]=appendHTML;
+				}
+				else{
+					
+					window.localStorage["getmytask"]='';
 				}
 				
 			
@@ -236,6 +246,26 @@ if (checkConnection() >2){
 							}								
 							
 							posttask(pid,tid,task_title);
+							
+							if(jQuery.inArray(data.items[x].id, mytask ) > -1){
+								document.getElementById('btn_addtask_leavetask').innerHTML='Leave Task';
+								ismytask=1;
+							}
+							else{
+								document.getElementById('btn_addtask_leavetask').innerHTML='<i class="glyphicon glyphicon-plus-sign"></i> Add to my Task';
+								ismytask=0;
+							}		
+							
+							
+							onedit_id = data.items[x].id;
+							onedit_title= task_title;
+							onedit_description= task_description;
+							onedit_priority=priority;
+							onedit_start_date=start_date;
+							onedit_end_date=target_date;
+							onedit_task_status=task_status;
+							onedit_dependent=dependent_taskid;
+							cur_pid=pid;
 						}							
 					 }
 								
@@ -265,6 +295,111 @@ else{
 	
 }
 
+function onedittask()
+{
+	
+	isnewtask=0;
+	document.getElementById('txt_tasktitle').value=onedit_title;
+	document.getElementById('select_priority').value=onedit_priority;
+	document.getElementById('txt_taskdesc').value=onedit_description;
+	document.getElementById('txt_startdate').value=onedit_start_date;
+	document.getElementById('txt_duedate').value=onedit_end_date;
+	dependanttask_select();
+	var depentask = document.getElementById('select_deptask').value=onedit_dependent;
+	document.getElementById("fortaskmembers").innerHTML=""
+	document.getElementById("viewnewtaskhdr").innerHTML="Edit Task";
+	
+}
+
+
+
+function add_leave_task()
+{
+	if (ismytask>0)
+	{
+		//Leave Task
+		
+		navigator.notification.confirm(
+        'Are you sure to want to leave this task?', 
+        leave_task, // <-- no brackets
+        'Confirmation Message',
+        ['Ok','Cancel']
+		);
+		
+	}
+	else{
+		//Join Task
+		jQuery.ajax({ 
+				type: 'post', 
+				async : false,     
+				global : false,
+				cache: false,
+				dataType : 'json',
+				url: 'http://teamstormapps.net/mobile/task/join/'+onedit_id, 
+				data: { sid: ses_id},
+				beforeSend: function () {
+				 preloading2();
+				},			
+				success: function (data) { 
+				
+					if(data.status == 1){
+							document.getElementById('btn_addtask_leavetask').innerHTML='Leave Task';
+							ismytask=1;
+							getmytask();
+
+					}
+		  },
+		  error: function (err) {
+			//navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+			//alert(err.message);
+			console.log(err.message);
+		}
+			
+		});
+		
+	}
+	
+	
+	
+}
+
+function leave_task(buttonIndex)
+{
+		if (buttonIndex==1)
+		{
+			
+			jQuery.ajax({ 
+				type: 'post', 
+				async : false,     
+				global : false,
+				cache: false,
+				dataType : 'json',
+				url: 'http://teamstormapps.net/mobile/task/leave/'+onedit_id, 
+				data: { sid: ses_id},
+				beforeSend: function () {
+				 preloading2();
+				},			
+				success: function (data) { 
+				
+					if(data.status == 1){
+							
+						document.getElementById('btn_addtask_leavetask').innerHTML='<i class="glyphicon glyphicon-plus-sign"></i> Add to my Task';
+						ismytask=0;
+						getmytask();
+					}
+		  },
+		  error: function (err) {
+			//navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+			//alert(err.message);
+			console.log(err.message);
+		}
+			
+		});
+			
+		}
+}
+
+
 function conf_delete_task()
 {	 //test_delete();
 
@@ -280,7 +415,7 @@ function conf_delete_task()
 
 function testmodal()
 {
-	alert('test');
+
 	$('#taskinfo').modal('hide');
 }
 
@@ -1449,11 +1584,15 @@ var members=document.getElementById("txtmember").value;
 }
 function new_task(id)
 {	
+	isnewtask=1;
 	cur_pid=id;
+	cleartsk_text();
 	preloading2();
 	dependanttask_select();
 	get_proj_mem_for_task();
+	document.getElementById("viewnewtaskhdr").innerHTML="Create Task";
 }
+
 
 function dependanttask_select(){	
 	var appendHTML = '<option value="0">None</option>';
@@ -1567,6 +1706,7 @@ function getmemprofpic(tsid)
 	
 }
 
+ 
 function create_task()
 {
 	var members = getCheckedBoxes('chk_members');
@@ -1586,39 +1726,82 @@ function create_task()
 	var depentask = document.getElementById('select_deptask').value;
 	
 	
-	jQuery.ajax({ 
-			type: 'post', 
-			async : false,     
-			global : false,
-			cache: false,
-			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/task/create', 
-			data: { sid: ses_id,
-					project_id: cur_pid,
-					title: title,
-					description:desc,
-					startdate:startdate,
-					duedate:duedate,
-					priority:priority,
-					members:chk_members,
-					dependent:depentask
-					}, 
-			success: function (data) { 
-			
-				if(data.status == 1){
+	if (isnewtask>0){	
+			jQuery.ajax({ 
+					type: 'post', 
+					async : false,     
+					global : false,
+					cache: false,
+					dataType : 'json',
+					url: 'http://teamstormapps.net/mobile/task/create', 
+					data: { sid: ses_id,
+							project_id: cur_pid,
+							title: title,
+							description:desc,
+							startdate:startdate,
+							duedate:duedate,
+							priority:priority,
+							members:chk_members,
+							dependent:depentask
+							}, 
+					success: function (data) { 
 					
-					cleartsk_text();
-					getproject();
+						if(data.status == 1){
+							
+							cleartsk_text();
+							getproject();
+							
+						}
+			  },
+			  error: function (err) {
+				//navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+				//alert(err.message);
+				console.log(err.message);
+			}
+				
+		}); 
+	}
+	else{
+		
+		
+		jQuery.ajax({ 
+					type: 'post', 
+					async : false,     
+					global : false,
+					cache: false,
+					dataType : 'json',
+					url: 'http://teamstormapps.net/mobile/task/edit/'+onedit_id, 
+					data: { sid: ses_id,
+							project_id: cur_pid,
+							title: title,
+							description:desc,
+							/* startdate:startdate,
+							duedate:duedate, */
+							priority:priority,
+							dependent:depentask
+							}, 
+					success: function (data) { 
 					
-				}
-	  },
-	  error: function (err) {
-        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
-		//alert(err.message);
-		console.log(err.message);
-    }
-      	
-}); 	
+						if(data.status == 1){
+							
+							
+							cleartsk_text();
+							
+							getmytaskinfo(cur_pid,cur_tid);
+							getmytask();
+							getproject();
+						}					
+						
+			  },
+			  error: function (err) {
+				//navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+				//alert(err.message);
+				console.log(err.message);
+			}
+				
+		}); 
+		
+	}	
 	 
 	
 }
