@@ -65,8 +65,11 @@
     <link rel="stylesheet" href="kendo/styles/kendo.dataviz.min.css" />
     <link rel="stylesheet" href="kendo/styles/kendo.dataviz.default.min.css" />
 
-    <script src="kendo/js/jquery.min.js"></script>
+   <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.all.min.js"></script> -->
+	
+	
+	
 	
 	 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
 	 <link href="preloader/dist/css/introLoader.css" rel="stylesheet">
@@ -85,7 +88,8 @@
 .custom-date-style {
 	background-color: red !important;
 }	
-</style>	
+</style>
+	
 <script type="text/javascript">
 	
 	
@@ -96,7 +100,7 @@
 			localStorage.backgroundstatus = "";		
 			document.addEventListener("deviceready", onDeviceReady, true);
 			function onDeviceReady()
-             {     preloading();
+             {     preloading();				  
                    document.addEventListener("backbutton", BackKeyDown, true);
              }
              function BackKeyDown()
@@ -1058,7 +1062,7 @@ display:none;
 
             <div class="bottom-controls sidebar-footer" style="width:270px;">
                 <ul class="half-control-3 clearfix">
-                    <li><a  class="btn btn-block btn-primary"><i class="flaticon-chat"></i> Chat</a>
+                    <li><a  class="btn btn-block btn-primary" onclick="testnotif();" ><i class="flaticon-chat"></i> Chat</a>
                     </li>
                     <li><a  class="btn btn-block btn-primary"><i class="flaticon-task"></i> Task</a>
                     </li>
@@ -1154,7 +1158,7 @@ display:none;
 
         </div>
        
-        <div class="content-modal" style="bottom: 20px;height: 400px;">
+        <div class="content-modal" style="bottom: 20px;height: 420px;">
 			
 				<ul >
 				 
@@ -1601,7 +1605,7 @@ display:none;
 	</div>   
 	   
 	   <!--task info-->
-	 <div id="taskinfo" class="modal-content modal">
+	 <div id="taskinfo" class="modal-content modal" data-keyboard="false" data-backdrop="static">
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
                 <button  data-toggle="modal" href="#taskinfo" data-role="button" class="btn btn-default btn-lg" type="button" ><i class="flaticon-arrow-left"></i></button>
@@ -1617,7 +1621,7 @@ display:none;
 		<div class="bottom-controls bar-footer" >
                 <ul class="half-control-3 clearfix">
 					<li>
-                       <button class="btn btn-block btn-primary" id="btn_taskcomplete" ><span class="flaticon-Check"></span> Complete
+                       <button  class="btn btn-block btn-primary" id="btn_taskcomplete"  onclick="testmodal();"  ><span class="flaticon-Check"  ></span> Complete
                        </button>
                     </li>
 					<li>
@@ -1625,7 +1629,7 @@ display:none;
                        </button>
                     </li>
 					<li>
-                       <button class="btn btn-block btn-primary" id="btn_taskdelete" onclick="conf_delete_task();" >&times; Delete
+                       <button  class="btn btn-block btn-primary" id="btn_taskdelete" onclick="conf_delete_task();" >&times; Delete
                        </button>
                     </li>
 					
@@ -1659,6 +1663,10 @@ display:none;
 					</li>
 					<li>
 					<div id="taskmaster_inf"> </div>
+					</li>
+					<li>
+					 <button class="btn btn-default" id="btn_addtask" style="background-color:background-image: linear-gradient(to bottom,#5cb85c 0,#449d44 100%);background-repeat: repeat-x;border-color: #419641;" ><i class="glyphicon glyphicon-plus-sign"></i> Add to my Task
+                     </button>
 					</li>
                 </a>
 				

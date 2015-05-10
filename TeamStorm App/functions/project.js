@@ -15,6 +15,7 @@ var numofmembers;
 var task_mem_profpic="";
 var cur_pid;
 var cur_tid;
+var del_assid,del_uid,del_tid;
 var task_mem_profpic1="";
 
 function getproject()
@@ -221,10 +222,17 @@ if (checkConnection() >2){
 							if (task_creator_id==localStorage.getItem('ts_myid'))
 							{
 								document.getElementById('t_request').style.display="block";
+								document.getElementById("btn_taskcomplete").disabled = false; 
+								document.getElementById("btn_taskedit").disabled = false; 
+								document.getElementById("btn_taskdelete").disabled = false; 
+								
 							}								
 							else
 							{
 								document.getElementById('t_request').style.display="none";
+								document.getElementById("btn_taskcomplete").disabled = true; 
+								document.getElementById("btn_taskedit").disabled = true; 
+								document.getElementById("btn_taskdelete").disabled = true; 
 							}								
 							
 							posttask(pid,tid,task_title);
@@ -270,6 +278,11 @@ function conf_delete_task()
 	
 }
 
+function testmodal()
+{
+	alert('test');
+	$('#taskinfo').modal('hide');
+}
 
 function delete_task(buttonIndex)
 {
@@ -291,8 +304,8 @@ function delete_task(buttonIndex)
 					if(data.status == 1){
 							
 						navigator.notification.alert('Task deleted',alertDismissed,'TeamStorm App','Ok');
-						  getmytask();
-						 getproject();
+						getmytask();
+						getproject();
 					}
 		  },
 		  error: function (err) {
@@ -317,14 +330,17 @@ if (checkConnection() >2){
 			cur_pid=id;
 			jQuery.ajax({ 
 			type: 'post', 
-		/* 	async : false,     
+			async : false,     
 			global : false,
-			cache: false, */
+			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/info/'+cur_pid, 
 			data: { sid: ses_id}, 
+			beforeSend: function () {
+				 preloading2();
+				},
 			success: function (data) { 
-				alert(data.status);
+				
 				if(data.status == 1){
 						
 							
@@ -1260,6 +1276,12 @@ document.getElementById("task-request-list").innerHTML=appendHTML;
 
 	
 }
+function cancel_taskrequest()
+{
+	
+}
+
+
 function gettaskmembers(tid)
 {
 	var appendHTML="";
@@ -1279,16 +1301,17 @@ function gettaskmembers(tid)
 			    for(var x = 0; x < data.items.length; x++){
 						 
 						var id=data.items[x].id;
+						var uid=data.items[x].user_id;
 						var project_id= data.items[x].project_id;
 						var assigned_by= data.items[x].assigned_by;
 						var display_name= data.items[x].display_name;
 						var email= data.items[x].email;
 						var profile_pic= data.items[x].profile_pic;
 						
-						 appendHTML +='<tr class="checked-list">'; 
-						 appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" src="data:image/gif;base64,'+profile_pic+'" height="45" width="45" class="img-circle"></a></div>';
+						appendHTML +='<tr class="checked-list" id="task-assigned-'+id+'">'; 
+						appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#userprof" onclick="userprofile('+uid+');" src="'+getprofpic(uid)+'" height="45" width="45" class="img-circle"></a></div>';
 						  
-						appendHTML +='<td><a  ><i data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><button type="button" class="close" onclick="delete_assignedtask('+id+')">×</button></div></td></tr>';
+						appendHTML +='<td><a  ><i data-toggle="modal" href="#userprof" onclick="userprofile('+uid+');" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><button type="button" class="close" onclick="delete_assignedtask('+id+','+tid+','+uid+')">×</button></div></td></tr>';
 						
 						
 					
@@ -1308,6 +1331,55 @@ function gettaskmembers(tid)
 document.getElementById("task-assigned-list").innerHTML=appendHTML;
 
 	
+}
+
+function delete_assignedtask(id,tid,uid)
+{
+	del_assid=id;
+	del_tid=tid;
+	del_uid=uid;
+	navigator.notification.confirm(
+        'Are you sure you want to remove this user from task?', 
+        delete_taskmember, // <-- no brackets
+        'Confirmation Message',
+        ['Ok','Cancel']
+    );
+	
+}
+
+function delete_taskmember(buttonIndex)
+{
+	if (buttonIndex==1)
+		{
+			jQuery.ajax({ 
+			type: 'post', 
+			async : true,  
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/task/remove_member/'+del_tid+'/'+del_uid, 
+			data: { sid: ses_id
+					}, 
+			beforeSend: function () {
+			 preloading2();
+			},						
+			success: function (data) { 
+				
+				if (data.status==1)
+				{
+					var parent = document.getElementById("task-assigned-list");
+					var child = document.getElementById('task-assigned-'+del_assid);
+					parent.removeChild(child);
+				}							 
+			},
+		  error: function (err) {
+			//navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+			//alert(err.message);
+			console.log(err.message);
+			}
+      	
+		});
+			
+	}
+
 }
 
 function gettaskprofpic(tsid)
