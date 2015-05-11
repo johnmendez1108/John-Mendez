@@ -2135,7 +2135,8 @@ display:none;
                         <script>
                         $(document).ready(function() {
                             $("#eventCalendarScroll").eventCalendar({
-                                eventsjson: 'json/events.json',
+                                eventsjson: 'json/events.json.php',
+                                jsonDateFormat: 'human',
                                 openEventInNewWindow: true,
                                 eventsScrollable: true
                             });
