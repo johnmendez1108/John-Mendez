@@ -4,6 +4,8 @@ var curmemoid;
 
 function load_memo()
 {
+   
+    document.getElementById("txt_memopad").focus();
 	
 	preloading2();
 	var appendHTML ='';

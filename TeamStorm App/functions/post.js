@@ -351,7 +351,7 @@ function postmember_search()
 
 
 
-
+/*
 document.addEventListener("deviceready",function(){
 
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){ 
@@ -394,4 +394,4 @@ document.addEventListener("deviceready",function(){
 
 
 
-        } , true);
+        } , true);*/

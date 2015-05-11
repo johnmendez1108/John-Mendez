@@ -139,7 +139,7 @@ function notif_click(id){
 
 document.addEventListener('deviceready', function () {
     window.plugin.notification.local.registerPermission(function (granted) {
-    alert('Permission has been granted: ' + granted);
+   console.log('Permission has been granted: ' + granted);
 });
 }, true);
 

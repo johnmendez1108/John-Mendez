@@ -20,6 +20,7 @@ var del_assid,del_uid,del_tid;
 var task_mem_profpic1="";
 
 var onedit_id,onedit_title,onedit_description,onedit_priority,onedit_start_date,onedit_end_date,onedit_task_status,onedit_dependent; 
+
 var isnewtask=0;
 var ismytask=0;
 
@@ -519,7 +520,14 @@ if (checkConnection() >2){
 							document.getElementById("btn_projectedit").disabled = true; 
 							document.getElementById("btn_projectcomplete").disabled = true; 
 						}
-								
+				    
+                    
+                    document.getElementById("txt_editprj_name").value =title;
+                    
+                    document.getElementById("txt_editprj_desc").value =project_description;
+                    
+                    document.getElementById("select_editprj_privacy").value ='0';
+                    
 				}
 	  },
 	  error: function (err) {
@@ -541,6 +549,50 @@ else{
 	
 	
 }
+
+function edit_project()
+{
+
+ var pname=document.getElementById("txt_editprj_name").value;
+var pdesc=document.getElementById("txt_editprj_desc").value;
+var privacy=document.getElementById("select_editprj_privacy").value;
+var approval = document.getElementById('chk_editprj_taskapproval').checked;    
+	jQuery.ajax({ 
+			type: 'post', 
+			async : true,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/edit/'+cur_pid, 
+			data: { sid: ses_id,
+					title:pname,
+					description:pdesc,
+					privacy:privacy,
+                    task_approval:approval }, 
+			beforeSend: function () {
+			 preloading2();
+			},
+			success: function (data) { 
+			
+				if(data.status == 1){
+					clearprj_text();
+					getproject();
+					navigator.notification.alert('Project Updated',alertDismissed,'TeamStorm App','Ok');
+                    projectinfo(cur_pid);
+				}
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+}); 
+    
+    
+    
+}
+
 
 function prjleaderpic(tsid)
 {
