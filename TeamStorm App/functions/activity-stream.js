@@ -259,7 +259,7 @@ if (checkConnection() >2){
 	
 					appendHTML+='<ul class="half-2 clearfix">'+
 												'<li>'+
-													'<button id="btn_post_ag_'+postid+'" type="button" class="btn btn-default btn-block '+is_agree_atr+'" onclick="postagree('+postid+');"><i class="flaticon-check-circle"></i> Agree ('+agree_count+')</button>'+
+													'<button id="btn_post_ag_'+postid+'" type="button" class="btn btn-default btn-block '+is_agree_atr+'" onclick="postagree('+postid+');"><i class="flaticon-check-circle"></i> Agree (<span id ="agree_count_'+postid+'">'+agree_count+'</span>)</button>'+
 												'</li>'+
 												'<li>'+
 													'<button type="button" class="btn btn-default btn-block" onclick="viewpostcomment('+postid+','+poster_id+');" data-toggle="modal" href="#comments"><i class="flaticon-comment-more"></i> Comments ('+comment_count+')</button>'+
@@ -489,7 +489,7 @@ if (checkConnection() >2){
 	
 					appendHTML+='<ul class="half-2 clearfix">'+
 												'<li>'+
-													'<button id="btn_post_ag_'+postid+'" type="button" class="btn btn-default btn-block '+is_agree_atr+'" onclick="postagree('+postid+');"><i class="flaticon-check-circle"></i> Agree ('+agree_count+')</button>'+
+													'<button id="btn_post_ag_'+postid+'" type="button" class="btn btn-default btn-block '+is_agree_atr+'" onclick="postagree('+postid+');"><i class="flaticon-check-circle"></i> Agree (<span id ="agree_count_'+postid+'">'+agree_count+'</span>)</button>'+
 												'</li>'+
 												'<li>'+
 													'<button type="button" class="btn btn-default btn-block" onclick="viewpostcomment('+postid+','+poster_id+');" data-toggle="modal" href="#comments"><i class="flaticon-comment-more"></i> Comments ('+comment_count+')</button>'+
@@ -946,14 +946,21 @@ function postagree(id) {
 					var element = document.getElementById('btn_post_ag_'+id);
 					if (data.is_agree==1)
 					{
-						
+						var count1= document.getElementById('agree_count_'+id);
+                        var newcount1 = count1.textContent;
+                        
 						element.classList.add("btn-agree-active");
-						loadnewsfeed();
+                        document.getElementById('agree_count_'+id).innerHTML = parseInt(newcount1)+1; 
+						//loadnewsfeed();
 					}
 					else
 					{
+                       var count2= document.getElementById('agree_count_'+id);
+                        var newcount2 = count2.textContent;
+                        
 						element.classList.remove("btn-agree-active");
-						loadnewsfeed();
+                        document.getElementById('agree_count_'+id).innerHTML = parseInt(newcount2)-1; 
+						//loadnewsfeed();
 					}
 				}
 				

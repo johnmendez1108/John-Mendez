@@ -119,7 +119,7 @@
 	generatedCount = 0;
 
 	function pullDownAction () {
-	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+	//setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
 		var el, li, i;
 		el = document.getElementById('streamlist');
 		var newpost = "<div class='inner-wrapper'>"+
@@ -158,11 +158,11 @@
 	
 		loadnewsfeed();
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-		}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
+		//}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
 	}
 	
 	function pullUpAction () {
-        setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+        //setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
 		//var el, li, i;
 		//el = document.getElementById('streamlist');
 		//var newpost = "";
@@ -174,7 +174,7 @@
 		//}
 		nextnewsfeed();
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-		}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
+		//}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
 	 }
 	
 	function loaded() {
@@ -581,7 +581,16 @@ display:none;
                     </li>
                     <li><a data-toggle="modal" href="#appsettings" onclick="" data-role="button" type="button" ><i class="flaticon-settings"></i> Settings</a>
                     </li>
-					<li><a data-toggle="modal" href="#notification" onclick="notification_remove_count();" data-role="button" type="button" ><img src="img/globe.png" height="25"><span class="badge" id="notif_gen_count"></span> Notifications</a>
+					<li><a data-toggle="collapse" data-parent="#accordion1" href="#collapse-notification" ><img src="img/globe.png" height="25"><span class="badge" id="notif_gen_count"></span> Notifications</a>
+                        <ul id="collapse-notification" class="panel-collapse collapse">
+							   <li><a data-toggle="modal" href="#notification" onclick="notification_remove_count();" data-role="button" type="button" ><img src="img/globe.png" height="25"> Global</a>
+								</li>
+                                <li><a data-toggle="modal" href="#notification" onclick="" data-role="button" type="button" ><i class="flaticon-folder-close-line"></i> Project</a>
+								</li>
+                                <li><a data-toggle="modal" href="#notification" onclick="" data-role="button" type="button" ><i class="flaticon-task"></i> Task</a>
+								</li>
+                        </ul>
+                        
                     </li>
                 </ul>
                 <ul class="sub" id="accordion1">
@@ -1696,7 +1705,7 @@ display:none;
 		<div class="bottom-controls bar-footer" >
                 <ul class="half-control-3 clearfix">
 					<li>
-                       <button  class="btn btn-block btn-primary" id="btn_taskcomplete"  onclick="testmodal();"  ><span class="flaticon-Check"  ></span> Complete
+                       <button  class="btn btn-block btn-primary" id="btn_taskcomplete"  onclick="conf_complete_task();"  ><span class="flaticon-Check"  ></span> Complete
                        </button>
                     </li>
 					<li>
@@ -1808,7 +1817,7 @@ display:none;
 		<div class="bottom-controls bar-footer" >
                 <ul class="half-control-3 clearfix">
 					<li>
-                       <button class="btn btn-block btn-primary" id="btn_projectcomplete" ><span class="flaticon-Check"></span> Archive
+                       <button class="btn btn-block btn-primary" id="btn_projectcomplete" onclick="conf_archive_project();" ><span class="flaticon-Check"></span> Archive
                        </button>
                     </li>
 					<li>
