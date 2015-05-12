@@ -1623,6 +1623,7 @@ var members=document.getElementById("txtmember").value;
 					clearprj_text();
 					getproject();
 					navigator.notification.alert('New Project Created',alertDismissed,'TeamStorm App','Ok');
+                    getmytask();
 				}
 	  },
 	  error: function (err) {
