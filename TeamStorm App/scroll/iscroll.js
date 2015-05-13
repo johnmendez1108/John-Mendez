@@ -70,7 +70,7 @@ var m = Math,
 	})(),
 	cancelFrame = (function () {
 		return window.cancelRequestAnimationFrame ||
-			window.webkitCancelAnimationFrame ||
+			window.cancelAnimationFrame ||
 			window.webkitCancelRequestAnimationFrame ||
 			window.mozCancelRequestAnimationFrame ||
 			window.oCancelRequestAnimationFrame ||
