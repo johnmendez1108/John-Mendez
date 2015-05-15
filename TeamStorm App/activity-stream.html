@@ -34,7 +34,11 @@
     <!--[if lt IE 9]><script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script><![endif]-->
     <script type="text/javascript" src="js/site.min.js"></script>
+    <script type="text/javascript" src="js/jsonfile.js"></script>
+    
 	<script src="emojify/emojify.js"></script>
+    
+    
 	
 	<link rel="stylesheet" href="css/ddown.css">
 	
@@ -371,6 +375,7 @@
 		leftScroll.refresh(); 
 		rightScroll.refresh();
 		postScroll.refresh(); 
+        calendarscroller.refresh();    
 		userprofscroller.refresh();
 		newtskscroll.refresh();
 		loadtskscroller.refresh();
@@ -1194,7 +1199,7 @@ display:none;
 			</div>
 				
 		</div>	
-	</div>
+
 	
 	
 	
@@ -1801,7 +1806,7 @@ display:none;
 			</div>	
             </div>
 		</div>
-    </div>
+    
 		
 	<!--projectinfo-->
 	 <div id="projectinfo" class="modal-content modal">
@@ -1828,7 +1833,7 @@ display:none;
                        <button class="btn btn-block btn-primary" id="btn_projectdelete" onclick="conf_delete_project();" >&times; Delete Project
                        </button>
                     </li>
-                    </li>
+                   
 					
                 </ul>
         </div>
@@ -2145,7 +2150,7 @@ display:none;
                         <script>
                         $(document).ready(function() {
                             $("#eventCalendarScroll").eventCalendar({
-                                eventsjson: 'json/events.json.php',
+                                eventsjson: 'json/events.json',
                                 jsonDateFormat: 'human',
                                 openEventInNewWindow: true
                             

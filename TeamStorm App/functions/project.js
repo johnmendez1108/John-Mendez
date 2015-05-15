@@ -270,7 +270,8 @@ if (checkConnection() >2){
 							cur_pid=pid;
 						}							
 					 }
-								
+				
+                    writejsonfile();
 				}
 	  },
 	  error: function (err) {
@@ -296,6 +297,23 @@ else{
 
 	
 }
+
+
+function writejsonfile()
+{
+    var jf = require('jsonfile')
+
+    var file = '/json/events.json'
+    var obj = {date: '2015-05-20 17:30:00',
+               type: 'meeting',
+               title: 'Test1',
+               description:' For Test Only'}
+
+    jf.writeFileSync(file, obj)
+    
+}
+
+
 
 function conf_complete_task()
 {	 //test_delete();
