@@ -1222,7 +1222,11 @@ display:none;
                     <div class="input-group-btn" style="right:2px;">
                          <img id="user_comment_profpic" class="media-object img-circle" class="media-object img-circle" src="img/user/thumb-user-small.jpg" width="35" height="35" alt="Image">
                     </div>
-                    <input class="form-control" placeholder="Reply on this storm thread..." id="inptcomment" onkeyUp="commentonwrite();" >
+                    <div class="textntags-wrapper">
+                         <div class="textntags-beautifier"><div>­</div ></div>
+                            <input class="form-control" placeholder="Reply on this storm thread..." id="inptcomment" onkeyUp="commentonwrite();" >
+                             <div class="textntags-tag-list" style="display: none;"></div>
+                        </div>
                     <div class="input-group-btn">
                         <button id="bttndocomment" type="button" class="btn btn-default btn-lg" tabindex="-1" onclick="do_comment();" disabled><i class="flaticon-comment"></i></button>
                     </div>
