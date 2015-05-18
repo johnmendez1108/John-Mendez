@@ -303,13 +303,13 @@ function writejsonfile()
 {
     var jf = require('jsonfile')
 
-    var file = '/json/events.json'
+    var file = 'json/events.json'
     var obj = {date: '2015-05-20 17:30:00',
                type: 'meeting',
                title: 'Test1',
                description:' For Test Only'}
 
-    jf.writeFileSync(file, obj)
+    jf.writeFile(file, obj)
     
 }
 
