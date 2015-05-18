@@ -588,13 +588,13 @@ display:none;
                     </li>
                     <li><a data-toggle="modal" href="#appsettings" onclick="" data-role="button" type="button" ><i class="flaticon-settings"></i> Settings</a>
                     </li>
-					<li><a data-toggle="collapse" data-parent="#accordion1" href="#collapse-notification" ><img src="img/globe.png" height="25"><span class="badge" id="notif_gen_count"></span> Notifications</a>
+					<li><a data-toggle="collapse" data-parent="#accordion1" href="#collapse-notification" ><img src="img/globe.png" height="25"><span class="badge" id="notif_all_count"></span> Notifications</a>
                         <ul id="collapse-notification" class="panel-collapse collapse">
-							   <li><a data-toggle="modal" href="#notification" onclick="notification_remove_count();" data-role="button" type="button" ><img src="img/globe.png" height="25"> Global</a>
+							   <li><a data-toggle="modal" href="#notification" onclick="notification_remove_count();" data-role="button" type="button" ><img src="img/globe.png" height="25"><span class="badge" id="notif_gen_count"></span> Global</a>
 								</li>
-                                <li><a data-toggle="modal" href="#notification" onclick="" data-role="button" type="button" ><i class="flaticon-folder-close-line"></i> Project</a>
+                                <li><a data-toggle="modal" href="#notificationprj" onclick="" data-role="button" type="button" ><i class="flaticon-folder-close-line"></i><span class="badge" id="notif_prj_count"></span> Project</a>
 								</li>
-                                <li><a data-toggle="modal" href="#notification" onclick="" data-role="button" type="button" ><i class="flaticon-task"></i> Task</a>
+                                <li><a data-toggle="modal" href="#notificationtask" onclick="" data-role="button" type="button" ><i class="flaticon-task"></i> <span class="badge" id="notif_task_count"></span>Task</a>
 								</li>
                         </ul>
                         
@@ -1184,7 +1184,7 @@ display:none;
 
         </div>
        
-        <div class="content-modal" style="bottom: 20px;height: 420px;">
+        <div class="content-modal" style="bottom: 20px;height: 420px; width:300px;">
 			
 				<ul >
 				 
@@ -1200,7 +1200,64 @@ display:none;
 				</ul>
 			</div>
 				
-		</div>	
+		</div>
+    
+    
+    <!--Notification Project-->
+	<div id="notificationprj" class="modal-dialog modal dropdown-menu notifications">
+        <div class="top-head-modal bar-title">
+            <div class="left-top-head pull-left">
+                <button data-toggle="modal" href="#notificationprj" class="btn btn-default btn-lg" ><i class="flaticon-arrow-left"></i></button>
+            </div>
+            <div class="title" style="font-size: 25px;">Project Requests</div>
+
+        </div>
+       
+        <div class="content-modal" style="bottom: 20px;height: 420px;width:300px;">
+			
+				<ul >
+				 
+					<div class="scrollthis"  id="notif_prj_holder" tabindex="5005" style="overflow-y: hidden; outline: none;">
+                     
+					
+						
+               
+			
+					</div>
+
+         
+				</ul>
+			</div>
+				
+		</div>
+    
+    <!--Notification Task-->
+	<div id="notificationtask" class="modal-dialog modal dropdown-menu notifications">
+        <div class="top-head-modal bar-title">
+            <div class="left-top-head pull-left">
+                <button data-toggle="modal" href="#notificationtask" class="btn btn-default btn-lg" ><i class="flaticon-arrow-left"></i></button>
+            </div>
+            <div class="title" style="font-size: 25px;">Task Requests</div>
+
+        </div>
+       
+        <div class="content-modal" style="bottom: 20px;height: 420px; width:300px;">
+			
+				<ul >
+				 
+					<div class="scrollthis"  id="notif_task_holder" tabindex="5005" style="overflow-y: hidden; outline: none;">
+                     
+					
+						
+               
+			
+					</div>
+
+         
+				</ul>
+			</div>
+				
+		</div>
 
 	
 	
@@ -1380,8 +1437,8 @@ display:none;
                         </ul>
 						<div class="chk">
 									 
-                                         <input type="checkbox" value="None" id="chk_txt_post" name="sendtoemail" style="width: 25px;font-size: 110%; display: inline;-ms-transform: scale(1.5); /* IE */    -moz-transform: scale(1.5); /* FF */    -webkit-transform: scale(1.5); /* Safari and Chrome */    -o-transform: scale(1.5); /* Opera */    padding: 10px;">
-										  <span><label for="chk_txt_post">Send email to team</label></span>
+                                         <input type="checkbox" value="None" id="chk_txt_post" name="sendtoemail" style="width: 25px;font-size: 110%; display: inline;-ms-transform: scale(1.2); /* IE */    -moz-transform: scale(1.25); /* FF */    -webkit-transform: scale(1.25); /* Safari and Chrome */    -o-transform: scale(1.25); /* Opera */    padding: 10px;">
+										  <label for="chk_txt_post">Send email to team</label>
                                       
 												
 												
@@ -1538,8 +1595,8 @@ display:none;
 						</div>
 						<div class="form-post-wrapper">
 								
-                             <input type="checkbox" value="None" id="chk_editprj_taskapproval" name="sendtoemail">
-							 <label class="lbl-check" for="chk_txt_post"></label><span><label for="chk_editprj_taskapproval">Task Approval</label></span>
+                             <input type="checkbox" value="None" id="chk_editprj_taskapproval" name="sendtoemail" style="width: 25px;font-size: 110%; display: inline;-ms-transform: scale(1.2); /* IE */    -moz-transform: scale(1.25); /* FF */    -webkit-transform: scale(1.25); /* Safari and Chrome */    -o-transform: scale(1.25); /* Opera */    padding: 10px;" >
+							 <label for="chk_editprj_taskapproval">Task Approval</label>
 						    
                         </div>
                     

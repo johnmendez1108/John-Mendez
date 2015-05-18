@@ -10,6 +10,9 @@ var  mess;
  function notification_refresh()
 {
 	
+    var gennotf=0;
+    var prjnotif=0;
+    var tasknotif=0;
 	
 	
 	
@@ -64,6 +67,7 @@ var  mess;
 			success: function (data) { 
 						if(data.count > 0){
 							$("#notif_gen_count").html(data.count);
+                            gennotf=data.count;
 							cur_notifcount=data.count;
 							
 							if (data.count>cur_notifcount2)
@@ -82,7 +86,21 @@ var  mess;
     }
       	
 }); 
-
+    
+ 
+  
+  var allnotifcount=gennotf+prjnotif+tasknotif;  
+    
+    if (allnotifcount>0)
+    {
+       $("#notif_all_count").html(allnotifcount);  
+    }
+    else
+    {
+        $("#notif_all_count").html('');
+    }
+ 
+    
  
 }
 
