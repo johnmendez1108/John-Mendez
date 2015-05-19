@@ -1607,7 +1607,7 @@ function getrequesttask(tid)
 									'<span class="actions">'+
 													'<div class="options btn-group">'+
 														'<button class="btn btn-success btn-xs tooltips" data-title="Accept" data-original-title="" title=""><span class="flaticon-check"></span></button>'+
-														'<button  class="btn btn-default btn-xs tooltips" data-title="Decline" data-original-title="" title="">X</button>'+
+														'<button  class="btn btn-default btn-xs tooltips" data-title="Decline" data-original-title="" title="" onclick="cancel_taskrequest('+id+');"    >X</button>'+
 													'</div>'+
 													'</span>'+	
 									'</div></td></tr>';
@@ -1628,8 +1628,9 @@ document.getElementById("task-request-list").innerHTML=appendHTML;
 
 	
 }
-function cancel_taskrequest()
+function cancel_taskrequest(id)
 {
+    
 	
 }
 

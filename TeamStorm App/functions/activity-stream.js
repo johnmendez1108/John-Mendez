@@ -1168,7 +1168,7 @@ function getaddressbook(){
                      appendHTML += '<tr id="'+user_id+'">'+
                                     '<td>'+
                                         '<div class="checkbox" style="left:23px;"><div class="chk">'+
-                                           '<input type="checkbox" value="None" id="chk_contacts_'+user_id+'" name="Contacts" class="icheckbox_flat">'+
+                                           '<input type="checkbox" value="'+email+'" id="chk_contacts_'+user_id+'" name="Contacts" class="icheckbox_flat">'+
                                         '</div></div>'+
                                     '</td>'+
                                     '<td>'+
@@ -1232,7 +1232,7 @@ function getaddressbookperletter(){
 							 appendHTML = '<tr id="'+user_id+'">'+
 											'<td>'+
 												'<div class="checkbox" style="left:23px;"><div class="chk">'+
-												   '<input type="checkbox" value="None" id="chk_contactslet_'+user_id+'" name="Contacts" class="icheckbox_flat">'+
+												   '<input type="checkbox" value="'+email+'" id="chk_contactslet_'+user_id+'" name="Contacts" class="icheckbox_flat">'+
 												'</div></div>'+
 											'</td>'+
 											'<td>'+
@@ -1278,7 +1278,7 @@ function signout(buttonIndex)
 {
 	if (buttonIndex==1){
 	
-	 
+	  window.location.replace("login.html");
 	 		 jQuery.ajax({ 
 				type: 'post', 
 				//async : false,     
@@ -1293,7 +1293,7 @@ function signout(buttonIndex)
 
 				}
 		   else  if(data.status ==1) {
-			   window.location.replace("login.html");
+			  
 		  }
 		  },
 		  error: function (XMLHttpRequest, textStatus,err) {
