@@ -67,7 +67,6 @@
     <link rel="stylesheet" href="kendo/styles/kendo.default.min.css" />
     <link rel="stylesheet" href="kendo/styles/kendo.dataviz.min.css" />
     <link rel="stylesheet" href="kendo/styles/kendo.dataviz.default.min.css" />
-
    -->
 	
 <!-- 	<link rel="stylesheet" href="kendo/styles/kendo.mobile.all.min.css" />
@@ -89,7 +88,6 @@
     <link href="tags/jquery-textntags.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
-
 .custom-date-style {
 	background-color: red !important;
 }	
@@ -114,7 +112,6 @@
                  navigator.notification.alert();
                  navigator.app.exitApp();  // For Exit Application
              }
-
 	
 			 
 	var myScroll,leftScroll,rightScroll,commentScroll,postScroll,projectScroll,newprjScroll,newtskscroll,loadtskscroller,userprofscroller,addtodoscroller,newtodoscroller,memoscroller,calendarscroller,myprofscroller,appsettingsscroller,taskinfoscroller,projectinfoscroller,editprojectscroller,
@@ -123,7 +120,6 @@
 	pullDownEl, pullDownOffset,
 	pullUpEl, pullUpOffset,
 	generatedCount = 0;
-
 	function pullDownAction () {
 	//setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
 		var el, li, i;
@@ -143,7 +139,6 @@
                                 "<small>4 hours ago via public</small>"+
 								" <span class='ico flaticon-lamp'></span>"+
                             "</div>"+
-
                         "</div>"+
                         "<div class='emojis-plain'><p class='post emojis-wysiwyg'>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. :grin:</p></div>"+
                         "<ul class='half-2 clearfix'>"+
@@ -286,7 +281,6 @@
 	rightScroll_Z= new iScroll('rightwrapper_Z');
 	postScroll.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
-
         while (target.nodeType != 1) target = target.parentNode;
         if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
             e.preventDefault();
@@ -294,7 +288,6 @@
    }
 	commentScroll.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
-
         while (target.nodeType != 1) target = target.parentNode;
         if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
             e.preventDefault();
@@ -303,7 +296,6 @@
 	
 	newprjScroll.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
-
         while (target.nodeType != 1) target = target.parentNode;
         if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
             e.preventDefault();
@@ -312,7 +304,6 @@
    
    newtskscroll.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
-
         while (target.nodeType != 1) target = target.parentNode;
         if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
             e.preventDefault();
@@ -321,16 +312,13 @@
    
    newtodoscroller.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
-
         while (target.nodeType != 1) target = target.parentNode;
         if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
             e.preventDefault();
         }
    }
-
    memoscroller.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
-
         while (target.nodeType != 1) target = target.parentNode;
         if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
             e.preventDefault();
@@ -339,7 +327,6 @@
    
    myprofscroller.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
-
         while (target.nodeType != 1) target = target.parentNode;
         if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
             e.preventDefault();
@@ -347,7 +334,6 @@
    }
     appsettingsscroller.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
-
         while (target.nodeType != 1) target = target.parentNode;
         if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
             e.preventDefault();
@@ -356,12 +342,20 @@
         
 	editprojectscroller.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
-
         while (target.nodeType != 1) target = target.parentNode;
         if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
             e.preventDefault();
         }
    }
+   rightScroll.options.onBeforeScrollStart = function(e) {                
+        var target = e.target;
+        while (target.nodeType != 1) target = target.parentNode;
+        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+            e.preventDefault();
+        }
+   }
+        
+        
         
 	setTimeout(function () { 
 	document.getElementById('wrapper').style.left = '0';
@@ -393,7 +387,6 @@
 		}, false);
 		document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);			 
      
-
 	
  </script>		
 
@@ -406,7 +399,6 @@
 	margin:0;
 	border:0;
 }
-
 body {
 	font-size:12px;
 	-webkit-user-select:none;
@@ -421,7 +413,6 @@ body {
 	/*background:#fff;*/
 	overflow:auto;
 }
-
 #leftwrapper,#rightwrapper  {
 	position:absolute; z-index:1;
 	top: 0px; bottom:0px; left:-9999px;
@@ -429,7 +420,6 @@ body {
 	background:#fff;
 	overflow:auto;
 }
-
 .right_wrapper{
 	position:absolute; z-index:1;
 	top: 0px; bottom:0px; left:-9999px;
@@ -438,7 +428,6 @@ body {
 	overflow:auto;
 }  
 	  
-
 /**
  *
  * Scroller
@@ -451,7 +440,6 @@ body {
 	width:100%;
 	padding:0;
 }
-
 .right_scroller
 {	position:absolute; z-index:1;
 	-webkit-touch-callout:none;
@@ -459,8 +447,6 @@ body {
 	width:100%;
 	padding:0;
 }
-
-
 #scroller ul {
 	list-style:none;
 	padding:0;
@@ -468,7 +454,6 @@ body {
 	width:100%;**/
 	text-align:left;
 }
-
 #scroller li {
 	/**padding:0 10px;
 	height:40px;**/
@@ -479,7 +464,6 @@ body {
 	font-size:14px;
 	
 }
-
 /**
  *
  * Pull down styles
@@ -511,39 +495,31 @@ body {
 #pullUp .pullUpIcon  {
 	-webkit-transform:rotate(-180deg) translateZ(0);
 }
-
 #pullDown.flip .pullDownIcon {
 	-webkit-transform:rotate(-180deg) translateZ(0);
 }
-
 #pullUp.flip .pullUpIcon {
 	-webkit-transform:rotate(0deg) translateZ(0);
 }
-
 #pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
 	background-position:0 100%;
 	-webkit-transform:rotate(0deg) translateZ(0);
 	-webkit-transition-duration:0ms;
-
 	-webkit-animation-name:loading;
 	-webkit-animation-duration:2s;
 	-webkit-animation-iteration-count:infinite;
 	-webkit-animation-timing-function:linear;
 }
-
 @-webkit-keyframes loading {
 	from { -webkit-transform:rotate(0deg) translateZ(0); }
 	to { -webkit-transform:rotate(360deg) translateZ(0); }
 }
-
 .table{
 position:relative;  /*so children div can use 100% height and not go over */
 /* width:100%; as long as this div's parent is body it will take up whole screen */
  /*height:250px;make whatever you want */
 padding:8px; /* will make that spacing you wanted */
 }
-
-
 .table .cell{
 width:90%;
 height:70%;
@@ -551,9 +527,6 @@ margin-bottom: 3px;
 /*display:inline-block; so they display inline */
 display:none;
 }
-
-
-
 </style>
 	
 </head>
@@ -639,7 +612,7 @@ display:none;
                     </li>
                     <li><a data-toggle="modal" href="#todo" onclick="load_todo();" data-role="button" type="button" ><i class="flaticon-to-do"></i> To-Do</a>
                     </li>
-                   <li><a onclick="conf_signout();" data-role="button" type="button" ><img src='img/exit.png' width="20" height="17" />  Log-Out</a>
+                   <li><a onclick="conf_signout();" data-role="button" type="button" ><img src='img/exit.png' width="20" />  Log-Out</a>
                     </li>
                 </ul>
             </div>
@@ -2591,17 +2564,14 @@ display:none;
 
     <script type="text/javascript">
     var
-
     // Helper
         $ = function(id) {
             return document.getElementById(id);
         },
-
         // Instance
         snapper = new Snap({
             element: document.getElementById('content')
         }),
-
         // 
         UpdateDrawers = function() {
             var state = snapper.state(),
@@ -2615,15 +2585,12 @@ display:none;
                // $('left-drawer').classList.add('active-drawer');
             }
         };
-
     snapper.on('drag', UpdateDrawers);
     snapper.on('animating', UpdateDrawers);
     snapper.on('animated', UpdateDrawers);
-
     $('toggle-left').addEventListener('click', function() {
         snapper.open('left');
     });
-
     $('toggle-right').addEventListener('click', function() {
         snapper.open('right');
     });
@@ -2690,7 +2657,6 @@ var ToEndDate = new Date();
 var curdate = new Date();
 var preDate =(curdate.getMonth()+1) + '/' + curdate.getDate() + '/' +
         curdate.getFullYear() + ' '+curdate.getHours() + ':' + curdate.getMinutes();
-
 //$('#txt_duedate,#txt_duedate1').prop('disabled',true);
 $('#txt_duedate').datetimepicker({
 	format:'m/d/Y H:i',
@@ -2710,7 +2676,6 @@ $('#txt_duedate').datetimepicker({
 	}
 });
 $("#txt_duedate").val(preDate);
-
 $('#txt_startdate').datetimepicker({
 	format:'m/d/Y H:i',
 	formatDate: 'm/d/Y',
@@ -2739,18 +2704,11 @@ $('#txt_startdate').datetimepicker({
 	}
 });
 $("#txt_startdate").val(preDate);
-
 $('#txt_tododate').datetimepicker({
 	timepicker:false,
 	format:'m/d/Y',
 	formatDate:'Y/m/d'
 });
-
-
-
-
-
-
 </script>
 
 
@@ -2759,13 +2717,11 @@ $('#txt_tododate').datetimepicker({
 <script src="swipebox/src/js/jquery.swipebox.js"></script>
 <script type="text/javascript">
 	$( document ).ready(function() {
-
 			/* Basic Gallery */
 			$( '.swipebox' ).swipebox();
 			
 			/* Video */
 			$( '.swipebox-video' ).swipebox();
-
 			/* Dynamic Gallery */
 			$( '#gallery' ).click( function( e ) {
 				e.preventDefault();
@@ -2774,7 +2730,6 @@ $('#txt_tododate').datetimepicker({
 					{ href : 'http://swipebox.csag.co/images/image-2.jpg', title : 'My Second Caption' }
 				] );
 			} );
-
       });
 	</script>
 
@@ -2809,7 +2764,6 @@ $('#txt_tododate').datetimepicker({
                             
                         }
                     },    
-
                     spinJs: {
                         lines: 10, // The number of lines to draw
                         length: 15, // The length of each line
@@ -2837,7 +2791,6 @@ $('#txt_tododate').datetimepicker({
                             
                         }
                     },    
-
                     spinJs: {
                         lines: 10, // The number of lines to draw
                         length: 15, // The length of each line
@@ -2881,8 +2834,6 @@ $('#txt_tododate').datetimepicker({
 
 <!-- 
 <script>
-
-
 function search_post_user()
 {
 	
@@ -2923,7 +2874,6 @@ $("#search-contacts").autocomplete({
 		};
 	
 }
-
 </script>
  -->
 

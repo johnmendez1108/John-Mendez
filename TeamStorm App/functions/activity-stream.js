@@ -1167,9 +1167,9 @@ function getaddressbook(){
 					
                      appendHTML += '<tr id="'+user_id+'">'+
                                     '<td>'+
-                                        '<div class="checkbox" style="left:20px;">'+
-                                           '<input type="checkbox" id="flat-checkbox-1" class="icheckbox_flat">'+
-                                        '</div>'+
+                                        '<div class="checkbox" style="left:23px;"><div class="chk">'+
+                                           '<input type="checkbox" value="None" id="chk_contacts_'+user_id+'" name="Contacts" class="icheckbox_flat">'+
+                                        '</div></div>'+
                                     '</td>'+
                                     '<td>'+
                                         '<div class="portrait-status chat" style="left:20px;">'+
@@ -1231,9 +1231,9 @@ function getaddressbookperletter(){
 							
 							 appendHTML = '<tr id="'+user_id+'">'+
 											'<td>'+
-												'<div class="checkbox" style="left:20px;">'+
-												   '<input type="checkbox" id="flat-checkbox-1" class="icheckbox_flat">'+
-												'</div>'+
+												'<div class="checkbox" style="left:23px;"><div class="chk">'+
+												   '<input type="checkbox" value="None" id="chk_contactslet_'+user_id+'" name="Contacts" class="icheckbox_flat">'+
+												'</div></div>'+
 											'</td>'+
 											'<td>'+
 												'<div class="portrait-status chat" style="left:20px;">'+
