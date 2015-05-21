@@ -97,7 +97,7 @@ var  mess;
     
  
   
-  var allnotifcount=gennotf+prjnotif+tasknotif;  
+  var allnotifcount=parseInt(gennotf)+parseInt(prjnotif)+parseInt(tasknotif);  
     
     if (allnotifcount>0)
     {
