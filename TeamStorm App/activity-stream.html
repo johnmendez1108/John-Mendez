@@ -1245,11 +1245,11 @@ display:none;
 
             <div class="bottom-controls sidebar-footer" style="width:270px;">
                 <ul class="half-control-3 clearfix">
-                    <li><a  class="btn btn-block btn-primary"  ><i class="flaticon-chat"></i> Chat</a>
+                    <li><a  class="btn btn-block btn-primary"  onclick="callchat();" ><i class="flaticon-chat"></i> Chat</a>
                     </li>
                     <li><a  class="btn btn-block btn-primary"><i class="flaticon-task"></i> Task</a>
                     </li>
-                    <li><a  class="btn btn-block btn-primary" ><i class="flaticon-project"></i> Project</a>
+                    <li><a data-toggle="modal" href="#inviteprojectlist" class="btn btn-block btn-primary"  ><i class="flaticon-project"></i> Project</a>
                     </li>
                 </ul>
             </div>
@@ -1517,6 +1517,33 @@ display:none;
 
 	
 	
+     <!--Invite Project-->
+	<div id="inviteprojectlist" class="modal-dialog modal dropdown-menu notifications">
+        <div class="top-head-modal bar-title">
+            <div class="left-top-head pull-left">
+                <button data-toggle="modal" href="#inviteprojectlist" class="btn btn-default btn-lg" ><i class="flaticon-arrow-left"></i></button>
+            </div>
+            <div class="title" style="font-size: 25px;">Project List</div>
+
+        </div>
+       
+        <div class="content-modal" style="bottom: 20px;height: 420px; width:300px;">
+			
+				<ul >
+				 
+					<div class="scrollthis"  id="invite_prjlist_holder" tabindex="5005" style="overflow-y: hidden; outline: none;">
+                     
+					
+						
+               
+			
+					</div>
+
+         
+				</ul>
+			</div>
+				
+		</div>
 	
 	
 	<!--Comments-->
