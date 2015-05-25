@@ -77,8 +77,8 @@ function onPhotoDataSuccess(imageData) {
 	
 	 
     imgcount +=1;  
-	// uploadfile(imageData);
-     var options = new FileUploadOptions();
+     //uploadfile(imageData);
+    var options = new FileUploadOptions();
     options.fileKey = "file";
     options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
     options.mimeType = "image/jpeg";
@@ -91,8 +91,8 @@ function onPhotoDataSuccess(imageData) {
 	//params.sid=ses_id;
     options.params = params;
     var ft = new FileTransfer();
-    ft.upload(imageData, encodeURI("http://teamstormapps.net/upload"), upwin, upfail,
-        options); 
+    ft.upload(imageData, encodeURI("http://teamstormapps.net/upload/"), upwin, upfail,
+        options,true); 
 
 
 	
@@ -149,7 +149,7 @@ function resOnError(error)
 
 function capturePhoto() {
   // Take picture using device camera and retrieve image as base64-encoded string
-  navigator.camera.getPicture(onPhotoDataSuccess, onFail, {destinationType: Camera.DestinationType.FILE_URI, quality: 50, correctOrientation: true,
+  navigator.camera.getPicture(onPhotoDataSuccess, onFail, {destinationType: Camera.DestinationType.DATA_URI, quality: 10, correctOrientation: true,
       targetWidth: 600,
       saveToPhotoAlbum: true });
 }
@@ -158,8 +158,8 @@ function getPhoto(source)
 {
 	
 
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, 
-    destinationType: Camera.DestinationType.FILE_URI,
+    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 10, 
+    destinationType: Camera.DestinationType.DATA_URI,
     sourceType: source });
 }
 

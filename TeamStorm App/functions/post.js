@@ -270,8 +270,7 @@ function uploadfile(src)
 			url: 'http://teamstormapps.net/upload', 
 			data: { sid: ses_id,files: src}, 
 			success: function (data) {
-				alert(data.files[0].url);
-			
+				alert(data.files[0].url);			
 			},				
 			error: function (err) {
         alert(err.message);
@@ -288,7 +287,7 @@ function upwin(r) {
 }
 
 function  upfail(error)  {
-    alert("An error has occurred: Code = " + error.code + error.source + error.target);
+    alert("An error has occurred: Code = " + error.code+" " + error.source+" " + error.target);
     console.log("upload error source " + error.source);
     console.log("upload error target " + error.target);
 }
