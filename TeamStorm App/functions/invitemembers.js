@@ -27,7 +27,7 @@ function getprojectsinvite()
 				    appendHTML += '<a  data-toggle="modal" href="#inviteprojectlist" onclick="inviteproject_select('+row.id+');">';
     				appendHTML += '<div class="dv-notif "  id="invite_prjlist-'+row.id+'">';
     				
-    				appendHTML += '<div class="dv-info">';
+    				appendHTML += '<div class="dv-info un-read">';
     				appendHTML += '<span> '+row.project_title+'</span>';
     				
     				appendHTML += '</div>';
