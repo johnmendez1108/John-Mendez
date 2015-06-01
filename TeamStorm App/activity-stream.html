@@ -60,6 +60,7 @@
 	<script type="text/javascript" charset="utf-8" src="functions/myprofile.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/appsettings.js"></script>
 	<script type="text/javascript" charset="utf-8" src="functions/notifications.js"></script>
+    <script type="text/javascript" charset="utf-8" src="functions/invitemembers.js"></script>
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	<!-- <script type="text/javascript" charset="utf-8" src="local-notification.js"></script> -->
 	<script type="text/javascript" charset="utf-8" src="functions/connection.js"></script>
@@ -1249,7 +1250,7 @@ display:none;
                     </li>
                     <li><a  data-toggle="modal" href="#invitetasklist" class="btn btn-block btn-primary"><i class="flaticon-task"></i> Task</a>
                     </li>
-                    <li><a data-toggle="modal" href="#inviteprojectlist" class="btn btn-block btn-primary"  ><i class="flaticon-project"></i> Project</a>
+                    <li><a data-toggle="modal" href="#inviteprojectlist" class="btn btn-block btn-primary" onclick="getprojectsinvite();"   ><i class="flaticon-project"></i> Project</a>
                     </li>
                 </ul>
             </div>
