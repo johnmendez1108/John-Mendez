@@ -48,7 +48,7 @@ $(document).ready(function() {
 
 });
 
-function postonwrite()
+function postonwrite(o)
 {
 	var content = document.getElementById('txt_post').value;
 
@@ -60,6 +60,8 @@ function postonwrite()
 	document.getElementById("bttndopost").disabled = false; 
 	}
 
+    o.style.height = "1px";
+	o.style.height = (25+o.scrollHeight)+"px";
 }
 function newpost()
 {

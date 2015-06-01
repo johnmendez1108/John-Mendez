@@ -109,8 +109,8 @@
              function BackKeyDown()
              { 
 				//window.history.back();
-                 navigator.notification.alert();
-                 navigator.app.exitApp();  // For Exit Application
+                // navigator.notification.alert();
+                // navigator.app.exitApp();  // For Exit Application
              }
 	
 			 
@@ -1709,7 +1709,7 @@ display:none;
                         <div class="form-post-wrapper">
                            
                                 
-                                    <textarea rows="5" class="form-control" placeholder="Share your Updates..." id="txt_post" onkeyUp="postonwrite();" ></textarea>
+                                    <textarea rows="5" class="form-control" placeholder="Share your Updates..." id="txt_post" onkeyUp="postonwrite(this);" ></textarea>
                              
 						
 							<div id="upld_img" class ="table" > 
