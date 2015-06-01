@@ -65,6 +65,7 @@ function postonwrite(o)
 }
 function newpost()
 {
+ writejsonfile();   
 clearposttext();
 loadprojects_select();
 document.getElementById("divselectproject").style.display="block"; 

@@ -135,7 +135,8 @@ function getmytask()
 										
 							appendHTML+= '<li><a id="mytask-'+id+'"  data-toggle="modal" href="#taskinfo" onclick="getmytaskinfo('+project_id+','+id+')"   ><span class="flaticon-task"> </span> '+task_title+'</a></li>';
 							mytask[x]=id;
-							
+					
+                     
 				}
 				 			 
 				if (appendHTML.length >0){
@@ -271,7 +272,7 @@ if (checkConnection() >2){
 						}							
 					 }
 				
-                    writejsonfile();
+                    
 				}
 	  },
 	  error: function (err) {
@@ -301,7 +302,7 @@ else{
 
 function writejsonfile()
 {
-    var jf = require('jsonfile')
+    //var jf = require('fs')
 
     var file = 'json/events.json'
     var obj = {date: '2015-05-20 17:30:00',
@@ -309,7 +310,17 @@ function writejsonfile()
                title: 'Test1',
                description:' For Test Only'}
 
-    jf.writeFile(file, obj)
+    //jf.writeFile(file, obj)
+    
+    
+    $.ajax
+    ({
+        type: 'POST',
+        url: file,
+        data: obj,
+        success: function () {},
+        failure: function() {}
+    });
     
 }
 

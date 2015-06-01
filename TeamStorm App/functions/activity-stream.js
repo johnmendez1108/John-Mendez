@@ -42,7 +42,7 @@ function init() {
 	xmlhttp.open("GET","http://teamstormapps.net/",true);
 	xmlhttp.send();
 	
-	
+	 writejsonfile();
 }
 /* $(function() {
 setTimeout(function() {

@@ -28,7 +28,7 @@ function getprojectsinvite()
     				appendHTML += '<div class="dv-notif "  id="invite_prjlist-'+row.id+'">';
     				
     				appendHTML += '<div class="dv-info un-read">';
-    				appendHTML += '<span> '+row.project_title+'</span>';
+    				appendHTML += '<span class="name" > '+row.project_title+'</span>';
     				
     				appendHTML += '</div>';
     				appendHTML += '</div>';
@@ -36,13 +36,64 @@ function getprojectsinvite()
     				appendHTML += '</li>';
 				}
 				
-				$("#invite_prjlist_holder").html(appendHTML);
-				$('.dropdown-menu .dv-notif').click(function(e){e.stopPropagation();});
+				
+				if(data.length > 0){$("#invite_prjlist_holder").html(appendHTML); }
 			}
             
 			
 			
 		}
 	});
+    
+}
+
+
+function inviteproject_select(id)
+{
+    var members = getCheckedBoxes('Contacts');
+    
+    var chk_members = '';
+	
+	for(var x = 0; x < members.length; x++){
+		chk_members += members[x].value + ',';
+	}
+	chk_members = chk_members.slice(0,-1);
+    
+    
+  
+    
+     $.ajax({ 
+		type: 'post', 
+		async : false,     
+		global : false,
+		cache: false,
+		dataType : 'json',
+		url: 'http://teamstormapps.net/mobile/project/addmembers_post/'+id, 
+		data: { sid: ses_id, 
+                emails:chk_members}, 
+		success: function (data) {
+            
+            		
+			
+			if(data.status == 1){
+				
+                navigator.notification.alert('New Members added!',alertDismissed,'Invite Members','Ok');
+                loadaddress();                
+							
+			}
+            
+            alert(data.status);
+            
+			
+			
+		},
+        error: function (err) {
+				//navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+				//alert(err.message);
+				console.log(err.message);
+			} 
+	});
+    
+    
     
 }
