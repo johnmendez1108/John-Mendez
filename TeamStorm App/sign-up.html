@@ -32,6 +32,13 @@
      <script src="preloader/dist/helpers/spin.min.js"></script>
      <script src="preloader/dist/jquery.introLoader.js"></script>
 	
+     <script type="application/javascript" src="js/fastclick.js"></script> 
+    
+     <script type="application/javascript">
+    	window.addEventListener('load', function () {
+    		FastClick.attach(document.body);
+    	}, false);
+        </script>
 	
       <script>
       function startActivity(className) {

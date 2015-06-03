@@ -36,6 +36,14 @@
      <script src="preloader/dist/jquery.introLoader.js"></script>
 	
 	<script type="text/javascript" src="js/preloader.js"></script>
+    
+    <script type="application/javascript" src="js/fastclick.js"></script> 
+    
+        <script type="application/javascript">
+    	window.addEventListener('load', function () {
+    		FastClick.attach(document.body);
+    	}, false);
+    </script>
       <script>
       function startActivity(className) {
           cordova.exec(function() {console.log("Success");}, function(e) {console.log("Error: "+e);}, "Activity", "start", [className]);
