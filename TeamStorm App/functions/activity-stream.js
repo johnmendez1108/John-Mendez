@@ -319,7 +319,7 @@ if (checkConnection() >2){
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/newsfeed', 
-			data: { sid: ses_id, mypost: 0,startdate:nextpagedate, itemperpage:4 },
+			data: { sid: ses_id, mypost: 0,startdate:nextpagedate, itemperpage:2 },
 				
 			success: function (data) {
 				nextpagedate=data.nextpage_date;
@@ -1161,7 +1161,7 @@ function getaddressbook(){
 					var user_id= data[x].user_id;
 					var fullname= data[x].fullname;
 					var email= data[x].email;
-					var profile_pic= data[x].profile_pic;
+					//var profile_pic= data[x].profile_pic;
 					var preview_pic= data[x].preview_pic;
 					
 					
@@ -1225,7 +1225,7 @@ function getaddressbookperletter(){
 					var fullname= data[x].fullname;
 					var user_id= data[x].user_id;	
 					var email= data[x].email;
-					var profile_pic= data[x].profile_pic;
+					//var profile_pic= data[x].profile_pic;
 					var preview_pic= data[x].preview_pic;
 							
 							

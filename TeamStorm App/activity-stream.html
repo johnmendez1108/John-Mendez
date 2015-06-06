@@ -558,6 +558,7 @@
 }	
 		document.addEventListener('touchmove', function (e) { e.preventDefault();
 		projectScroll.refresh();
+        projectinfoscroller.refresh();    
         editprojectscroller.refresh();
 		leftScroll.refresh();
 		leftScroll.refresh(); 
@@ -1849,14 +1850,12 @@ display:none;
                 <button data-toggle="modal" href="#editproject" data-role="button"  class="btn btn-default btn-lg" type="button" ><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title">Edit Project</div>
-          
+             <div class="right-top-head pull-right">
+                <button  data-toggle="modal" href="#editproject" data-role="button" class="btn btn-default btn-lg" type="button" onclick="edit_project();"  ><i class="flaticon-check" ></i></button>
+            </div> 
         </div>
-        <div class="bottom-controls bar-footer">
-            <ul class="full-control clearfix">
-                <li><button  data-toggle="modal" href="#editproject" class="btn btn-block btn-primary btn-lg"  onclick="edit_project();" ><i class="flaticon-folder-check"></i> Save Project</button>
-                </li>
-            </ul>
-        </div>
+        
+        
         <div class="content-modal">
 			
 			<div id="editprjwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px;">
@@ -2238,7 +2237,21 @@ display:none;
 				
             </div>
 			
+                   <div class="form-post-wrapper">							
+							<div >
+							
+							 <table class="table ">
+								<tbody id="prj-member">
+									
+								</tbody>
+							</table>
+							</div>
+                        </div>
+
+                
 			
+                
+                
 			
            <!--     <div class="tab-wrapper">
                     <ul id="task-tab" class="nav nav-tabs nav-justified">

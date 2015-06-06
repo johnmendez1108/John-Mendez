@@ -41,15 +41,15 @@ function getproject()
 				list_prj_count=data.length;		
 				 for(var x = 0; x < data.length; x++){
 					var pid= data[x].id;
-					var project_creator= data[x].project_creator;
+					//var project_creator= data[x].project_creator;
 					var project_title= data[x].project_title;   
-					var project_description= data[x].project_description;
-					var date_last_update= data[x].date_last_update;
-					var date_created= new Date(data[x].date_created);  
-					var is_deleted= data[x].is_deleted;
-					var status= data[x].status;
-					var creator_name= data[x].creator_name;
-					var percentcomplete=0;
+					//var project_description= data[x].project_description;
+					//var date_last_update= data[x].date_last_update;
+					//var date_created= new Date(data[x].date_created);  
+					//var is_deleted= data[x].is_deleted;
+					//var status= data[x].status;
+					//var creator_name= data[x].creator_name;
+					//var percentcomplete=0;
 					
 					
 					
@@ -187,7 +187,7 @@ if (checkConnection() >2){
 							
 					 for(var x = 0; x < data.items.length; x++){	
 						
-						if (tid== data.items[x].id)
+						if (cur_tid == data.items[x].id)
 						{
 							var task_title = data.items[x].task_title;
 							var task_description = data.items[x].task_description;
@@ -199,7 +199,7 @@ if (checkConnection() >2){
 							var complete_date = data.items[x].date_completed;
 							var task_status = data.items[x].task_status;
 							var dependent_taskid = data.items[x].dependent_taskid;
-							var project_title = data.items[x].project_title;
+							//var project_title = data.items[x].project_title;
 							var prior;
 							
 							
@@ -391,7 +391,8 @@ function onedittask()
 	document.getElementById('txt_startdate').value=onedit_start_date;
 	document.getElementById('txt_duedate').value=onedit_end_date;
 	dependanttask_select();
-	var depentask = document.getElementById('select_deptask').value=onedit_dependent;
+	//var depentask = 
+    document.getElementById('select_deptask').value=onedit_dependent;
 	document.getElementById("fortaskmembers").innerHTML=""
 	document.getElementById("viewnewtaskhdr").innerHTML="Edit Task";
 	
@@ -613,6 +614,7 @@ if (checkConnection() >2){
                     
                     document.getElementById("select_editprj_privacy").value ='0';
                     
+                    projectmembers(cur_pid);
 				}
 	  },
 	  error: function (err) {
@@ -634,6 +636,61 @@ else{
 	
 	
 }
+
+function projectmembers(id)
+{
+    
+    jQuery.ajax({ 
+			type: 'post', 
+			async : false,     
+			global : false,
+			cache: false,
+			dataType : 'json',
+			url: 'http://teamstormapps.net/mobile/project/memberlist/'+id, 
+			data: { sid: ses_id}, 
+			/* beforeSend: function () {
+			 preloading2();
+			}, */
+			success: function (data) { 
+			
+                var htmldata="";
+				if(data.status == 1){
+					
+				
+        			    for(var x = 0; x < data.items.length; x++){
+        						
+        					  
+        							
+        						var id  = data.items[x].id;
+        						var role = data.items[x].role;
+        						var name = data.items[x].name;
+        						var pic = data.items[x].profile_pic;
+        					  
+                             
+        									htmldata +='<tr class="checked-list">'; 
+        									htmldata +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');"  ><img  src="'+pic+ '" height="45" width="45" class="img-circle"></a></div>';
+        									htmldata +='<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');"><i data-toggle="modal" href="#newproject" ></i>'+name+'</a><p style="font-size:10px;">'+role+'</p></td></td><td><div class="checkbox" name="chk_members" >'+		
+        										'</div></td></tr>';
+                            
+                            
+        					}
+                    
+                    document.getElementById('prj-member').innerHTML=htmldata;
+                    
+                }
+	  },
+	  error: function (err) {
+        //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
+		//alert(err.message);
+		console.log(err.message);
+    }
+      	
+}); 
+    
+    
+    
+}
+
 
 
 function conf_archive_project()
@@ -866,16 +923,16 @@ function getprojectlist()
 						 
 				 for(var x = 0; x < data.length; x++){
 					var pid= data[x].id;
-					var project_creator= data[x].project_creator;
+					//var project_creator= data[x].project_creator;
 					var project_title= data[x].project_title;   
-					var project_description= data[x].project_description;
-					var date_last_update= data[x].date_last_update;
+					//var project_description= data[x].project_description;
+					//var date_last_update= data[x].date_last_update;
 					var date_created= data[x].date_created;  
-					var is_deleted= data[x].is_deleted;
-					var status= data[x].status;
-					var creator_name= data[x].creator_name;
-					var percentcomplete=0;
-					var numact,numpen,numcomp;
+					//var is_deleted= data[x].is_deleted;
+					//var status= data[x].status;
+					//var creator_name= data[x].creator_name;
+					//var percentcomplete=0;
+					//var numact,numpen,numcomp;
 					var p_title ="'"+project_title+"'";
 					
 					var parts,dayparts,createdate;
@@ -1107,7 +1164,7 @@ function getprofpic(tsid)
 			success: function (data) { 
 			
 		
-			 pic= data.profile_pic;
+			 pic= data.preview_pic;
 			
 			
 	  },
@@ -1209,17 +1266,17 @@ document.getElementById(""+type+"-task").innerHTML="";
 					
 					 for(var x = 0; x < data.items.length; x++){	
 						var id =data.items[x].id;
-						var dependent_taskid =data.items[x].dependent_taskid;
+						//var dependent_taskid =data.items[x].dependent_taskid;
 						var task_title =data.items[x].task_title;
-						var task_description =data.items[x].task_description;
-						var task_creator_id =data.items[x].task_creator_id;
-						var task_creator_name =data.items[x].task_creator_name;
+						//var task_description =data.items[x].task_description;
+						//var task_creator_id =data.items[x].task_creator_id;
+						//var task_creator_name =data.items[x].task_creator_name;
 						var priority =data.items[x].priority;
-						var date_created =data.items[x].date_created;
-						var date_start =data.items[x].date_start;
-						var date_end =data.items[x].date_end;
-						var date_completed =data.items[x].date_completed;
-						var task_status =data.items[x].task_status;
+						//var date_created =data.items[x].date_created;
+						//var date_start =data.items[x].date_start;
+						//var date_end =data.items[x].date_end;
+						//var date_completed =data.items[x].date_completed;
+						//var task_status =data.items[x].task_status;
 						
 						var task_name ="'"+task_title+"'";
 						/* var progval=0;
@@ -1604,8 +1661,8 @@ function getrequesttask(tid)
 			    for(var x = 0; x < data.items.length; x++){
 						 
 						var id=data.items[x].id;
-						var project_id= data.items[x].project_id;
-						var assigned_by= data.items[x].assigned_by;
+						//var project_id= data.items[x].project_id;
+						//var assigned_by= data.items[x].assigned_by;
 						var display_name= data.items[x].display_name;
 						var email= data.items[x].email;
 						var profile_pic= data.items[x].profile_pic;
@@ -1673,7 +1730,7 @@ function gettaskmembers(tid)
 						var profile_pic= data.items[x].profile_pic;
 						
 						appendHTML +='<tr class="checked-list" id="task-assigned-'+id+'">'; 
-						appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#userprof" onclick="userprofile('+uid+');" src="'+getprofpic(uid)+'" height="45" width="45" class="img-circle"></a></div>';
+						appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#userprof" onclick="userprofile('+uid+');" src="data:image/gif;base64,'+getprofpic(uid)+'" height="45" width="45" class="img-circle"></a></div>';
 						  
 						appendHTML +='<td><a  ><i data-toggle="modal" href="#userprof" onclick="userprofile('+uid+');" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><button type="button" class="close" onclick="delete_assignedtask('+id+','+tid+','+uid+')">×</button></div></td></tr>';
 						
