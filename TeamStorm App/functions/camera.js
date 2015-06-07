@@ -51,6 +51,16 @@ function encodeImage(src, callback) {
       img.src = src;;
 }
 function onPhotoDataSuccess(imageData) {
+  var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+		var response = xmlhttp.responseText; //if you need to do something with the returned value
+		}
+	}
+
+	xmlhttp.open("GET","http://teamstormapps.net/",true);
+	xmlhttp.send();
+    
   var based64img = "";
    
   if (imgcount<=3) { 
@@ -79,23 +89,26 @@ function onPhotoDataSuccess(imageData) {
     imgcount +=1;  
      //uploadfile(imageData);
     var options = new FileUploadOptions();
-    options.fileKey = "file";
+    options.fileKey = "files";
     options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
-    options.mimeType = "image/jpeg";
+    options.mimeType = "image/jpg";
 	options.httpMethod = "POST";
     options.chunkedMode = false;
 	options.headers = {
           Connection: "close"
         };
     var params = new Object();
-	//params.sid=ses_id;
+	  params.sid=ses_id;
+      params.fullpath =imageData;
+      params.name = options.fileName;
     options.params = params;
     var ft = new FileTransfer();
+      
+    preloading3();
+      
     ft.upload(imageData, encodeURI("http://teamstormapps.net/upload/"), upwin, upfail,
         options,true); 
-
-
-	
+           	
    }
    else {
        navigator.notification.alert('Exceeded maximum attachment',alertDismissed,'New Post','Ok');
@@ -111,6 +124,11 @@ function onFail(message)
 function clearimg_count()
 {
     imgcount=1;
+    document.getElementById('upld_img').innerHTML='<div class="cell" id="pstimg1" ><img  id="post_image1" /><button type="button" data-dismiss="alert" class="close" style="float:none;" aria-hidden="true">X</button></div>'+
+    '<div class="cell" id="pstimg2"><div class="cell" id="pstimg2"><button type="button" data-dismiss="alert" class="close" style="float:none;" aria-hidden="true">X</button></div>'+
+    '<div class="cell" id="pstimg3"><div class="cell" id="pstimg3"><button type="button" data-dismiss="alert" class="close" style="float:none;" aria-hidden="true">X</button></div>';
+    
+    
 }
 
 function movePic(file)
@@ -149,7 +167,7 @@ function resOnError(error)
 
 function capturePhoto() {
   // Take picture using device camera and retrieve image as base64-encoded string
-  navigator.camera.getPicture(onPhotoDataSuccess, onFail, {destinationType: Camera.DestinationType.DATA_URI, quality: 10, correctOrientation: true,
+  navigator.camera.getPicture(onPhotoDataSuccess, onFail, {destinationType: Camera.DestinationType.FILE_URI, quality: 10, correctOrientation: true,
       targetWidth: 600,
       saveToPhotoAlbum: true });
 }
@@ -159,7 +177,8 @@ function getPhoto(source)
 	
 
     navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 10, 
-    destinationType: Camera.DestinationType.DATA_URI,
+    destinationType: Camera.DestinationType.FILE_URI,
+    mediaType:Camera.MediaType.ALLMEDIA,    
     sourceType: source });
 }
 

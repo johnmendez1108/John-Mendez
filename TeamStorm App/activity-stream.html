@@ -1757,6 +1757,10 @@ display:none;
                             </li>
 							
 							
+                            
+                            
+                            
+                            
                         </ul>
 						<div class="chk">
 									 
@@ -3021,62 +3025,91 @@ $('#txt_tododate').datetimepicker({
 				
 				function preloading()
 				{
-				var loader = $("#spinload").introLoader({
-					animation: {
-                        name: 'simpleLoader',
-                        options: {
-                            effect:'slideUp',
-                            ease: "easeInOutCirc",
-                            style: 'light',
-                            delayTime: 200, //delay time in milliseconds
-                            animationTime: 200
-                            
+    				var loader = $("#spinload").introLoader({
+    					animation: {
+                            name: 'simpleLoader',
+                            options: {
+                                effect:'slideUp',
+                                ease: "easeInOutCirc",
+                                style: 'light',
+                                delayTime: 200, //delay time in milliseconds
+                                animationTime: 200
+                                
+                            }
+                        },    
+                        spinJs: {
+                            lines: 10, // The number of lines to draw
+                            length: 15, // The length of each line
+                            width: 10, // The line thickness
+                            radius: 20, // The radius of the inner circle
+                            corners: 1, // Corner roundness (0..1)
+                            color: '#ffffff', // #rgb or #rrggbb or array of colors
                         }
-                    },    
-                    spinJs: {
-                        lines: 10, // The number of lines to draw
-                        length: 15, // The length of each line
-                        width: 10, // The line thickness
-                        radius: 20, // The radius of the inner circle
-                        corners: 1, // Corner roundness (0..1)
-                        color: '#ffffff', // #rgb or #rrggbb or array of colors
-                    }
-				});
+    				});
                 
 				}
 				
-				function preloading2()
-				{
-				var loader = $("#element2").introLoader({
-					animation: {
-                        name: 'simpleLoader',
-                        options: {
-                            effect:'slideDown',
-                            ease: "easeInOutCirc",
-                            style: 'dark',
-							animationTime: 200,
-                            stop: false,
-                            fixed: false
-                            
-                        }
-                    },    
-                    spinJs: {
-                        lines: 10, // The number of lines to draw
-                        length: 15, // The length of each line
-                        width: 10, // The line thickness
-                        radius: 20, // The radius of the inner circle
-                        corners: 1, // Corner roundness (0..1)
-                        color: '#00A3DC', // #rgb or #rrggbb or array of colors
+        				function preloading2()
+        				{
+        				var loader = $("#element2").introLoader({
+        					animation: {
+                                name: 'simpleLoader',
+                                options: {
+                                    effect:'slideDown',
+                                    ease: "easeInOutCirc",
+                                    style: 'dark',
+        							animationTime: 200,
+                                    stop: false,
+                                    fixed: false
+                                    
+                                }
+                            },    
+                            spinJs: {
+                                lines: 10, // The number of lines to draw
+                                length: 15, // The length of each line
+                                width: 10, // The line thickness
+                                radius: 20, // The radius of the inner circle
+                                corners: 1, // Corner roundness (0..1)
+                                color: '#00A3DC', // #rgb or #rrggbb or array of colors
+                            }
+        				});
+                        window.setTimeout("stoppreload()", 100);
+    				}
+    				function stoppreload()
+    				{
+        				 var loader = $('#element2').data('introLoader');
+        				loader.stop();
+    				}
+                        function preloading3()
+        				{
+        				var loader = $("#element2").introLoader({
+        					animation: {
+                                name: 'simpleLoader',
+                                options: {
+                                    effect:'slideDown',
+                                    ease: "easeInOutCirc",
+                                    style: 'dark',
+        							animationTime: 200,
+                                    stop: false,
+                                    fixed: false
+                                    
+                                }
+                            },    
+                            spinJs: {
+                                lines: 10, // The number of lines to draw
+                                length: 15, // The length of each line
+                                width: 10, // The line thickness
+                                radius: 20, // The radius of the inner circle
+                                corners: 1, // Corner roundness (0..1)
+                                color: '#00A3DC', // #rgb or #rrggbb or array of colors
+                            }
+        				});
                     }
-				});
-                window.setTimeout("stoppreload()", 100);
-				}
-				function stoppreload()
+				function stopload()
 				{
 				 var loader = $('#element2').data('introLoader');
 				loader.stop();
 				}
-				
 				
 				
 				

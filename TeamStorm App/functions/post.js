@@ -72,6 +72,7 @@ document.getElementById("divselectproject").style.display="block";
 document.getElementById("searchpostuser").style.display="table-row"; 
 postmember_search();
 
+    
 }
 function clearposttext()
 {
@@ -283,14 +284,30 @@ function uploadfile(src)
 	
 }
 function upwin(r) {
-	alert("Sent = " + r.bytesSent);
+	//alert("Sent = " + r.bytesSent);
     console.log("Code = " + r.responseCode);
     console.log("Response = " + r.response);
     console.log("Sent = " + r.bytesSent);
+ 
+     var delurl = r.response.substr(r.response.lastIndexOf('id=') + 3);
+     var res= delurl.split('"');
+    stopload();
+     //alert(res[0]); 
 }
 
+function deleteuploadimage(id)
+{
+    $.get("http://teamstormapps.net/upload/remove_temp?id="+id, function(data, status){
+       if(data.success == 1){
+           console.log("Image deleted");
+          }
+    });
+}
+
+
 function  upfail(error)  {
-    alert("An error has occurred: Code = " + error.code+" " + error.source+" " + error.target);
+    stopload();
+    //alert("An error has occurred: Code = " + error.code+" " + error.source+" " + error.target);
     console.log("upload error source " + error.source);
     console.log("upload error target " + error.target);
 }
