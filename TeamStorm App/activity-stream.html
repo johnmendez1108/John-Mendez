@@ -47,7 +47,8 @@
 	
 	 <script src="js/jquery-1.11.1.min.js"></script>
 	<script type="application/javascript" src="js/fastclick.js"></script> 
-
+    
+    
 	<script type="text/javascript" src="scroll/iscroll.js"></script>
     
 	<script type="text/javascript" charset="utf-8" src="functions/activity-stream.js"></script>
@@ -732,11 +733,11 @@ display:none;
 			
           	<div class="user-menu">
                 <div class="media">
-                    <a class="pull-right" data-toggle="modal" href="#myprofile" onclick="load_myprofile();"  data-role="button" type="button">
+                    <a class="pull-right" data-toggle="modal" href="#myprofile" ontouchstart="load_myprofile();"  data-role="button" type="button">
                         <img id="user_menu_profpic" class="media-object img-circle" src="img/user/thumb-user-medium.jpg" width="50"  height="50" alt="Image">
                     </a>
                     <div class="media-body text-right">
-                        <h4 class="media-heading"><a id="main_prof_fullname"  data-toggle="modal" href="#myprofile"   onclick="load_myprofile();" data-role="button" type="button"></a></h4>
+                        <h4 class="media-heading"><a id="main_prof_fullname"  data-toggle="modal" href="#myprofile"   ontouchstart="load_myprofile();" data-role="button" type="button"></a></h4>
                         <!-- <p>Administrator</p> -->
                     </div>
                 </div>
@@ -750,17 +751,17 @@ display:none;
 			
                 <ul class="main">
 
-                    <li><a data-toggle="modal" href="#userprof" onclick="userprofile(0);" data-role="button" type="button"  ><i class="flaticon-user-profile"></i> Profile</a>
+                    <li><a data-toggle="modal" href="#userprof" ontouchstart="userprofile(0);" data-role="button" type="button"  ><i class="flaticon-user-profile"></i> Profile</a>
                     </li>
-                    <li><a data-toggle="modal" href="#appsettings" onclick="" data-role="button" type="button" ><i class="flaticon-settings"></i> Settings</a>
+                    <li><a data-toggle="modal" href="#appsettings" ontouchstart="" data-role="button" type="button" ><i class="flaticon-settings"></i> Settings</a>
                     </li>
 					<li><a data-toggle="collapse" data-parent="#accordion1" href="#collapse-notification" ><img src="img/notification.png" height="17"><span class="badge" id="notif_all_count"></span> Notifications</a>
                         <ul id="collapse-notification" class="panel-collapse collapse">
-							   <li><a data-toggle="modal" href="#notification" onclick="notification_remove_count();" data-role="button" type="button" ><img src="img/globe.png" height="17"><span class="badge" id="notif_gen_count"></span> Global</a>
+							   <li><a data-toggle="modal" href="#notification" ontouchstart="notification_remove_count();" data-role="button" type="button" ><img src="img/globe.png" height="17"><span class="badge" id="notif_gen_count"></span> Global</a>
 								</li>
-                                <li><a data-toggle="modal" href="#notificationprj" onclick="" data-role="button" type="button" ><i class="flaticon-folder-close-line"></i><span class="badge" id="notif_prj_count"></span> Project</a>
+                                <li><a data-toggle="modal" href="#notificationprj" ontouchstart="" data-role="button" type="button" ><i class="flaticon-folder-close-line"></i><span class="badge" id="notif_prj_count"></span> Project</a>
 								</li>
-                                <li><a data-toggle="modal" href="#notificationtask" onclick="" data-role="button" type="button" ><i class="flaticon-task"></i> <span class="badge" id="notif_task_count"></span>Task</a>
+                                <li><a data-toggle="modal" href="#notificationtask" ontouchstart="" data-role="button" type="button" ><i class="flaticon-task"></i> <span class="badge" id="notif_task_count"></span>Task</a>
 								</li>
                         </ul>
                         
@@ -801,11 +802,11 @@ display:none;
                 <ul class="additional-menu">
                     <li><a  data-toggle="modal" href="#calendar" data-role="button" type="button"><i class="flaticon-calendar"></i> Calendar</a>
                     </li>
-                    <li><a data-toggle="modal" href="#memo"  onclick="load_memo();"  data-role="button" type="button"><i class="flaticon-memo-pad"></i> Memo Pad</a>
+                    <li><a data-toggle="modal" href="#memo"   ontouchstart="load_memo();"  data-role="button" type="button"><i class="flaticon-memo-pad"></i> Memo Pad</a>
                     </li>
-                    <li><a data-toggle="modal" href="#todo" onclick="load_todo();" data-role="button" type="button" ><i class="flaticon-to-do"></i> To-Do</a>
+                    <li><a data-toggle="modal" href="#todo" ontouchstart="load_todo();" data-role="button" type="button" ><i class="flaticon-to-do"></i> To-Do</a>
                     </li>
-                   <li><a onclick="conf_signout();" data-role="button" type="button" ><img src='img/exit.png' width="18" />  Log-Out</a>
+                   <li><a ontouchstart="conf_signout();" data-role="button" type="button" ><img src='img/exit.png' width="18" />  Log-Out</a>
                     </li>
                 </ul>
             </div>
@@ -1254,11 +1255,11 @@ display:none;
 
             <div class="bottom-controls sidebar-footer" style="width:270px;">
                 <ul class="half-control-2 clearfix">
-                    <li><a  class="btn btn-block btn-primary" onclick="callchat();" ><i class="flaticon-chat"></i> Chat</a>
+                    <li><a  class="btn btn-block btn-primary" ontouchstart="callchat();" ><i class="flaticon-chat"></i> Chat</a>
                     </li>
-                    <!--<li><a  data-toggle="modal" href="#invitetasklist" class="btn btn-block btn-primary" onclick=""><i class="flaticon-task"></i> Task</a>
+                    <!--<li><a  data-toggle="modal" href="#invitetasklist" class="btn btn-block btn-primary" ontouchstart=""><i class="flaticon-task"></i> Task</a>
                     </li>-->
-                    <li><a data-toggle="modal" href="#inviteprojectlist" class="btn btn-block btn-primary" onclick="getprojectsinvite();"   ><i class="flaticon-project"></i> Project</a>
+                    <li><a data-toggle="modal" href="#inviteprojectlist" class="btn btn-block btn-primary" ontouchstart="getprojectsinvite();"   ><i class="flaticon-project"></i> Project</a>
                     </li>
                 </ul>
             </div>
@@ -1281,12 +1282,12 @@ display:none;
 			 
 				
 					<!-- <button >				
-						<a id="" class="dropdown-toggle" data-toggle="dropdown" onclick="notification_remove_count();"><img src="img/globe.png" height="25"><span class="badge" id="notif_gen_count"></span>
+						<a id="" class="dropdown-toggle" data-toggle="dropdown" ontouchstart="notification_remove_count();"><img src="img/globe.png" height="25"><span class="badge" id="notif_gen_count"></span>
 						<ul class="dropdown-menu notifications">
 						
 							<div class="scrollthis" id="notif_gen_holder" tabindex="5005" style="overflow-y: hidden; outline: none;">
 					    	<li>
-								<a href="javascript:void(0);" onclick="notif_click(2756,'http://teamstormapps.net/?pid=582');">
+								<a href="javascript:void(0);" ontouchstart="notif_click(2756,'http://teamstormapps.net/?pid=582');">
 								<div class="dv-notif un-read">
 									<img src="http://teamstormapps.net/thumbs/profile?id=8&amp;hash=" class="img-circle" width="45" height="45"  alt="Image">
 									<div class="dv-info">
@@ -1308,9 +1309,9 @@ display:none;
         </div>
         <div class="bottom-controls bar-footer">
             <ul class="half-control-2 clearfix">
-                <li><button data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" onclick="newpost()" ><i class="flaticon-post"></i> Post</button>
+                <li><button data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" ontouchstart="newpost()" ><i class="flaticon-post"></i> Post</button>
                 </li>
-                <li><button data-toggle="modal" href="#chat" class="btn btn-block btn-primary btn-lg" onclick="callchat();" ><i class="flaticon-chat"></i> Chat</button>
+                <li><button data-toggle="modal" href="#chat" class="btn btn-block btn-primary btn-lg" ontouchstart="callchat();" ><i class="flaticon-chat"></i> Chat</button>
 		
                 </li>
             </ul>
@@ -1605,7 +1606,7 @@ display:none;
                     
                     <input class="form-control" placeholder="Reply on this storm thread..." id="inptcomment" onkeyUp="commentonwrite();" >
                     <div class="input-group-btn">
-                        <button id="bttndocomment" type="button" class="btn btn-default btn-lg" tabindex="-1" onclick="do_comment();" disabled><i class="flaticon-comment"></i></button>
+                        <button id="bttndocomment" type="button" class="btn btn-default btn-lg" tabindex="-1" ontouchstart="do_comment();" disabled><i class="flaticon-comment"></i></button>
                     </div>
                 </div>
             </div>
@@ -1660,14 +1661,14 @@ display:none;
             </div>
             <div class="title">New Post</div>
             <div class="right-top-head pull-right">
-                <button id="bttndopost" data-toggle="modal" href="#newpost" class="btn btn-default btn-lg" onclick="do_post();" disabled ><i class="flaticon-check"></i>
+                <button id="bttndopost" data-toggle="modal" href="#newpost" class="btn btn-default btn-lg" ontouchstart="do_post();" disabled ><i class="flaticon-check"></i>
                 </button>
             </div>
 
         </div>
    <!--      <div class="bottom-controls bar-footer">
             <ul class="full-control clearfix">
-                <li><a  data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" onclick="do_post();" ><i class="flaticon-post"></i> Post</a>
+                <li><a  data-toggle="modal" href="#newpost" class="btn btn-block btn-primary btn-lg" ontouchstart="do_post();" ><i class="flaticon-post"></i> Post</a>
                 </li>
             </ul>
         </div> -->
@@ -1747,12 +1748,12 @@ display:none;
 							
                         <ul class="btn-list-bottom">
                             <li>
-							<!-- onclick="getPhoto(navigator.camera.PictureSourceType.SAVEDPHOTOALBUM);" getmultiimage();  -->
-                                <button class="btn btn-info"  onclick="getPhoto(navigator.camera.PictureSourceType.SAVEDPHOTOALBUM);" ><i class="flaticon-attachement"></i>
+							<!-- ontouchstart="getPhoto(navigator.camera.PictureSourceType.SAVEDPHOTOALBUM);" getmultiimage();  -->
+                                <button class="btn btn-info"  ontouchstart="getPhoto(navigator.camera.PictureSourceType.SAVEDPHOTOALBUM);" ><i class="flaticon-attachement"></i>
                                 </button>
                             </li>
                             <li>
-                                <button class="btn btn-info" onclick="capturePhoto();" ><i class="flaticon-camera"></i>
+                                <button class="btn btn-info" ontouchstart="capturePhoto();" ><i class="flaticon-camera"></i>
                                 </button>
                             </li>
 							
@@ -1789,14 +1790,14 @@ display:none;
 	<div id="newproject"  class="modal-content modal" >
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <button data-toggle="modal" href="#newproject" data-role="button"  class="btn btn-default btn-lg" type="button" onclick="clearprj_text(1);"><i class="flaticon-arrow-left"></i></button>
+                <button data-toggle="modal" href="#newproject" data-role="button"  class="btn btn-default btn-lg" type="button" ontouchstart="clearprj_text(1);"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title">Create Project</div>
           
         </div>
         <div class="bottom-controls bar-footer">
             <ul class="full-control clearfix">
-                <li><button  data-toggle="modal" href="#newproject" class="btn btn-block btn-primary btn-lg"  onclick="create_project();" ><i class="flaticon-folder-check"></i> Save Project</button>
+                <li><button  data-toggle="modal" href="#newproject" class="btn btn-block btn-primary btn-lg"  ontouchstart="create_project();" ><i class="flaticon-folder-check"></i> Save Project</button>
                 </li>
             </ul>
         </div>
@@ -1855,7 +1856,7 @@ display:none;
             </div>
             <div class="title">Edit Project</div>
              <div class="right-top-head pull-right">
-                <button  data-toggle="modal" href="#editproject" data-role="button" class="btn btn-default btn-lg" type="button" onclick="edit_project();"  ><i class="flaticon-check" ></i></button>
+                <button  data-toggle="modal" href="#editproject" data-role="button" class="btn btn-default btn-lg" type="button" ontouchstart="edit_project();"  ><i class="flaticon-check" ></i></button>
             </div> 
         </div>
         
@@ -1909,73 +1910,21 @@ display:none;
     
 
 	
-	 <!--Load Task-->  
-	<div id="task" class="modal-content modal">
-        <div class="top-head bar-title">
-            <div class="left-top-head pull-left">
-                <button data-toggle="modal" href="#task" data-role="button"  class="btn btn-default btn-lg" type="button" onclick="clearprj_text();"><i class="flaticon-arrow-left"></i></button>
-            </div>
-            <div class="title" id="viewtaskhdr" style="font-size: 14px;">Task List</div>
-
-        </div>
-        <div class="bottom-controls bar-footer">
-            <ul class="full-control clearfix">
-                <li data-toggle="modal" href="#task"><a data-toggle="modal" href="#newtask" data-role="button" type="button" class="btn btn-block btn-primary btn-lg" onclick="new_task();"><i class="flaticon-task"></i> Create New Task</a>
-
-                </li>
-            </ul>
-        </div>
-        <div class="content-modal">
-            <div class="main-wrapper">
-				
-			<div id="loadtskwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px; bottom: 30px">
-			<div id="loadtskscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">		
-                <div class="tab-wrapper">
-                    <ul id="task-tab" class="nav nav-tabs nav-justified">
-                        <li class="active"><a href="#active-task" data-toggle="tab" onclick ="gettaskactive();" >Active</a>
-                        </li>
-                        <li><a href="#pending-task" data-toggle="tab" onclick ="gettaskpending();">Pending</a>
-                        </li>
-                        <li><a href="#completed-task" data-toggle="tab" onclick ="gettaskcompleted();" >Completed</a>
-                        </li>
-                    </ul>
-                </div>
-                <div id="task-tab-content" class="tab-content">
-                    <div class="tab-pane fade active in" id="active-task">
-
-                    </div>
-                    <div class="tab-pane fade" id="pending-task">
-                     
-                    </div>
-                    <div class="tab-pane fade" id="completed-task">
-
-                      
-						
-                    </div>
-                </div>
-			 </div>
-			</div>
-			<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
-			</div>		
-			
-            </div>
-        </div>
-    </div>
 		
      <!--New Task-->  
 	<div id="newtask" class="modal-content modal" >
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <button data-toggle="modal" href="#newtask" data-role="button" type="button"  class="btn btn-default btn-lg" onclick="cleartsk_text();"><i class="flaticon-arrow-left"></i></button>
+                <button data-toggle="modal" href="#newtask" data-role="button" type="button"  class="btn btn-default btn-lg" ontouchstart="cleartsk_text();"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title" id="viewnewtaskhdr" style="font-size: 14px;">Create Task</div>
           <div class="right-top-head pull-right">
-                <button id="bttnsavetask"  data-toggle="modal" href="#newtask" data-role="button" class="btn btn-default btn-lg" type="button" onclick="create_task();" ><i class="flaticon-check"></i></button>
+                <button id="bttnsavetask"  data-toggle="modal" href="#newtask" data-role="button" class="btn btn-default btn-lg" type="button" ontouchstart="create_task();" ><i class="flaticon-check"></i></button>
             </div>
         </div>
       <!--   <div class="bottom-controls bar-footer">
             <ul class="full-control clearfix">
-                <li><button id="bttnsavetask"  data-toggle="modal" href="#newtask" class="btn btn-block btn-primary btn-lg"  onclick="create_task();" ><i class="flaticon-check"></i> Save Task</button>
+                <li><button id="bttnsavetask"  data-toggle="modal" href="#newtask" class="btn btn-block btn-primary btn-lg"  ontouchstart="create_task();" ><i class="flaticon-check"></i> Save Task</button>
                 </li>
             </ul>
         </div> -->
@@ -2013,12 +1962,12 @@ display:none;
 						<div class="form-post-wrapper">
 						
 							<label>Start Date</label>
-							<input class="form-control"  placeholder="" id="txt_startdate" >					
+							<input class="form-control"  type="date"  placeholder="" id="txt_startdate" >					
                         </div>
 						<div class="form-post-wrapper">
 						
 							<label>End Date</label>
-							<input class="form-control"  placeholder="" id="txt_duedate" >					
+							<input class="form-control"  type="date"  placeholder="" id="txt_duedate" >					
                         </div>
 						<div class="form-post-wrapper">
 						
@@ -2026,7 +1975,7 @@ display:none;
 							<input class="form-control"  placeholder="Task Description" id="txt_taskdesc" >					
                         </div>
 						
-						<div class="form-post-wrapper">
+						<div class="form-post-wrapper" id="divtaskmemlist">
 						
 							<label>Send Task Assignment</label>
 							<p >you can select member/s on the list below to assign a task.</p>
@@ -2067,15 +2016,15 @@ display:none;
 		<div class="bottom-controls bar-footer" >
                 <ul class="half-control-3 clearfix">
 					<li>
-                       <button  class="btn btn-block btn-primary" id="btn_taskcomplete"  onclick="conf_complete_task();"  ><span class="flaticon-Check"  ></span> Complete
+                       <button  class="btn btn-block btn-primary" id="btn_taskcomplete"  ontouchstart="conf_complete_task();"  ><span class="flaticon-Check"  ></span> Complete
                        </button>
                     </li>
 					<li>
-                       <button class="btn btn-block btn-primary" id="btn_taskedit" data-toggle="modal" href="#newtask" onclick="onedittask();"  ><span class="flaticon-memo-pad"></span> Edit
+                       <button class="btn btn-block btn-primary" id="btn_taskedit" data-toggle="modal" href="#newtask" ontouchstart="onedittask();"  ><span class="flaticon-memo-pad"></span> Edit
                        </button>
                     </li>
 					<li>
-                       <button  class="btn btn-block btn-primary" id="btn_taskdelete" onclick="conf_delete_task();" >&times; Delete
+                       <button  class="btn btn-block btn-primary" id="btn_taskdelete" ontouchstart="conf_delete_task();" >&times; Delete
                        </button>
                     </li>
 					
@@ -2111,7 +2060,7 @@ display:none;
 					<div id="taskmaster_inf"> </div>
 					</li>
 					<li>
-					 <button class="btn btn-default" id="btn_addtask_leavetask" style="background-color:background-image: linear-gradient(to bottom,#5cb85c 0,#449d44 100%);background-repeat: repeat-x;border-color: #419641;" onclick="add_leave_task();" ><i class="glyphicon glyphicon-plus-sign"></i> Add to my Task
+					 <button class="btn btn-default" id="btn_addtask_leavetask" style="background-color:background-image: linear-gradient(to bottom,#5cb85c 0,#449d44 100%);background-repeat: repeat-x;border-color: #419641;" ontouchstart="add_leave_task();" ><i class="glyphicon glyphicon-plus-sign"></i> Add to my Task
                      </button>
 					</li>
                 </a>
@@ -2179,7 +2128,7 @@ display:none;
 		<div class="bottom-controls bar-footer" >
                 <ul class="half-control-3 clearfix">
 					<li>
-                       <button class="btn btn-block btn-primary" id="btn_projectcomplete" onclick="conf_archive_project();" ><span class="flaticon-Check"></span> Archive
+                       <button class="btn btn-block btn-primary" id="btn_projectcomplete" ontouchstart="conf_archive_project();" ><span class="flaticon-Check"></span> Archive
                        </button>
                     </li>
 					<li>
@@ -2187,7 +2136,7 @@ display:none;
                        </button>
                     </li>
 					<li>
-                       <button class="btn btn-block btn-primary" id="btn_projectdelete" onclick="conf_delete_project();" >&times; Delete Project
+                       <button class="btn btn-block btn-primary" id="btn_projectdelete" ontouchstart="conf_delete_project();" >&times; Delete Project
                        </button>
                     </li>
                    
@@ -2284,6 +2233,58 @@ display:none;
     </div>  
 		
 	 
+	 <!--Load Task-->  
+	<div id="task" class="modal-content modal">
+        <div class="top-head bar-title">
+            <div class="left-top-head pull-left">
+                <button data-toggle="modal" href="#task" data-role="button"  class="btn btn-default btn-lg" type="button" ontouchstart="clearprj_text();"><i class="flaticon-arrow-left"></i></button>
+            </div>
+            <div class="title" id="viewtaskhdr" style="font-size: 14px;">Task List</div>
+
+        </div>
+        <div class="bottom-controls bar-footer">
+            <ul class="full-control clearfix">
+                <li data-toggle="modal" href="#task"><a data-toggle="modal" href="#newtask" data-role="button" type="button" class="btn btn-block btn-primary btn-lg" ontouchstart="new_task();"><i class="flaticon-task"></i> Create New Task</a>
+
+                </li>
+            </ul>
+        </div>
+        <div class="content-modal">
+            <div class="main-wrapper">
+				
+			<div id="loadtskwrapper" class="content main-wrapper" style="overflow: hidden; left: 0px; top: 50px; bottom: 30px">
+			<div id="loadtskscroller" style="transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); -webkit-transition: 0ms cubic-bezier(0.33, 0.66, 0.66, 1); transform-origin: 0px 0px 0px; position: absolute; top: 0px; left: 0px;">		
+                <div class="tab-wrapper">
+                    <ul id="task-tab" class="nav nav-tabs nav-justified">
+                        <li class="active"><a href="#active-task" data-toggle="tab" ontouchstart ="gettaskactive();" >Active</a>
+                        </li>
+                        <li><a href="#pending-task" data-toggle="tab" ontouchstart ="gettaskpending();">Pending</a>
+                        </li>
+                        <li><a href="#completed-task" data-toggle="tab" ontouchstart ="gettaskcompleted();" >Completed</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="task-tab-content" class="tab-content">
+                    <div class="tab-pane fade active in" id="active-task">
+
+                    </div>
+                    <div class="tab-pane fade" id="pending-task">
+                     
+                    </div>
+                    <div class="tab-pane fade" id="completed-task">
+
+                      
+						
+                    </div>
+                </div>
+			 </div>
+			</div>
+			<div style="position: absolute; z-index: 100; width: 7px; bottom: 2px; top: 2px; right: 1px; pointer-events: none; transition: opacity 0ms 0ms; -webkit-transition: opacity 0ms 0ms; overflow: hidden; opacity: 1;">
+			</div>		
+			
+            </div>
+        </div>
+    </div>
     <!--Projects-->
 	<div id="project" class="modal-content modal">
         <div class="top-head bar-title">
@@ -2405,7 +2406,7 @@ display:none;
         </div>
         <div class="bottom-controls bar-footer">
             <ul class="full-control clearfix">
-                <li><a  data-toggle="modal" href="#newtodo" class="btn btn-block btn-primary btn-lg" onclick="do_todo();" ><i class="flaticon-check"></i> Save</a>
+                <li><a  data-toggle="modal" href="#newtodo" class="btn btn-block btn-primary btn-lg" ontouchstart="do_todo();" ><i class="flaticon-check"></i> Save</a>
                 </li>
             </ul>
         </div>
@@ -2423,7 +2424,7 @@ display:none;
                         </div>
                         <div class="form-group">
 						<label>To-do Date</label>
-                            <input class="form-control" placeholder="Optional" id="txt_tododate" >
+                            <input class="form-control" type="date" placeholder="Optional" id="txt_tododate" >
                         </div>
                         <div class="form-group">
 						<label>To-do Priority</label>
@@ -2453,11 +2454,11 @@ display:none;
 	<div id="memo" class="modal-content modal">
         <div class="top-head bar-title">
             <div class="left-top-head pull-left">
-                <button data-toggle="modal" href="#memo" data-role="button" type="button"  class="btn btn-default btn-lg"  onclick="clearnote();"><i class="flaticon-arrow-left"></i></button>
+                <button data-toggle="modal" href="#memo" data-role="button" type="button"  class="btn btn-default btn-lg"  ontouchstart="clearnote();"><i class="flaticon-arrow-left"></i></button>
             </div>
             <div class="title">Memo Pad</div>
             <div class="right-top-head pull-right">
-                <button id="btn_savememo" lass="btn btn-default btn-lg" type="button" class="btn btn-default btn-lg"  onclick="do_memo();" ><i class="flaticon-check"></i>
+                <button id="btn_savememo" lass="btn btn-default btn-lg" type="button" class="btn btn-default btn-lg"  ontouchstart="do_memo();" ><i class="flaticon-check"></i>
                 </button>
             </div>
 
@@ -2469,7 +2470,7 @@ display:none;
                             <textarea rows="6" class="form-control" placeholder="Notes or Message" id="txt_memopad" onkeyUp="memoonwrite();" autofocus></textarea>
                         </div>
 						 <div class="form-group">
-                            <button class="add-list-todo btn btn-default" onclick="addnote();" id="btn_addnote"><span class="glyphicon glyphicon-plus-sign"></span> Add Note</button>
+                            <button class="add-list-todo btn btn-default" ontouchstart="addnote();" id="btn_addnote"><span class="glyphicon glyphicon-plus-sign"></span> Add Note</button>
                         </div>
                     </div>
 			
@@ -2588,7 +2589,7 @@ display:none;
         </div>
 		<div class="bottom-controls bar-footer">
             <ul class="full-control clearfix">
-                <li><button type="button" class="btn btn-primary btn-block" tabindex="-1" onclick="updatemyprofile();"><span class="glyphicon glyphicon-ok"></span> Save</button>
+                <li><button type="button" class="btn btn-primary btn-block" tabindex="-1" ontouchstart="updatemyprofile();"><span class="glyphicon glyphicon-ok"></span> Save</button>
                 </li>
             </ul>
         </div>
@@ -2785,7 +2786,7 @@ display:none;
                                             </div>
                                             <div class="col-xs-4 text-right">
                                                 <label class="toggle">
-                                                    <input type="checkbox" id ="notif_settings" name ="notif_settings"  onclick="togglecheckbox(this);"> <span class="handle"></span>
+                                                    <input type="checkbox" id ="notif_settings" name ="notif_settings"  ontouchstart="togglecheckbox(this);"> <span class="handle"></span>
                                                 </label>
                                             </div>
                                         </div>
@@ -2798,7 +2799,7 @@ display:none;
                                             <div class="col-xs-8">Automatically add employee</div>
                                             <div class="col-xs-4 text-right">
                                                 <label class="toggle">
-                                                    <input type="checkbox" id ="auto_addemp" name ="auto_addemp"  onclick="togglecheckbox(this);"> <span class="handle"></span>
+                                                    <input type="checkbox" id ="auto_addemp" name ="auto_addemp"  ontouchstart="togglecheckbox(this);"> <span class="handle"></span>
                                                 </label>
                                             </div>
                                         </div>
@@ -2811,7 +2812,7 @@ display:none;
                                             <div class="col-xs-8">Show profile as private</div>
                                             <div class="col-xs-4 text-right">
                                                 <label class="toggle">
-                                                    <input type="checkbox" id ="show_prof" name ="show_prof"  onclick="togglecheckbox(this);"> <span class="handle"></span>
+                                                    <input type="checkbox" id ="show_prof" name ="show_prof"  ontouchstart="togglecheckbox(this);"> <span class="handle"></span>
                                                 </label>
                                             </div>
                                         </div>
@@ -2833,7 +2834,7 @@ display:none;
 	
     <!-- SNAP -->
     <script type="text/javascript" src="js/snap.js"></script>
-
+     <script type="text/javascript" charset="utf-8" src="functions/custom.js"></script>
 
     <script type="text/javascript">
     var
@@ -2918,10 +2919,10 @@ display:none;
         grabCursor: true
     });
     </script>
-<script src="datetimepicker/jquery.js"></script>
-<script src="datetimepicker/jquery.datetimepicker.js"></script>	
+<!--<script src="datetimepicker/jquery.js"></script>
+<script src="datetimepicker/jquery.datetimepicker.js"></script>-->
 	
-
+<!--
 <script>
 //create task start date and due date
 var startDate = new Date('01/01/2012');
@@ -2930,7 +2931,7 @@ var ToEndDate = new Date();
 var curdate = new Date();
 var preDate =(curdate.getMonth()+1) + '/' + curdate.getDate() + '/' +
         curdate.getFullYear() + ' '+curdate.getHours() + ':' + curdate.getMinutes();
-//$('#txt_duedate,#txt_duedate1').prop('disabled',true);
+$('#txt_duedate,#txt_duedate1').prop('disabled',true);
 $('#txt_duedate').datetimepicker({
 	format:'m/d/Y H:i',
 	formatDate: 'm/d/Y',
@@ -2982,8 +2983,13 @@ $('#txt_tododate').datetimepicker({
 	format:'m/d/Y',
 	formatDate:'Y/m/d'
 });
+    
+  
+  
+   
+    
 </script>
-
+-->
 
 <script src="swipebox/lib/ios-orientationchange-fix.js"></script>
 <script src="swipebox/lib/jquery-2.1.0.min.js"></script>

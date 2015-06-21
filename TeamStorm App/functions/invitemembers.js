@@ -24,7 +24,7 @@ function getprojectsinvite()
 					 var row = data[x]; 
                     
 					appendHTML += '<li>';
-				    appendHTML += '<a  data-toggle="modal" href="#inviteprojectlist" onclick="inviteproject_select('+row.id+');">';
+				    appendHTML += '<a  data-toggle="modal" href="#inviteprojectlist" ontouchstart="inviteproject_select('+row.id+');">';
     				appendHTML += '<div class="dv-notif "  id="invite_prjlist-'+row.id+'">';
     				
     				appendHTML += '<div class="dv-info un-read">';

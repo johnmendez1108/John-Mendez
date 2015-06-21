@@ -48,7 +48,7 @@ function load_todo()
 						
 						
 						appendHTML ='<div class="panel" id="todo-'+id+'">'+
-											'<button type="button" class="close"   onclick="conf_delete_todo('+id+')">×</button>'+
+											'<button type="button" class="close"   ontouchstart="conf_delete_todo('+id+')">×</button>'+
 											'<div class="panel-heading">'+
 												'<h4 class="panel-title">'+
 											'<a >'+title+'</a>';

@@ -25,7 +25,7 @@ function init() {
 	
 	getmytask();
 	getproject();
-	//getprojectlist();
+	getprojectlist();
 	loadprojects_select();
 
 	
@@ -121,29 +121,29 @@ if (checkConnection() >2){
 					
 					getposterpic(poster_id);
 					if(project_id > 0){
-						projname = ' posted in <a onclick="viewprojectpost('+project_id+');"  >' + title  + '</a>';
+						projname = ' posted in <a ontouchstart="viewprojectpost('+project_id+');"  >' + title  + '</a>';
 					}	
 					if(to_user_id > 0 && to_user_id != localStorage.getItem("ts_myid")) { 
 						getnfeeduserinfo(to_user_id);
 						var to_user_name = getnfeeduname;
-						projname = '<i class="flaticon-arrow-right"></i> <a data-toggle="modal" href="#userprof" onclick="userprofile('+to_user_id+');" >' + to_user_name + '</a>'; 						
+						projname = '<i class="flaticon-arrow-right"></i> <a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+to_user_id+');" >' + to_user_name + '</a>'; 						
 					}
 					if(task_id > 0){
 						
-						projname = ' posted on task <a data-toggle="modal" href="#taskinfo" onclick="getmytaskinfo('+project_id+','+task_id+');" >' + gettaskname(project_id,task_id) + '</a>'; 
+						projname = ' posted on task <a data-toggle="modal" href="#taskinfo" ontouchstart="getmytaskinfo('+project_id+','+task_id+');" >' + gettaskname(project_id,task_id) + '</a>'; 
 					}
 					
 					appendHTML += '<div class="inner-wrapper" id ="newsfeed-'+postid+'">'+
 										'<div class="main-user-post">'+
 											'<div class="media">'+
-												'<a class="pull-left" data-toggle="modal" href="#userprof"  onclick="userprofile('+poster_id+');"  >'+
+												'<a class="pull-left" data-toggle="modal" href="#userprof"  ontouchstart="userprofile('+poster_id+');"  >'+
 													'<img class="media-object img-circle" src="data:image/gif;base64,'+getnfeedprofpic+'" width="50" height="50" alt="Image">'+
 												'</a>'+
 												'<div class="media-body">';
 												
 					if(poster_id == localStorage.getItem('ts_myid')){
 						
-					appendHTML +=	'<div class="btn-group pull-right" ><span class="ico flaticon-arrow-bottom dropdown-toggle" data-toggle="modal" href="#postsettings" onclick="postsettings('+postid+')"></span></div>';								 
+					appendHTML +=	'<div class="btn-group pull-right" ><span class="ico flaticon-arrow-bottom dropdown-toggle" data-toggle="modal" href="#postsettings" ontouchstart="postsettings('+postid+')"></span></div>';								 
 								
 								
 								
@@ -158,7 +158,7 @@ if (checkConnection() >2){
 					}		
 					
 																
-					appendHTML +='<h4 class="media-heading"><a data-toggle="modal" href="#userprof"  onclick="userprofile('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
+					appendHTML +='<h4 class="media-heading"><a data-toggle="modal" href="#userprof"  ontouchstart="userprofile('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
 													'<small>'+date_posted+'</small>';
 													
 					switch(post_mood){
@@ -262,7 +262,7 @@ if (checkConnection() >2){
 													'<button id="btn_post_ag_'+postid+'" type="button" class="btn btn-default btn-block '+is_agree_atr+'" onclick="postagree('+postid+');"><i class="flaticon-check-circle"></i> Agree (<span id ="agree_count_'+postid+'">'+agree_count+'</span>)</button>'+
 												'</li>'+
 												'<li>'+
-													'<button type="button" class="btn btn-default btn-block" onclick="viewpostcomment('+postid+','+poster_id+');" data-toggle="modal" href="#comments"><i class="flaticon-comment-more"></i> Comments ('+comment_count+')</button>'+
+													'<button type="button" class="btn btn-default btn-block" ontouchstart="viewpostcomment('+postid+','+poster_id+');" data-toggle="modal" href="#comments"><i class="flaticon-comment-more"></i> Comments ('+comment_count+')</button>'+
 												'</li>'+
 											'</ul>'+
 										'</div>'+
@@ -320,7 +320,9 @@ if (checkConnection() >2){
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/newsfeed', 
 			data: { sid: ses_id, mypost: 0,startdate:nextpagedate, itemperpage:2 },
-				
+			beforeSend: function () {
+				 preloading2();
+			},	
 			success: function (data) {
 				nextpagedate=data.nextpage_date;
 			if(data.items > 0){
@@ -351,29 +353,29 @@ if (checkConnection() >2){
 					
 					getposterpic(poster_id);
 					if(project_id > 0){
-						projname = ' posted in <a onclick="viewprojectpost('+project_id+');"  >' + title  + '</a>';
+						projname = ' posted in <a ontouchstart="viewprojectpost('+project_id+');"  >' + title  + '</a>';
 					}	
 					if(to_user_id > 0 && to_user_id != localStorage.getItem("ts_myid")) { 
 						getnfeeduserinfo(to_user_id);
 						var to_user_name = getnfeeduname;
-						projname = '<i class="flaticon-arrow-right"></i> <a data-toggle="modal" href="#userprof" onclick="userprofile('+to_user_id+');" >' + to_user_name + '</a>'; 						
+						projname = '<i class="flaticon-arrow-right"></i> <a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+to_user_id+');" >' + to_user_name + '</a>'; 						
 					}
 					if(task_id > 0){
 						
-						projname = ' posted on task <a data-toggle="modal" href="#taskinfo" onclick="getmytaskinfo('+project_id+','+task_id+');" >' + gettaskname(project_id,task_id) + '</a>'; 
+						projname = ' posted on task <a data-toggle="modal" href="#taskinfo" ontouchstart="getmytaskinfo('+project_id+','+task_id+');" >' + gettaskname(project_id,task_id) + '</a>'; 
 					}
 					
 					appendHTML += '<div class="inner-wrapper" id ="newsfeed-'+postid+'">'+
 										'<div class="main-user-post">'+
 											'<div class="media">'+
-												'<a class="pull-left" data-toggle="modal" href="#userprof"  onclick="userprofile('+poster_id+');"  >'+
+												'<a class="pull-left" data-toggle="modal" href="#userprof"  ontouchstart="userprofile('+poster_id+');"  >'+
 													'<img class="media-object img-circle" src="data:image/gif;base64,'+getnfeedprofpic+'" width="50" height="50" alt="Image">'+
 												'</a>'+
 												'<div class="media-body">';
 												
 					if(poster_id == localStorage.getItem('ts_myid')){
 						
-					appendHTML +=	'<div class="btn-group pull-right" ><span class="ico flaticon-arrow-bottom dropdown-toggle" data-toggle="modal" href="#postsettings" onclick="postsettings('+postid+')"></span></div>';								 
+					appendHTML +=	'<div class="btn-group pull-right" ><span class="ico flaticon-arrow-bottom dropdown-toggle" data-toggle="modal" href="#postsettings" ontouchstart="postsettings('+postid+')"></span></div>';								 
 								
 								
 								
@@ -388,7 +390,7 @@ if (checkConnection() >2){
 					}		
 					
 																
-					appendHTML +='<h4 class="media-heading"><a data-toggle="modal" href="#userprof"  onclick="userprofile('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
+					appendHTML +='<h4 class="media-heading"><a data-toggle="modal" href="#userprof"  ontouchstart="userprofile('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
 													'<small>'+date_posted+'</small>';
 													
 					switch(post_mood){
@@ -492,22 +494,14 @@ if (checkConnection() >2){
 													'<button id="btn_post_ag_'+postid+'" type="button" class="btn btn-default btn-block '+is_agree_atr+'" onclick="postagree('+postid+');"><i class="flaticon-check-circle"></i> Agree (<span id ="agree_count_'+postid+'">'+agree_count+'</span>)</button>'+
 												'</li>'+
 												'<li>'+
-													'<button type="button" class="btn btn-default btn-block" onclick="viewpostcomment('+postid+','+poster_id+');" data-toggle="modal" href="#comments"><i class="flaticon-comment-more"></i> Comments ('+comment_count+')</button>'+
+													'<button type="button" class="btn btn-default btn-block" ontouchstart="viewpostcomment('+postid+','+poster_id+');" data-toggle="modal" href="#comments"><i class="flaticon-comment-more"></i> Comments ('+comment_count+')</button>'+
 												'</li>'+
 											'</ul>'+
 										'</div>'+
 									'</div>';
 
 				}
-				if (appendHTML.length >0){
-					var e = document.createElement('div');
-					e.innerHTML = appendHTML;
-					document.getElementById("streamlist").appendChild(e);
-                    call_emoticons('streamlist');
-				 //window.localStorage["latestnewsfeed"]= appendHTML;
-				 //window.localStorage["numoffeed"]= data.items-1;
-			
-				}			
+							
 				/* else
 				{
 					$("#feednotif").show();
@@ -531,6 +525,17 @@ if (checkConnection() >2){
 		
     }
       	
+}).done(function()  {
+   
+  if (appendHTML.length >0){
+					var e = document.createElement('div');
+					e.innerHTML = appendHTML;
+					document.getElementById("streamlist").appendChild(e);
+                    call_emoticons('streamlist');
+				 //window.localStorage["latestnewsfeed"]= appendHTML;
+				 //window.localStorage["numoffeed"]= data.items-1;
+			
+				}  
 });   
 
 }
@@ -633,13 +638,13 @@ function viewpostcomment(id,pstrid)
 					 
 					 if(pstrid == localStorage.getItem('ts_myid')){
 						 
-						 deletehtml='<button type="button" class="close" onclick="conf_delete_comment('+com_id+')">×</button>';
+						 deletehtml='<button type="button" class="close" ontouchstart="conf_delete_comment('+com_id+')">×</button>';
 					 }	 
 					 
 					 
 					 if (commentor==window.localStorage.getItem('name'))
 					 {
-						 edithtml = '<button type="button" class="close" style="font-size: 16px;" onclick="comment_edit('+com_id+')" >Edit</button>'
+						 edithtml = '<button type="button" class="close" style="font-size: 16px;" ontouchstart="comment_edit('+com_id+')" >Edit</button>'
 					 }	 
 					
 					
@@ -718,9 +723,9 @@ return 	pic;
 
 function comment_edit(id)
 {
-	document.getElementById('edit-comment-'+id+'').innerHTML='<div class="input-group"><textarea rows=1 class="form-control" id="inpteditcomment-'+id+'" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea> <div class="input-group-btn"><button type="button" class="btn" tabindex="-1" onclick="do_editcomment('+id+');" style="background: transparent;color: #00BDFF;"><i class="flaticon-check"></i></button></div></div>';
+	document.getElementById('edit-comment-'+id+'').innerHTML='<div class="input-group"><textarea rows=1 class="form-control" id="inpteditcomment-'+id+'" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea> <div class="input-group-btn"><button type="button" class="btn" tabindex="-1" ontouchstart="do_editcomment('+id+');" style="background: transparent;color: #00BDFF;"><i class="flaticon-check"></i></button></div></div>';
 	document.getElementById('inpteditcomment-'+id+'').value=document.getElementById('comment-content-'+id+'').innerHTML;
-	document.getElementById('edit-cancel-button-'+id+'').innerHTML='<button type="button" class="close" style="font-size: 16px;" onclick="cancelcomment_edit('+id+')" >Cancel</button>'	
+	document.getElementById('edit-cancel-button-'+id+'').innerHTML='<button type="button" class="close" style="font-size: 16px;" ontouchstart="cancelcomment_edit('+id+')" >Cancel</button>'	
 	document.getElementById('comment-content-'+id+'').style.display="none";
 	document.getElementById('delete-button-'+id+'').innerHTML='';
 	
@@ -730,9 +735,9 @@ function cancelcomment_edit(id)
 {
 	document.getElementById('edit-comment-'+id+'').innerHTML='';
 	//document.getElementById('inpteditcomment').value=document.getElementById('comment-content-'+id+'').innerHTML;
-	document.getElementById('edit-cancel-button-'+id+'').innerHTML='<button type="button" class="close" style="font-size: 16px;" onclick="comment_edit('+id+')" >Edit</button>'
+	document.getElementById('edit-cancel-button-'+id+'').innerHTML='<button type="button" class="close" style="font-size: 16px;" ontouchstart="comment_edit('+id+')" >Edit</button>'
 	document.getElementById('comment-content-'+id+'').style.display="block";
-	document.getElementById('delete-button-'+id+'').innerHTML='<button type="button" class="close" onclick="conf_delete_comment('+id+')">×</button>';
+	document.getElementById('delete-button-'+id+'').innerHTML='<button type="button" class="close" ontouchstart="conf_delete_comment('+id+')">×</button>';
 }
 
 function do_editcomment(id)
@@ -757,10 +762,10 @@ function do_editcomment(id)
 				{
 					
 					document.getElementById('edit-comment-'+id+'').innerHTML='';	
-					document.getElementById('edit-cancel-button-'+id+'').innerHTML='<button type="button" class="close" style="font-size: 16px;" onclick="comment_edit('+id+')" >Edit</button>'
+					document.getElementById('edit-cancel-button-'+id+'').innerHTML='<button type="button" class="close" style="font-size: 16px;" ontouchstart="comment_edit('+id+')" >Edit</button>'
 					document.getElementById('comment-content-'+id+'').innerHTML=commentmsg;
 					document.getElementById('comment-content-'+id+'').style.display="block";
-					document.getElementById('delete-button-'+id+'').innerHTML='<button type="button" class="close" onclick="comment_delete('+id+')">×</button>';
+					document.getElementById('delete-button-'+id+'').innerHTML='<button type="button" class="close" ontouchstart="comment_delete('+id+')">×</button>';
 					
 				}							 
 			},
@@ -1173,9 +1178,9 @@ function getaddressbook(){
                                     '</td>'+
                                     '<td>'+
                                         '<div class="portrait-status chat" style="left:20px;">'+
-										 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" height="35" class="img-circle" data-toggle="modal" href="#userprof" onclick="userprofile('+user_id+');"> </td>'+
+										 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" height="35" class="img-circle" data-toggle="modal" href="#userprof" ontouchstart="userprofile('+user_id+');"> </td>'+
                                         '</div>'+
-                                        '<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+user_id+');">'+fullname+'</a>'+
+                                        '<td><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+user_id+');">'+fullname+'</a>'+
                                         '</td>'+
 									 '</td>'+
 								  '</tr>';
@@ -1237,9 +1242,9 @@ function getaddressbookperletter(){
 											'</td>'+
 											'<td>'+
 												'<div class="portrait-status chat" style="left:20px;">'+
-												 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" height="35" class="img-circle" data-toggle="modal" href="#userprof" onclick="userprofile('+user_id+');"> </td>'+
+												 '<img src="data:image/gif;base64,'+preview_pic+'" height="35" height="35" class="img-circle" data-toggle="modal" href="#userprof" ontouchstart="userprofile('+user_id+');"> </td>'+
 												'</div>'+
-												'<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+user_id+');">'+fullname+'</a>'+
+												'<td><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+user_id+');">'+fullname+'</a>'+
 												'</td>'+
 											 '</td>'+
 										  '</tr>';

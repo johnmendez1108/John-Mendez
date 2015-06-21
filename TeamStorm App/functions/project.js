@@ -23,10 +23,11 @@ var onedit_id,onedit_title,onedit_description,onedit_priority,onedit_start_date,
 
 var isnewtask=0;
 var ismytask=0;
+var req_tid,req_uid;
 
 function getproject()
 {
-	var appendHTML ='<li><a data-toggle="modal" href="#newproject" onclick="newproject();" ><i class="flaticon-folder-plus"></i> Create New Project</a></li>';
+	var appendHTML ='<li><a data-toggle="modal" href="#newproject" ontouchstart="newproject();" ><i class="flaticon-folder-plus"></i> Create New Project</a></li>';
 	var list_prj_count=0;
 	  jQuery.ajax({ 
 			type: 'post', 
@@ -63,12 +64,12 @@ function getproject()
 						appendHTML+= '<i class="flaticon-menu pull-right"></i></a>';
 						appendHTML+= '<ul id="collapse-projects-task-lists-'+pid+'" class="panel-collapse collapse">';
 					
-						appendHTML+= '<li><a data-toggle="modal" href="#projectinfo"  onclick="projectinfo('+pid+');"  ><span class="flaticon-folder-open-line"> </span> Project Info</a></li>';
-						appendHTML+= '<li><a data-toggle="modal" href="#newtask"  onclick="new_task('+pid+');"  ><span class="glyphicon glyphicon-plus-sign"> </span> Add New Task</a></li>';
+						appendHTML+= '<li><a data-toggle="modal" href="#projectinfo"  ontouchstart="projectinfo('+pid+');"  ><span class="flaticon-folder-open-line"> </span> Project Info</a></li>';
+						appendHTML+= '<li><a data-toggle="modal" href="#newtask"  ontouchstart="new_task('+pid+');"  ><span class="glyphicon glyphicon-plus-sign"> </span> Add New Task</a></li>';
 					
 						for(var i = 0; i < numoftask; i++){	
 						
-							appendHTML+= '<li><a id='+alltaskid[i]+' data-toggle="modal" href="#taskinfo"  onclick="getmytaskinfo('+pid+','+alltaskid[i]+')"  ><span class="flaticon-task"> </span> '+alltaskname[i]+'</a></li>';
+							appendHTML+= '<li><a id='+alltaskid[i]+' data-toggle="modal" href="#taskinfo"  ontouchstart="getmytaskinfo('+pid+','+alltaskid[i]+')"  ><span class="flaticon-task"> </span> '+alltaskname[i]+'</a></li>';
 							
 						}
 						
@@ -85,7 +86,7 @@ function getproject()
 					
 				 }
 				 
-				appendHTML+= '<li><a data-toggle="modal" href="#project" onclick="getprojectlist();"><i class="flaticon-folder-close-line"></i>See All</a>';	 				 
+				appendHTML+= '<li><a data-toggle="modal" href="#project" ontouchstart="getprojectlist();"><i class="flaticon-folder-close-line"></i>See All</a>';	 				 
 				if (appendHTML.length >0){
 					
 					window.localStorage["getprojects"]=appendHTML;
@@ -133,7 +134,7 @@ function getmytask()
 					var title="'"+task_title+"'"; */
 					
 										
-							appendHTML+= '<li><a id="mytask-'+id+'"  data-toggle="modal" href="#taskinfo" onclick="getmytaskinfo('+project_id+','+id+')"   ><span class="flaticon-task"> </span> '+task_title+'</a></li>';
+							appendHTML+= '<li><a id="mytask-'+id+'"  data-toggle="modal" href="#taskinfo" ontouchstart="getmytaskinfo('+project_id+','+id+')"   ><span class="flaticon-task"> </span> '+task_title+'</a></li>';
 							mytask[x]=id;
 					
                      
@@ -206,7 +207,7 @@ if (checkConnection() >2){
 							
 							document.getElementById("taskinfo_title").innerHTML='<span class="flaticon-task"> </span>'+task_title;
 							document.getElementById("taskinfo_desc").innerHTML=task_description;
-							document.getElementById("taskmaster_inf").innerHTML='<label>Task Master  <a data-toggle="modal" href="#userprof" onclick="userprofile('+task_creator_id+');"><span data-toggle="modal" href="#taskinfo"> '+task_creator_name+' </span></a></label>';
+							document.getElementById("taskmaster_inf").innerHTML='<label>Task Master  <a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+task_creator_id+');"><span data-toggle="modal" href="#taskinfo"> '+task_creator_name+' </span></a></label>';
 							
 							
 							
@@ -395,6 +396,8 @@ function onedittask()
     document.getElementById('select_deptask').value=onedit_dependent;
 	document.getElementById("fortaskmembers").innerHTML=""
 	document.getElementById("viewnewtaskhdr").innerHTML="Edit Task";
+    document.getElementById("divtaskmemlist").style.display = "None";
+    
 	
 }
 
@@ -547,8 +550,10 @@ function delete_task(buttonIndex)
 
 function projectinfo(id)
 {
-		
+
+    
 if (checkConnection() >2){
+   
 			cur_pid=id;
 			jQuery.ajax({ 
 			type: 'post', 
@@ -558,8 +563,8 @@ if (checkConnection() >2){
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/info/'+cur_pid, 
 			data: { sid: ses_id}, 
-			beforeSend: function () {
-				 preloading2();
+		    beforeSend: function () {
+				  preloading2();
 				},
 			success: function (data) { 
 				
@@ -582,7 +587,7 @@ if (checkConnection() >2){
 						document.getElementById("prjhdr").innerHTML=title;
 						document.getElementById("projectinfo_title").innerHTML='<span class="flaticon-folder-open"> </span>'+title;
 						document.getElementById("projectinfo_desc").innerHTML=project_description;
-						document.getElementById("PLname_inf").innerHTML ='<a data-toggle="modal" href="#userprof" onclick="userprofile('+creator_id+');"><span data-toggle="modal" href="#projectinfoprojectinfoprojectinfo">'+creator_name+'</a>';
+						document.getElementById("PLname_inf").innerHTML ='<a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+creator_id+');"><span data-toggle="modal" href="#projectinfoprojectinfoprojectinfo">'+creator_name+'</a>';
 						document.getElementById("PLemail_inf").innerHTML =creator_email;
 						
 						
@@ -616,6 +621,7 @@ if (checkConnection() >2){
                     
                     projectmembers(cur_pid);
 				}
+                
 	  },
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
@@ -624,6 +630,8 @@ if (checkConnection() >2){
 	
     }
       	
+}).done(function() {
+   
 });
 	
 
@@ -668,8 +676,8 @@ function projectmembers(id)
         					  
                              
         									htmldata +='<tr class="checked-list">'; 
-        									htmldata +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');"  ><img  src="'+pic+ '" height="45" width="45" class="img-circle"></a></div>';
-        									htmldata +='<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');"><i data-toggle="modal" href="#newproject" ></i>'+name+'</a><p style="font-size:10px;">'+role+'</p></td></td><td><div class="checkbox" name="chk_members" >'+		
+        									htmldata +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+id+');"  ><img  src="'+pic+ '" height="45" width="45" class="img-circle"></a></div>';
+        									htmldata +='<td><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+id+');"><i data-toggle="modal" href="#newproject" ></i>'+name+'</a><p style="font-size:10px;">'+role+'</p></td></td><td><div class="checkbox" name="chk_members" >'+		
         										'</div></td></tr>';
                             
                             
@@ -905,7 +913,7 @@ function gettasklist(id)
 
 function getprojectlist()
 {
-	
+	preloading3();
 	var appendHTML = '';
 
 	  jQuery.ajax({ 
@@ -916,9 +924,7 @@ function getprojectlist()
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/project/getlist', 
 			data: { sid: ses_id },
-			beforeSend: function () {
-			 preloading2();
-			},				
+							
 			success: function (data) { 
 						 
 				 for(var x = 0; x < data.length; x++){
@@ -946,7 +952,7 @@ function getprojectlist()
 							'<div class="task-wrapper">'+
 							
 							'<div class=" left-border" style="width:100%">'+
-                                '<div class="title-task"><a data-toggle="modal" href="#projectinfo" data-role="button" type="button" onclick="projectinfo('+pid+');" ><span data-toggle="modal" href="#project">'+project_title+'</span></a>'+
+                                '<div class="title-task"><a data-toggle="modal" href="#projectinfo" data-role="button" type="button" ontouchstart="projectinfo('+pid+');" ><span data-toggle="modal" href="#project">'+project_title+'</span></a>'+
                                 '</div>'+
                                 '<div class="sub-title-task">Date Created: '+createdate+'</div>';
                        
@@ -955,7 +961,7 @@ function getprojectlist()
                     appendHTML+='<div class="project-status">'+
                                    '<ul class="clearfix">'+
                                         '<li>'+
-                                            '<div class="title" ><a data-toggle="modal" href="#task" data-role="button" type="button" onclick="loadtask('+p_title+','+pid+');"><span data-toggle="modal" href="#project" style="margin: 0 0 0px;"></span>Tasks</a></div>'+
+                                            '<div class="title" ><a data-toggle="modal" href="#task" data-role="button" type="button" ontouchstart="loadtask('+p_title+','+pid+');"><span data-toggle="modal" href="#project" style="margin: 0 0 0px;"></span>Tasks</a></div>'+
                                         '</li>'+
                                         '<li>'+
                                             '<div class="stats">Active</div>'+
@@ -979,7 +985,7 @@ function getprojectlist()
 								 for(var i = 0; i < numofmembers; i++){	
 
 									 appendHTML+='<li>'+
-                                            '<a data-toggle="modal" href="#userprof" onclick="userprofile('+allmemberid[i]+');"><img data-toggle="modal" href="#project" class="img-circle" src="'+allmemberpic[i]+'" width="50" height="50" alt="Image"></a>'+
+                                            '<a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+allmemberid[i]+');"><img data-toggle="modal" href="#project" class="img-circle" src="'+allmemberpic[i]+'" width="50" height="50" alt="Image"></a>'+
 											'</li>';		  
 								}
 					   
@@ -998,10 +1004,10 @@ function getprojectlist()
 					'</div>';		
 				 }
 				 				 
-				if (appendHTML.length >0){
+				/*if (appendHTML.length >0){
 				 window.localStorage["getprojectlist"]= appendHTML; 
 				
-				}
+				}*/
 				
 			
 	  },
@@ -1011,8 +1017,13 @@ function getprojectlist()
 		console.log(err.message);
     }
       	
+}).done(function()  {
+   document.getElementById("projectlist").innerHTML=appendHTML;
+   stopload();
+}).fail(function(err)  {
+   console.log(err.message);
 });  
-document.getElementById("projectlist").innerHTML=window.localStorage.getItem('getprojectlist');	
+//document.getElementById("projectlist").innerHTML=window.localStorage.getItem('getprojectlist');	
 }
 
 
@@ -1294,7 +1305,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						
 						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
 									'<div class="left-border" style="width:100%;">'+
-									'<div class="title-task"><a data-toggle="modal" href="#taskinfo"  onclick="getmytaskinfo('+cur_pid+','+id+');"> <i data-toggle="modal" href="#task"><i/>'+task_title+'</a>'+
+									'<div class="title-task"><a data-toggle="modal" href="#taskinfo"  ontouchstart="getmytaskinfo('+cur_pid+','+id+');"> <i data-toggle="modal" href="#task"><i/>'+task_title+'</a>'+
                                     '</div>';
                                     /* '<div class="progress">'+
                                         '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
@@ -1321,7 +1332,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						 for(var i = 0; i < numtaskmem; i++){	
 
 									 appendHTML+='<li>'+
-                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+taskmemid[i]+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+taskmempic[i]+'" width="50" height="50" width="50" alt="Image">'+
+                                                '<a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+taskmemid[i]+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+taskmempic[i]+'" width="50" height="50" width="50" alt="Image">'+
                                                 '</a>'+
                                             '</li>';		  
 								}	
@@ -1332,7 +1343,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						
 						 appendHTML +='<div class="right-border">'+
                                     '<div class="link-wrapper">'+
-                                       ' <a class="arrow-link"><span class="flaticon-arrow-right"  data-toggle="modal" href="#newpost" onclick="posttask('+cur_pid+','+id+','+task_name+');" ></span></a>'+
+                                       ' <a class="arrow-link"><span class="flaticon-arrow-right"  data-toggle="modal" href="#newpost" ontouchstart="posttask('+cur_pid+','+id+','+task_name+');" ></span></a>'+
                                     '</div>'+
                                 '</div></div></div>';
 						
@@ -1417,7 +1428,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						
 						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
 									'<div class="left-border" style="width:100%;">'+
-									'<div class="title-task"><a data-toggle="modal" href="#taskinfo"  onclick="getmytaskinfo('+cur_pid+','+id+');"> <i data-toggle="modal" href="#task"><i/>'+task_title+'</a>'+
+									'<div class="title-task"><a data-toggle="modal" href="#taskinfo"  ontouchstart="getmytaskinfo('+cur_pid+','+id+');"> <i data-toggle="modal" href="#task"><i/>'+task_title+'</a>'+
                                     '</div>';
                                     /* '<div class="progress">'+
                                         '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
@@ -1441,7 +1452,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						 for(var i = 0; i < numtaskmem; i++){	
 
 									 appendHTML+='<li>'+
-                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+taskmemid[i]+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+taskmempic[i]+'" width="50" height="50" width="50" alt="Image">'+
+                                                '<a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+taskmemid[i]+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+taskmempic[i]+'" width="50" height="50" width="50" alt="Image">'+
                                                 '</a>'+
                                             '</li>';			  
 								}	
@@ -1450,7 +1461,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						
 						 appendHTML +='<div class="right-border">'+
                                     '<div class="link-wrapper">'+
-                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right" data-toggle="modal" href="#newpost" onclick="posttask('+cur_pid+','+id+','+task_name+');"></span></a>'+
+                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right" data-toggle="modal" href="#newpost" ontouchstart="posttask('+cur_pid+','+id+','+task_name+');"></span></a>'+
                                     '</div>'+
                                 '</div></div></div>';
 						
@@ -1533,7 +1544,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						
 						appendHTML +='<div id="task-'+id+'" class="inner-wrapper"> <div class="task-wrapper">'+
 									'<div class="left-border" style="width:100%;">'+
-									'<div class="title-task"><a data-toggle="modal" href="#taskinfo"  onclick="getmytaskinfo('+cur_pid+','+id+');"> <i data-toggle="modal" href="#task" ><i/>'+task_title+'</a>'+
+									'<div class="title-task"><a data-toggle="modal" href="#taskinfo"  ontouchstart="getmytaskinfo('+cur_pid+','+id+');"> <i data-toggle="modal" href="#task" ><i/>'+task_title+'</a>'+
                                     '</div>';
                                     /* '<div class="progress">'+
                                         '<div class="progress-bar '+progbarclass+'" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: '+progval+'%">'+
@@ -1557,7 +1568,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						 for(var i = 0; i < numtaskmem; i++){	
 
 								 appendHTML+='<li>'+
-                                                '<a data-toggle="modal" href="#userprof" onclick="userprofile('+taskmemid[i]+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+taskmempic[i]+'" width="50" height="50" width="50" alt="Image">'+
+                                                '<a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+taskmemid[i]+');"><img data-toggle="modal" href="#task" class="img-circle" src="data:image/gif;base64,'+taskmempic[i]+'" width="50" height="50" width="50" alt="Image">'+
                                                 '</a>'+
                                             '</li>';			  
 								}	
@@ -1566,7 +1577,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 						
 						 appendHTML +='<div class="right-border">'+
                                     '<div class="link-wrapper">'+
-                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right" data-toggle="modal" href="#newpost" onclick="posttask('+cur_pid+','+id+','+task_name+');"></span></a>'+
+                                       ' <a  class="arrow-link"><span class="flaticon-arrow-right" data-toggle="modal" href="#newpost" ontouchstart="posttask('+cur_pid+','+id+','+task_name+');"></span></a>'+
                                     '</div>'+
                                 '</div></div></div>';
 						
@@ -1666,16 +1677,17 @@ function getrequesttask(tid)
 						var display_name= data.items[x].display_name;
 						var email= data.items[x].email;
 						var profile_pic= data.items[x].profile_pic;
+                        var uid=data.items[x].user_id;
 						
 						 appendHTML +='<tr class="checked-list">'; 
 						 appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#newtask" src="data:image/gif;base64,'+profile_pic+'" height="45" width="45" class="img-circle"></a></div>';
 						  
-						appendHTML +='<td><a ><i data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" >'+
+						appendHTML +='<td><a ><i data-toggle="modal" href="#userprof" ontouchstart="userprofile('+id+');" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" >'+
 										
 									'<span class="actions">'+
 													'<div class="options btn-group">'+
-														'<button class="btn btn-success btn-xs tooltips" data-title="Accept" data-original-title="" title=""><span class="flaticon-check"></span></button>'+
-														'<button  class="btn btn-default btn-xs tooltips" data-title="Decline" data-original-title="" title="" onclick="cancel_taskrequest('+id+');"    >X</button>'+
+														'<button class="btn btn-success btn-xs tooltips" data-title="Accept" data-original-title="" title="" ontouchstart="accept_taskrequest('+tid+','+uid+');"  ><span class="flaticon-check"></span></button>'+
+														'<button  class="btn btn-default btn-xs tooltips" data-title="Decline" data-original-title="" title="" ontouchstart="cancel_taskrequest('+tid+','+uid+');" >X</button>'+
 													'</div>'+
 													'</span>'+	
 									'</div></td></tr>';
@@ -1696,11 +1708,85 @@ document.getElementById("task-request-list").innerHTML=appendHTML;
 
 	
 }
-function cancel_taskrequest(id)
+function accept_taskrequest(tid,uid)
 {
-    
+    req_tid=tid;
+    req_uid=uid;
+	navigator.notification.confirm(
+        'Are you sure you want to accept this task request?', 
+        acceptmembertask, // <-- no brackets
+        'Confirmation Message',
+        ['Ok','Cancel']
+    );
 	
 }
+function acceptmembertask(buttonIndex)
+{
+      if (buttonIndex==1)
+		{
+            $.ajax({ 
+    		type: 'get', 
+    		url: 'http://teamstormapps.net/tasks/accept_member/'+req_tid+'/'+req_uid, 
+    		data: { }, 
+    		success: function (data) { 
+    			if(data.success == 1){ 
+    				
+                    getrequesttask(req_tid);
+                    gettaskmembers(req_tid);
+    			}
+                else { 
+                navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
+                    
+                }
+    			
+    		}
+	        });
+            
+            
+        }
+    
+}
+
+
+function cancel_taskrequest(tid,uid)
+{
+    req_tid=tid;
+    req_uid=uid;
+    	navigator.notification.confirm(
+        'Are you sure you want to decline this task request?', 
+        declinemembertask, // <-- no brackets
+        'Confirmation Message',
+        ['Ok','Cancel']
+    );
+	
+	
+}
+function declinemembertask(buttonIndex)
+{
+    if (buttonIndex==1)
+		{
+             $.ajax({ 
+    		type: 'get', 
+    		url: 'http://teamstormapps.net/tasks/decline_member/'+req_tid+'/'+req_uid, 
+    		data: { }, 
+    		success: function (data) { 
+    			if(data.success == 1){ 
+    				
+                      getrequesttask(req_tid);
+    			}
+                else { 
+                navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
+                    
+                }
+    			
+    		}
+	        });
+            
+            
+        }
+    
+}
+
 
 
 function gettaskmembers(tid)
@@ -1730,9 +1816,9 @@ function gettaskmembers(tid)
 						var profile_pic= data.items[x].profile_pic;
 						
 						appendHTML +='<tr class="checked-list" id="task-assigned-'+id+'">'; 
-						appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#userprof" onclick="userprofile('+uid+');" src="data:image/gif;base64,'+getprofpic(uid)+'" height="45" width="45" class="img-circle"></a></div>';
+						appendHTML +='<td><div class="portrait-status chat"><a  ><img data-toggle="modal" href="#userprof" ontouchstart="userprofile('+uid+');" src="data:image/gif;base64,'+getprofpic(uid)+'" height="45" width="45" class="img-circle"></a></div>';
 						  
-						appendHTML +='<td><a  ><i data-toggle="modal" href="#userprof" onclick="userprofile('+uid+');" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><button type="button" class="close" onclick="delete_assignedtask('+id+','+tid+','+uid+')">×</button></div></td></tr>';
+						appendHTML +='<td><a  ><i data-toggle="modal" href="#userprof" ontouchstart="userprofile('+uid+');" ></i>'+display_name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><button type="button" class="close" ontouchstart="delete_assignedtask('+id+','+tid+','+uid+')">×</button></div></td></tr>';
 						
 						
 					
@@ -1878,6 +1964,8 @@ function new_task(id)
 	dependanttask_select();
 	get_proj_mem_for_task();
 	document.getElementById("viewnewtaskhdr").innerHTML="Create Task";
+    document.getElementById("divtaskmemlist").style.display = "Block";
+    
 }
 
 
@@ -1943,9 +2031,9 @@ function get_proj_mem_for_task()
 						
 						 appendHTML +='<tr class="checked-list">'; 
 						 //getmemprofpic(id);
-						 appendHTML +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');" ><img data-toggle="modal" href="#newtask" src='+profile_pic+' height="45" width="45" class="img-circle"></a></div>';
+						 appendHTML +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+id+');" ><img data-toggle="modal" href="#newtask" src='+profile_pic+' height="45" width="45" class="img-circle"></a></div>';
 						  
-						appendHTML +='<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+id+');"><i data-toggle="modal" href="#newtask" ></i>'+name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><input type="checkbox" id="flat-checkbox-1" name="chk_members" class="icheckbox_flat" value="'+id+'"></div></td></tr>';
+						appendHTML +='<td><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+id+');"><i data-toggle="modal" href="#newtask" ></i>'+name+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+email+'</i></p></td></td><td><div class="checkbox" name="chk_members" ><input type="checkbox" id="flat-checkbox-1" name="chk_members" class="icheckbox_flat" value="'+id+'"></div></td></tr>';
 					}			
 				}
 				
@@ -1993,7 +2081,14 @@ function getmemprofpic(tsid)
 	
 }
 
- 
+function changedateformat(dte)
+{
+    var parts,newdate; 
+    parts =dte.split('/');
+    newdate= parts[2]+"-"+parts[0]+"-"+parts[1];
+    return newdate;
+} 
+
 function create_task()
 {
 	var members = getCheckedBoxes('chk_members');
@@ -2012,6 +2107,8 @@ function create_task()
 	var duedate = document.getElementById('txt_duedate').value;
 	var depentask = document.getElementById('select_deptask').value;
 	
+       
+    
 	
 	if (isnewtask>0){	
 			jQuery.ajax({ 
@@ -2062,8 +2159,8 @@ function create_task()
 							project_id: cur_pid,
 							title: title,
 							description:desc,
-							/* startdate:startdate,
-							duedate:duedate, */
+							/*startdate:changedateformat(startdate),
+							duedate:changedateformat(duedate),*/
 							priority:priority,
 							dependent:depentask
 							}, 
@@ -2171,11 +2268,11 @@ function member_search()
 									else{
 									var htmldata;
 									htmldata ='<tr class="checked-list">'; 
-									htmldata +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" onclick="userprofile('+u.item.id+');"  ><img data-toggle="modal" href="#newproject" src="'+site_url+'thumbs/profile?id='+ u.item.id +'&hash=' + u.item.image + '" height="45" width="45" class="img-circle"></a></div>';
-									htmldata +='<td><a data-toggle="modal" href="#userprof" onclick="userprofile('+u.item.id+');"><i data-toggle="modal" href="#newproject" ></i>'+u.item.fullname+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+u.item.email+'</i></p></td></td><td><div class="checkbox" name="chk_members" >'+
+									htmldata +='<td><div class="portrait-status chat"><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+u.item.id+');"  ><img data-toggle="modal" href="#newproject" src="'+site_url+'thumbs/profile?id='+ u.item.id +'&hash=' + u.item.image + '" height="45" width="45" class="img-circle"></a></div>';
+									htmldata +='<td><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+u.item.id+');"><i data-toggle="modal" href="#newproject" ></i>'+u.item.fullname+'</a><p style="font-size:10px;"><i class="flaticon-email" > '+u.item.email+'</i></p></td></td><td><div class="checkbox" name="chk_members" >'+
 										'<span class="actions">'+
 														'<div class="options btn-group">'+
-															'<button  class="btn btn-default btn-xs tooltips" data-title="Decline" data-original-title="" onclick="delete_member('+email+')" title="">X</button>'+
+															'<button  class="btn btn-default btn-xs tooltips" data-title="Decline" data-original-title="" ontouchstart="delete_member('+email+')" title="">X</button>'+
 														'</div>'+
 														'</span>'+	
 										'</div></td></tr>';

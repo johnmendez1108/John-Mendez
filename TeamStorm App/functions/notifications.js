@@ -2,7 +2,7 @@ var ses_id = window.localStorage.getItem('session_id');
 var cur_notifcount=0;
 var cur_notifcount2=0;
 var first_notif_id;
-var  mess;
+var  notifid,mess;
 	//NOTIFICATION AUTO REFRESH
 	setInterval(function(){ notification_refresh() }, 20000);
 
@@ -36,7 +36,7 @@ var  mess;
 				var des =row.description.replace(row.fullname, "");
 				
 				appendHTML += '<li>';
-				appendHTML += '<a  data-toggle="modal" href="#notification" onclick="notif_click('+row.id+');">';
+				appendHTML += '<a  data-toggle="modal" href="#notification" ontouchstart="notif_click('+row.id+');">';
 				appendHTML += '<div class="dv-notif '+(is_new? 'un-read':'')+'"  id="notif-info-'+row.id+'">';
 				appendHTML += '<img src="data:image/gif;base64,'+profile_pic+'" class="img-circle" width="60" height="60"  alt="Image" />';
 				appendHTML += '<div class="dv-info">';
@@ -140,14 +140,14 @@ function getprojectnotiflist()
 					appendHTML += '<div class="dv-notif new">';
 					appendHTML += '<img src="data:image/gif;base64,'+profile_pic+'" class="img-circle" width="60" height="60"  alt="Image" />';
 					appendHTML += '<div class="dv-info">';
-					/*appendHTML += '<span class="name"><a data-toggle="modal" href="#userprof" onclick="userprofile('+data[x].actor_id+');">'+data[x].actor_name+'</a></span>';*/
+					/*appendHTML += '<span class="name"><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+data[x].actor_id+');">'+data[x].actor_name+'</a></span>';*/
                     appendHTML += '<span class="name">'+data[x].actor_name+'</span>';
 					appendHTML += '<span class="msg">'+des+'</span>';
 					appendHTML += '<span><a ></a></span>';
 					appendHTML += '<span class="n-time">'+data[x].timestamp+'</span>';
 					appendHTML += '<div class="pull-right options btn-group">';
-					appendHTML += '<button class="btn btn-success btn-xs tooltips" data-placement="top" data-title="Accept" onclick="n_project_accept('+data[x].project_id+')" style="width:50px;"><span class="flaticon-check"></span></button>';
-					appendHTML += '<button class="btn btn-default btn-xs tooltips" data-placement="top" data-title="Decline" onclick="n_project_decline('+data[x].project_id+')" style="width:50px;">X</button>';
+					appendHTML += '<button class="btn btn-success btn-xs tooltips" data-placement="top" data-title="Accept" ontouchstart="n_project_accept('+data[x].project_id+')" style="width:50px;"><span class="flaticon-check"></span></button>';
+					appendHTML += '<button class="btn btn-default btn-xs tooltips" data-placement="top" data-title="Decline" ontouchstart="n_project_decline('+data[x].project_id+')" style="width:50px;">X</button>';
 					appendHTML += '</div>';
 					appendHTML += '</div>';
 					appendHTML += '</div>';
@@ -198,14 +198,14 @@ function gettasknotiflist()
 					appendHTML += '<div class="dv-notif new">';
 					appendHTML += '<img src="data:image/gif;base64,'+profile_pic+'" class="img-circle" width="60" height="60"  alt="Image" />';
 					appendHTML += '<div class="dv-info">';
-					/*appendHTML += '<span class="name"><a data-toggle="modal" href="#userprof" onclick="userprofile('+data[x].actor_id+');">'+data[x].actor_name+'</a></span>';*/
+					/*appendHTML += '<span class="name"><a data-toggle="modal" href="#userprof" ontouchstart="userprofile('+data[x].actor_id+');">'+data[x].actor_name+'</a></span>';*/
                     appendHTML += '<span class="name">'+data[x].actor_name+'</span>';
 					appendHTML += '<span class="msg">'+des+'</span>';
 					appendHTML += '<span><a ></a></span>';
 					appendHTML += '<span class="n-time">'+data[x].timestamp+'</span>';
 					appendHTML += '<div class="pull-right options btn-group">';
-					appendHTML += '<button class="btn btn-success btn-xs tooltips" data-placement="top" data-title="Accept" onclick="n_task_accept('+data[x].task_id+')" style="width:50px;"><span class="flaticon-check"></span></button>';
-					appendHTML += '<button class="btn btn-default btn-xs tooltips" data-placement="top" data-title="Decline" onclick="n_task_decline('+data[x].task_id+')" style="width:50px;">X</button>';
+					appendHTML += '<button class="btn btn-success btn-xs tooltips" data-placement="top" data-title="Accept" ontouchstart="n_task_accept('+data[x].task_id+')" style="width:50px;"><span class="flaticon-check"></span></button>';
+					appendHTML += '<button class="btn btn-default btn-xs tooltips" data-placement="top" data-title="Decline" ontouchstart="n_task_decline('+data[x].task_id+')" style="width:50px;">X</button>';
 					appendHTML += '</div>';
 					appendHTML += '</div>';
 					appendHTML += '</div>';
@@ -391,8 +391,8 @@ document.addEventListener('deviceready', function () {
 		url: 'http://teamstormapps.net/mobile/notification', 
 		data: { sid: ses_id }, 
 		success: function (data) {
- 			
-			mess=data[0].description
+ 		   notifid=data[0].id;
+			mess=data[0].description;
 		}
 	});
  
@@ -401,7 +401,7 @@ var now                  = new Date().getTime(),
     _5_seconds_from_now = new Date(now + 5*1000);
 
 window.plugin.notification.local.add({
-    id:      1,
+    id:      notifid,
     title:   'TeamStorm App',
     message: mess,
 	badge:  1,

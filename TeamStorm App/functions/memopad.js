@@ -32,7 +32,7 @@ function load_memo()
 						var parts =content.split('\n');
 					
 						appendHTML +='<div class="panel" id="memo-'+id+'">'+
-                                '<button type="button" class="close"   onclick="conf_delete_memo('+id+');">×</button>'+
+                                '<button type="button" class="close"   ontouchstart="conf_delete_memo('+id+');">×</button>'+
                             '<div class="panel-heading">'+
                                 '<h4 class="panel-title">'+
                                 '<a data-toggle="collapse" data-parent="#accordion1" href="#note-'+id+'">'+parts[0]+'</a></h4>'+
@@ -64,7 +64,7 @@ function addnote()
 {
 	var appendHTML;
 	appendHTML ='<div class="panel" id="memo-0">'+
-                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="clearnote();">×</button>'+
+                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ontouchstart="clearnote();">×</button>'+
                             '<div class="panel-heading">'+
                                 '<h4 class="panel-title">'+
                                 '<a data-toggle="collapse" data-parent="#accordion1" href="#note-0" id="tempmemo">Untitled</a></h4>'+
