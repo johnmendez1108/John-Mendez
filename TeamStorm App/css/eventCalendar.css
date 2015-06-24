@@ -28,6 +28,7 @@
 	}
 		.eventsCalendar-monthWrap.currentMonth { 
 			z-index:1;
+            width: 100%;
 		}	
 .eventsCalendar-daysList { 
 	display:table;

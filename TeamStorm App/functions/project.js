@@ -438,6 +438,10 @@ function add_leave_task()
 							getmytask();
 
 					}
+                    else{
+                        	document.getElementById('btn_addtask_leavetask').innerHTML='Requesting';
+						
+                    }
 		  },
 		  error: function (err) {
 			//navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 

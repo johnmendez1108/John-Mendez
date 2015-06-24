@@ -24,6 +24,12 @@ function signup(){
 	var gender = document.getElementById('sup_gender').value;
 	var pass1 = document.getElementById('sup_password1').value;
 	var pass2 = document.getElementById('sup_password2').value;
+    var errmess;
+    
+    
+    
+    
+    
     
     jQuery.ajax({ 
 			type: 'post', 
@@ -37,12 +43,35 @@ function signup(){
 				email :email,
 				gender:gender,
 				password:pass1,
-				password2:pass2}, 
+				password2:pass2},
+           beforeSend: function () {
+			preloading();
+			}, 
       success: function (data) { 
         if(data.status ==0) {
 			//navigator.notification.alert(data.status_message, function() {}); 
 			//alert(data.status_message); 
-			document.getElementById("sup_statmessage").innerHTML = data.status_message;
+            if (fname.length<=0)
+            {
+                errmess="First Name is required.";
+                
+            }
+            else if (lname.length<=0)
+            {
+                 errmess="Last Name is required.";
+            }
+             else if (email.length<=0)
+            {
+                 errmess="Email Address is required.";
+            }
+              else
+            {
+               errmess= data.status_message;
+            }
+            
+            
+            
+			document.getElementById("sup_statmessage").innerHTML =errmess;
 			$("#allert_error").show();
 			 window.setTimeout("hideMessage()", 2500); 
 			}
@@ -52,10 +81,15 @@ function signup(){
 		   $("#allert_success").show();
       }
 	  },
+        
 	  error: function (err) {
         navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
     }
       
+    }).done(function()  {
+        
+        stopload();
+        
     });
     
 	

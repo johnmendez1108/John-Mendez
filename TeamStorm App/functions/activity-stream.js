@@ -8,8 +8,9 @@ var nextpagedate;
 
 var numoffeed = window.localStorage.getItem('numoffeed');
 
-function init() {
-	
+document.addEventListener("deviceready", function(){
+    //mycode
+
 	
 	
 	load_myprofile();
@@ -43,7 +44,8 @@ function init() {
 	xmlhttp.send();
 	
 	 writejsonfile();
-}
+});
+	
 /* $(function() {
 setTimeout(function() {
     $('feednotif').fadeOut('fast');
@@ -121,7 +123,7 @@ if (checkConnection() >2){
 					
 					getposterpic(poster_id);
 					if(project_id > 0){
-						projname = ' posted in <a ontouchstart="viewprojectpost('+project_id+');"  >' + title  + '</a>';
+						projname = ' posted in <a ontouchstart="projectinfo('+project_id+');"  >' + title  + '</a>';
 					}	
 					if(to_user_id > 0 && to_user_id != localStorage.getItem("ts_myid")) { 
 						getnfeeduserinfo(to_user_id);
@@ -353,7 +355,7 @@ if (checkConnection() >2){
 					
 					getposterpic(poster_id);
 					if(project_id > 0){
-						projname = ' posted in <a ontouchstart="viewprojectpost('+project_id+');"  >' + title  + '</a>';
+						projname = ' posted in <a ontouchstart="projectinfo('+project_id+');"  >' + title  + '</a>';
 					}	
 					if(to_user_id > 0 && to_user_id != localStorage.getItem("ts_myid")) { 
 						getnfeeduserinfo(to_user_id);
@@ -1009,20 +1011,10 @@ function loadnewsfeed()
 	 
 	getnewsfeed();
 	document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
+    
     call_emoticons('streamlist');
+    myScroll.refresh();
 
-}
-
-function calendar()
-{
-	window.location="calendar.html";
-	
-}
-
-function appsettings()
-{
-	window.location="app-settings.html";
-	
 }
 
 
@@ -1316,3 +1308,4 @@ function callchat(){
 	preloading();
 	window.location.replace("chat.html");
 }
+

@@ -167,7 +167,7 @@
 				//el.insertBefore(li, el.childNodes[0]);
 	
 		loadnewsfeed();
-		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+		//myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
 		//}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
 	}
 	
@@ -725,7 +725,7 @@ display:none;
 	
 </head>
 
-<body onload="init();">
+<body >
     <div id="spinload"></div>
 	<div id="element2"></div>
     <div class="snap-drawers">
@@ -800,7 +800,7 @@ display:none;
                 </ul>
                 <hr>
                 <ul class="additional-menu">
-                    <li><a  data-toggle="modal" href="#calendar" data-role="button" type="button"><i class="flaticon-calendar"></i> Calendar</a>
+                    <li><a  data-toggle="modal" href="#calendar"    data-role="button" type="button" ><i class="flaticon-calendar"></i> Calendar</a>
                     </li>
                     <li><a data-toggle="modal" href="#memo"   ontouchstart="load_memo();"  data-role="button" type="button"><i class="flaticon-memo-pad"></i> Memo Pad</a>
                     </li>
@@ -2552,14 +2552,21 @@ display:none;
                     <div class="calendar-wrapper">
                         <div id="eventCalendarScroll"></div>
                         <script>
-                        $(document).ready(function() {
-                            $("#eventCalendarScroll").eventCalendar({
+                            
+                        function loadcalendar()
+                        {
+                                 $("#eventCalendarScroll").eventCalendar({
                                 eventsjson: 'json/events.json',
                                 jsonDateFormat: 'human',
                                 openEventInNewWindow: true
                             
                             });
+                             
+                         }
+                        $(document).ready(function() {
+                           loadcalendar();
                         });
+                               
                         </script>
                         <!-- <pre>$(id).eventCalendar({  eventsjson: 'file.json',  eventsScrollable: true});</pre> -->
                     </div>
