@@ -10,7 +10,7 @@ function load_memo()
 	preloading2();
 	var appendHTML ='';
 	
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -114,7 +114,7 @@ function do_memo()
 	var content = document.getElementById('txt_memopad').value;
 
 
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -164,7 +164,7 @@ function delete_memo(buttonIndex)
 	if (buttonIndex==1)
 		{
 		
-			jQuery.ajax({ 
+			$.ajax({ 
 				type: 'post', 
 				async : false,     
 				global : false,

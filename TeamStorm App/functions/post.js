@@ -85,7 +85,7 @@ function loadprojects_select(){
 	var appendHTML = '<option value="0">Project list</option>';
 	
 	
-	 jQuery.ajax({ 
+	 $.ajax({ 
 			type: 'post', 
 		/* 	async : false,     
 			global : false,
@@ -162,7 +162,7 @@ function do_post(){
 	if(postmsg.trim().length > 0){
 		
 	if (checkConnection() >2){
-		jQuery.ajax({ 
+		$.ajax({ 
 			type: 'post', 
 			async : true,     
 			global : false,
@@ -250,7 +250,7 @@ function uploadfile(src)
         });	 */	
 		
 		//var fd = new FormData(document.getElementById("pic_map"));
-	/* 	jQuery.ajax({ 
+	/* 	$.ajax({ 
 			type: 'post', 
 			enctype: 'multipart/form-data',
 			processData: false,  // tell jQuery not to process the data
@@ -265,7 +265,7 @@ function uploadfile(src)
         });  */
 		
 		
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,

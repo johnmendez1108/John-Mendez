@@ -164,7 +164,7 @@ function conf_unfollow()
 function do_follow()
 {
 
-	 jQuery.ajax({ 
+	 $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -198,7 +198,7 @@ function do_unfollow(buttonIndex)
 		if (buttonIndex==1)
 		{
 
-			 jQuery.ajax({ 
+			 $.ajax({ 
 					type: 'post', 
 					async : false,     
 					global : false,

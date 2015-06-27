@@ -46,19 +46,6 @@ document.addEventListener("deviceready", function(){
 	 writejsonfile();
 });
 	
-/* $(function() {
-setTimeout(function() {
-    $('feednotif').fadeOut('fast');
-	
-}, 1000);	
-}); */
-
-/* $(document).mousedown(function(e) {
-    
-        $('#postsettings').dialog("close");
-    
-}); */
-
 
 
 
@@ -74,6 +61,7 @@ function loadaddress()
 {
 	getaddressbook();
 	document.getElementById("addressall").innerHTML=window.localStorage.getItem('latestcontacts');
+    delete loadaddress;
 }
 
 function hideMessagefeed() {
@@ -84,14 +72,14 @@ function getnewsfeed()
 {
 	var appendHTML = '';
 if (checkConnection() >2){
-	 jQuery.ajax({ 
+	 $.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global :false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/newsfeed', 
-			data: { sid: ses_id, mypost: 0 },
+			data: { sid: ses_id, mypost: 0,itemperpage:7 },
 				
 			success: function (data) {
 				nextpagedate=data.nextpage_date;
@@ -303,22 +291,22 @@ else{
 document.getElementById('feednotif').style.display = "block";
 window.setTimeout('hideMessagefeed()', 4000);
 }
-	
+delete getnewsfeed;	
 }
 function nextnewsfeed()
 {
 	var appendHTML = '';
 if (checkConnection() >2){
-	 jQuery.ajax({ 
+	 $.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global :false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/newsfeed', 
 			data: { sid: ses_id, mypost: 0,startdate:nextpagedate, itemperpage:2 },
 			beforeSend: function () {
-				 preloading2();
+				 preloading3();
 			},	
 			success: function (data) {
 				nextpagedate=data.nextpage_date;
@@ -328,22 +316,17 @@ if (checkConnection() >2){
 					var postid= data.feeds[x].id;
 					var poster_id= data.feeds[x].poster_id;
 					var poster_name = data.feeds[x].poster_name;
-					var poster_picture = data.feeds[x].poster_picture;
 					var date_posted = data.feeds[x].date_posted;
 					var post_mood = data.feeds[x].post_mood;
-					var post_mood_desc = data.feeds[x].post_mood_desc;
-					var can_modify = data.feeds[x].can_modify;
 					var project_id = data.feeds[x].project_id;
 					var task_id = data.feeds[x].task_id;
 					var to_user_id = data.feeds[x].to_user_id;
 					var title = data.feeds[x].title;
 					var content = data.feeds[x].content;
 					var agree_count = data.feeds[x].agree_count;
-					var disagree_count = data.feeds[x].agree_count;
 					var comment_count = data.feeds[x].comment_count;
 					var location = data.feeds[x].location;
-					var is_agree = data.feeds[x].is_agree;
-					var is_disagree = data.feeds[x].is_disagree;					
+					var is_agree = data.feeds[x].is_agree;				
 					//alert(data.feeds[x].content);
 					var projname= '';
 					var is_agree_atr;
@@ -534,7 +517,7 @@ if (checkConnection() >2){
 			
 				}  
 });   
-
+stopload();
 }
 else{
 
@@ -551,7 +534,7 @@ window.setTimeout('hideMessagefeed()', 4000);
 function gettaskname(pid,tid)
 {
 	var cur_taskname;
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -606,7 +589,7 @@ function viewpostcomment(id,pstrid)
 	var appendHTML = '';
 	document.getElementById("commentlist").innerHTML="";
 	document.getElementById("commentlist").style.display="none";
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -691,7 +674,7 @@ function viewpostcomment(id,pstrid)
 function showprofpic(tsid)
 {
 var pic="img/user/thumb-user-medium.jpg";
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -741,7 +724,7 @@ function do_editcomment(id)
 {
 	var commentmsg = document.getElementById('inpteditcomment-'+id+'').value
 	
-		  jQuery.ajax({ 
+		  $.ajax({ 
 			type: 'post', 
 			async : false,  
 			dataType : 'json',
@@ -794,7 +777,7 @@ function delete_comment(buttonIndex) {
 		if (buttonIndex==1)
 		{
 			
-			jQuery.ajax({ 
+			$.ajax({ 
 			type: 'post', 
 			async : true,  
 			dataType : 'json',
@@ -828,7 +811,7 @@ function do_comment()
 {
 	var commentmsg = document.getElementById('inptcomment').value;
 	var issuccess;
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : true,  
 			dataType : 'json',
@@ -886,7 +869,7 @@ function delete_post(buttonIndex) {
 		if (buttonIndex==1)
 		{
 					
-			jQuery.ajax({ 
+			$.ajax({ 
 			type: 'post', 
 			async : false, 
 			global : false,
@@ -929,7 +912,7 @@ function removepost() {
 function postagree(id) {
 	
 	
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : true,     
 			global : false,
@@ -1000,15 +983,13 @@ function call_emoticons(id)
 
 function loadnewsfeed()
 {
-/* 		 var locpath =document.location.pathname;
-	 locpath = 'file://'+locpath.substring(0, locpath.lastIndexOf("/"));
-	 alert(locpath); */
-	 
-	getnewsfeed();
+
+	 	
 	document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
-    
+   
     call_emoticons('streamlist');
     myScroll.refresh();
+     getnewsfeed();
 
 }
 
@@ -1030,7 +1011,7 @@ function encodeImage(src, callback) {
 
 function getnfeeduserinfo(tsid){
 
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1056,7 +1037,7 @@ function getnfeeduserinfo(tsid){
 }
 function getposterpic(tsid){
 
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1086,7 +1067,7 @@ function getposterpic(tsid){
 
  
  if (checkConnection() >2){
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1135,7 +1116,7 @@ function getaddressbook(){
 
 	var appendHTML = '';
 
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1198,7 +1179,7 @@ function getaddressbookperletter(){
 
 	var appendHTML = '';
 
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1271,7 +1252,7 @@ function signout(buttonIndex)
 	if (buttonIndex==1){
 	
 	  window.location.replace("login.html");
-	 		 jQuery.ajax({ 
+	 		 $.ajax({ 
 				type: 'post', 
 				//async : false,     
 				global : false,

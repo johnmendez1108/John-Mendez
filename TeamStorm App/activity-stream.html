@@ -122,61 +122,18 @@
 	pullUpEl, pullUpOffset,
 	generatedCount = 0;
 	function pullDownAction () {
-	//setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-		var el, li, i;
-		el = document.getElementById('streamlist');
-		var newpost = "<div class='inner-wrapper'>"+
-                    "<div class='main-user-post'>"+
-                        "<div class='media'>"+
-                            "<a class='pull-left' a >"+
-                                "<img class='media-object img-circle' src='img/user/thumb-user-medium.jpg' width='50' alt='Image'>"+
-                            "</a>"+
-                            "<div class='media-body'>"+
-							
-								"<div class='btn-group pull-right' ><span class='ico flaticon-arrow-bottom' data-toggle='modal' href='#postsettings'></span></div>"+
-								
-								
-                                "<h4 class='media-heading'><a >Jay Quinto</a> </h4>"+
-                                "<small>4 hours ago via public</small>"+
-								" <span class='ico flaticon-lamp'></span>"+
-                            "</div>"+
-                        "</div>"+
-                        "<div class='emojis-plain'><p class='post emojis-wysiwyg'>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. :grin:</p></div>"+
-                        "<ul class='half-2 clearfix'>"+
-                            "<li>"+
-                                "<button type='button' class='btn btn-default btn-block'><i class='flaticon-check-circle'></i> Agree (5)</button>"+
-                            "</li>"+
-                            "<li>"+
-                                "<button type='button' class='btn btn-default btn-block' data-toggle='modal' href='#comments' ><i class='flaticon-comment-more'></i> Comments (23)</button>"+
-                            "</li>"+
-                        "</ul>"+
-                    "</div>"+
-                "</div>";	
-		
-				
-				//li = document.createElement('div');
-				//li.innerHTML  = reload_feed();
-				//el.insertBefore(li, el.childNodes[0]);
+	
 	
 		loadnewsfeed();
-		//myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-		//}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
+		
 	}
 	
 	function pullUpAction () {
-        //setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-		//var el, li, i;
-		//el = document.getElementById('streamlist');
-		//var newpost = "";
-		//for (i=0; i<1; i++) {
-			//li = document.createElement('div');
-			//li.innerHTML  =newpost;
-			//el.appendChild(li, el.childNodes[0]);
-			//loadnewsfeed();
-		//}
+       
+        
 		nextnewsfeed();
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-		//}, 10);	// <-- Simulate network congestion, remove setTimeout from production!
+		
 	 }
 	
 	function loaded() {
@@ -223,13 +180,13 @@
 				pullDownEl.className = 'loading';
 				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';				
 				pullDownAction();	// Execute custom function (ajax call?)
-				//loadnewsfeed();
+				
 				
 			} else if (pullUpEl.className.match('flip')) {
 				pullUpEl.className = 'loading';
 				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
 				pullUpAction();	// Execute custom function (ajax call?)
-				//loadnewsfeed();
+				
 				
 			}
 		}
@@ -2851,11 +2808,11 @@ display:none;
                 towards = state.info.towards,
                 opening = state.info.opening;
             if (opening == 'right' && towards == 'left') {
-                //$('right-drawer').classList.add('active-drawer');
-                //$('left-drawer').classList.remove('active-drawer');
+               $('#right-drawer').addClass('active-drawer');
+               $('#left-drawer').removeClass('active-drawer');
             } else if (opening == 'left' && towards == 'right') {
-                //$('right-drawer').classList.remove('active-drawer');
-               // $('left-drawer').classList.add('active-drawer');
+                $('#right-drawer').removeClass('active-drawer');
+                $('#left-drawer').addClass('active-drawer');
             }
         };
     snapper.on('drag', UpdateDrawers);
@@ -3011,6 +2968,7 @@ $('#txt_tododate').datetimepicker({
       });
 	</script>
 
+ <script src="js/zepto.min.js"></script>   
 	
 </body>
 <script src="js/jquery.eventCalendar.min.js" type="text/javascript"></script>
@@ -3139,49 +3097,5 @@ $('#txt_tododate').datetimepicker({
 	
 
 
-<!-- 
-<script>
-function search_post_user()
-{
-	
-var search = document.getElementById("search-contacts").autocomplete;
-	
-	
-$("#search-contacts").autocomplete({
-		source: 'http://teamstormapps.net/mobile/search',
-		selectFirst: true,
-		autoFocus: true,
-		search: function (e, u) {$('.search-all-loading').addClass('show');},
-		response: function (e, u) {$('.search-all-loading').removeClass('show');
-			if (!u.content.length) {
-				var noResult = { 
-					subtitle:"No match found on `" + $("#search-all").val() + "`",
-					title:"No result found",
-					image: '../img/no-result-thumb-default.png'
-				};
-				u.content.push(noResult);
-				}
-			},
-		select: function (e,u) { window.location.href = u.item.link; },
-		open: function(e, u) {
-			$('.ui-autocomplete').append('<li><a href="" class="search-hashtag"><div class="dv-search-list"><div class="image"><img src=".../img/hashtag-default.png" /></div><div class="info"><span class="name">Search for Hashtag?</span><span class="email">Search for hashtag `#' + $("#search-all").val() + '`</span></div></div></a></li><li><a href="" class="no-result">See All Result</a></li>'); //See all results
-		},//
-		}).focus(function() {
-			$(this).autocomplete("search", this.value);
-		}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-			var inner_html = '<a href=""><div class="dv-search-list">';
-			inner_html +='<div class="image"><img src="data:image/gif;base64,' + item.image + '" /></div>';
-			inner_html +='<div class="info"><span class="name">' + item.title + '</span><span class="email">' + item.subtitle + '</span></div>';
-			inner_html +='</div></a>';
-			
-			return $( "<li></li>" )
-				.data( "item.autocomplete", item )
-				.append(inner_html)
-				.appendTo( ul );
-		};
-	
-}
-</script>
- -->
 
 </html>

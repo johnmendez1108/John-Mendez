@@ -42,7 +42,7 @@ document.getElementById("allert_success").style.display="none";
 var ses_id = window.localStorage.getItem('session_id');
 
  if (checkConnection() >2){
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -112,7 +112,7 @@ var pass2=document.getElementById('txt_myprofnewpass2').value;
 if (pass1.length>=6){
 	if ( pass1 === pass2 )
 	{
-			  jQuery.ajax({ 
+			  $.ajax({ 
 					type: 'post', 
 					async : false,     
 					global : false,

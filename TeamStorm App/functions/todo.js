@@ -11,7 +11,7 @@ function load_todo()
 	var appendHTMLC='';
 	var appendHTMLO='';
 	
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -118,7 +118,7 @@ function do_todo()
 	var desc = document.getElementById('txt_tododesc').value
 
 
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -170,7 +170,7 @@ function delete_todo(buttonIndex)
 	
 if (buttonIndex==1)
 {
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,

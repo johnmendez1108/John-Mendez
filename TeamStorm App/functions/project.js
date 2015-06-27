@@ -29,7 +29,7 @@ function getproject()
 {
 	var appendHTML ='<li><a data-toggle="modal" href="#newproject" ontouchstart="newproject();" ><i class="flaticon-folder-plus"></i> Create New Project</a></li>';
 	var list_prj_count=0;
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -110,7 +110,7 @@ function getmytask()
 {
 	var appendHTML ='';
 	var list_mytsk_count=0;
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -170,7 +170,7 @@ function getmytaskinfo(pid,tid)
 	
 if (checkConnection() >2){
 	cur_tid=tid;
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -239,7 +239,7 @@ if (checkConnection() >2){
 							
 							posttask(pid,tid,task_title);
 							
-							if(jQuery.inArray(data.items[x].id, mytask ) > -1){
+							if($.inArray(data.items[x].id, mytask ) > -1){
 								document.getElementById('btn_addtask_leavetask').innerHTML='Leave Task';
 								ismytask=1;
 							}
@@ -345,7 +345,7 @@ function settaskcomplete(buttonIndex)
 {
     if (buttonIndex==1)
 		{
-    				jQuery.ajax({ 
+    				$.ajax({ 
     				type: 'post', 
     				async : false,     
     				global : false,
@@ -419,7 +419,7 @@ function add_leave_task()
 	}
 	else{
 		//Join Task
-		jQuery.ajax({ 
+		$.ajax({ 
 				type: 'post', 
 				async : false,     
 				global : false,
@@ -462,7 +462,7 @@ function leave_task(buttonIndex)
 		if (buttonIndex==1)
 		{
 			
-			jQuery.ajax({ 
+			$.ajax({ 
 				type: 'post', 
 				async : false,     
 				global : false,
@@ -517,7 +517,7 @@ function delete_task(buttonIndex)
 {
 		if (buttonIndex==1)
 		{
-				jQuery.ajax({ 
+				$.ajax({ 
 				type: 'post', 
 				async : false,     
 				global : false,
@@ -559,9 +559,9 @@ function projectinfo(id)
 if (checkConnection() >2){
    
 			cur_pid=id;
-			jQuery.ajax({ 
+			$.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
@@ -635,6 +635,8 @@ if (checkConnection() >2){
     }
       	
 }).done(function() {
+    
+    
    
 });
 	
@@ -652,7 +654,7 @@ else{
 function projectmembers(id)
 {
     
-    jQuery.ajax({ 
+    $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -720,7 +722,7 @@ function archive_project(buttonIndex)
 {
      if (buttonIndex==1)
 		{
-    				jQuery.ajax({ 
+    				$.ajax({ 
     				type: 'post', 
     				async : false,     
     				global : false,
@@ -763,7 +765,7 @@ function edit_project()
 var pdesc=document.getElementById("txt_editprj_desc").value;
 var privacy=document.getElementById("select_editprj_privacy").value;
 var approval = document.getElementById('chk_editprj_taskapproval').checked;    
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : true,     
 			global : false,
@@ -803,7 +805,7 @@ var approval = document.getElementById('chk_editprj_taskapproval').checked;
 function prjleaderpic(tsid)
 {
 var pic="";
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -847,7 +849,7 @@ function delete_project(buttonIndex)
 {
 		if (buttonIndex==1)
 		{
-				jQuery.ajax({ 
+				$.ajax({ 
 				type: 'post', 
 				async : false,     
 				global : false,
@@ -884,7 +886,7 @@ function delete_project(buttonIndex)
 
 function gettasklist(id)
 {
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -920,9 +922,9 @@ function getprojectlist()
 	preloading3();
 	var appendHTML = '';
 
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
@@ -1057,7 +1059,7 @@ function proj_inf(id)
 {
 	var pname="";
 
-jQuery.ajax({ 
+$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1093,7 +1095,7 @@ function proj_creator(id)
 {
 	var creatorid=0;
 
-jQuery.ajax({ 
+$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1128,7 +1130,7 @@ jQuery.ajax({
 
 function get_proj_member(id)
 {	
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1168,7 +1170,7 @@ function get_proj_member(id)
 function getprofpic(tsid)
 {
 	var pic="img/user/thumb-user-medium.jpg";
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1206,7 +1208,7 @@ function clearprj_text()
 function getcounttask(id,type)
 {
 	var counttask=0;
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1263,7 +1265,7 @@ var appendHTML ='';
 var type='active';
 document.getElementById(""+type+"-task").innerHTML="";
 
-		jQuery.ajax({ 
+		$.ajax({ 
 			type: 'post', 
 			async : true,     
 			global : false,
@@ -1386,7 +1388,7 @@ var type='pending';
 document.getElementById(""+type+"-task").innerHTML="";
 
 
-		jQuery.ajax({ 
+		$.ajax({ 
 			type: 'post', 
 			async : true,     
 			global : false,
@@ -1503,7 +1505,7 @@ var appendHTML ='';
 var type='completed';
 document.getElementById(""+type+"-task").innerHTML="";
 
-		jQuery.ajax({ 
+		$.ajax({ 
 			type: 'post', 
 			async : true,     
 			global : false,
@@ -1617,7 +1619,7 @@ function gettaskmemberspic(tid)
 {
 	
 	
-	 jQuery.ajax({ 
+	 $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1660,7 +1662,7 @@ function gettaskmemberspic(tid)
 function getrequesttask(tid)
 {
 	var appendHTML="";
-	 jQuery.ajax({ 
+	 $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1796,7 +1798,7 @@ function declinemembertask(buttonIndex)
 function gettaskmembers(tid)
 {
 	var appendHTML="";
-	 jQuery.ajax({ 
+	 $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1862,7 +1864,7 @@ function delete_taskmember(buttonIndex)
 {
 	if (buttonIndex==1)
 		{
-			jQuery.ajax({ 
+			$.ajax({ 
 			type: 'post', 
 			async : true,  
 			dataType : 'json',
@@ -1896,7 +1898,7 @@ function delete_taskmember(buttonIndex)
 function gettaskprofpic(tsid)
 {
 
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -1927,7 +1929,7 @@ function create_project()
 var pname=document.getElementById("txt_prj_name").value;
 var pdesc=document.getElementById("txt_prj_desc").value;
 var members=document.getElementById("txtmember").value;	
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : true,     
 			global : false,
@@ -1977,7 +1979,7 @@ function dependanttask_select(){
 	var appendHTML = '<option value="0">None</option>';
 	
 	
-	 jQuery.ajax({ 
+	 $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -2012,7 +2014,7 @@ function get_proj_mem_for_task()
 {	
 
 	var appendHTML = '';
-	jQuery.ajax({ 
+	$.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -2060,7 +2062,7 @@ else{document.getElementById("fortaskmembers").innerHTML="";}
 function getmemprofpic(tsid)
 {
 
-	  jQuery.ajax({ 
+	  $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
@@ -2115,7 +2117,7 @@ function create_task()
     
 	
 	if (isnewtask>0){	
-			jQuery.ajax({ 
+			$.ajax({ 
 					type: 'post', 
 					async : false,     
 					global : false,
@@ -2152,7 +2154,7 @@ function create_task()
 	else{
 		
 		
-		jQuery.ajax({ 
+		$.ajax({ 
 					type: 'post', 
 					async : false,     
 					global : false,
@@ -2266,7 +2268,7 @@ function member_search()
 									navigator.notification.alert('You cannot add yourself!.',alertDismissed,'TeamStorm App','Ok');
 								}				
 								else{
-										if(jQuery.inArray(u.item.email, pm_arr ) > -1){
+										if($.inArray(u.item.email, pm_arr ) > -1){
 										navigator.notification.alert(u.item.email+' is already in the list.',alertDismissed,'TeamStorm App','Ok');
 									}
 									else{
@@ -2329,4 +2331,3 @@ function delete_member(li_id){
 			
 	holder.removeChild(old_data);
 }
-

@@ -31,7 +31,7 @@ function signup(){
     
     
     
-    jQuery.ajax({ 
+    $.ajax({ 
 			type: 'post', 
 			async : false,     
 			global : false,
