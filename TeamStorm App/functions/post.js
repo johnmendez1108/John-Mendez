@@ -185,18 +185,8 @@ function do_post(){
 				if (data.status==1)
 				{
 					
-				//alert(data.message);
-				loadnewsfeed();
-				document.getElementById('option1').checked = true;
-				document.getElementById('chk_txt_post').checked	= false;
-				document.getElementById('txt_post').value="";
-				document.getElementById('select_projlists').value=0;
-				document.getElementById('txtposttoid').value=0;
-				document.getElementById('search-contacts').value="";
-				document.getElementById('txtposttotaskprjid').value=0;
-				document.getElementById('txtposttotaskid').value=0;
-				document.getElementById('txtposttoid').value=0;
-				document.getElementById('search-contacts').value="";
+				getnewsfeed(false);
+				clearpost();
 				clearimg_count();
 				}
 		
@@ -218,10 +208,22 @@ function do_post(){
 }
  function alertDismissed()
 {
-    
+   
 }
 
-
+function clearpost()
+{
+    document.getElementById('option1').checked = true;
+	document.getElementById('chk_txt_post').checked	= false;
+	document.getElementById('txt_post').value="";
+	document.getElementById('select_projlists').value=0;
+	document.getElementById('txtposttoid').value=0;
+	document.getElementById('search-contacts').value="";
+	document.getElementById('txtposttotaskprjid').value=0;
+	document.getElementById('txtposttotaskid').value=0;
+	document.getElementById('txtposttoid').value=0;
+	document.getElementById('search-contacts').value="";
+}
 function uploadfile(src)
 {
 		

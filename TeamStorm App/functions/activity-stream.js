@@ -17,31 +17,8 @@ document.addEventListener("deviceready", function(){
 	document.getElementById("user_comment_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
 	window.localStorage["host"] = 'http://teamstormapps.net/';
 	
-	loadaddress();
-	if (window.localStorage.getItem('auto_signin')==1)
-	{
-        document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
-        call_emoticons('streamlist');
-        
-	}
-	else
-	{
-		 getnewsfeed(false);
-        
-	}
-    myScroll.refresh();
     
-    
-    
-
-	getmytask();
-	getproject();
-	getprojectlist();
-	loadprojects_select();
-
-	
-	
-	//TO LOGIN IN COMET CHAT
+    //TO LOGIN IN COMET CHAT
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
 	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
@@ -51,7 +28,33 @@ document.addEventListener("deviceready", function(){
 
 	xmlhttp.open("GET","http://teamstormapps.net/",true);
 	xmlhttp.send();
-	
+    
+	loadaddress();
+	if ((window.localStorage.getItem('auto_signin')==1) || (window.localStorage.getItem('isfrom_chat')==1))
+	{
+        document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
+        call_emoticons('streamlist');
+        nextpagedate= window.localStorage.getItem('nextpagedate');
+        
+        document.getElementById("collapse-tasks").innerHTML=window.localStorage.getItem('getmytask');
+        document.getElementById("list_mytsk_count").innerHTML=window.localStorage.getItem('list_mytsk_count');
+			
+        document.getElementById("collapse-projects-lists").innerHTML=window.localStorage.getItem('getprojects');
+        document.getElementById("list_prj_cont").innerHTML=window.localStorage.getItem('list_prj_count');
+        
+	}
+	else
+	{
+		 getnewsfeed(false);
+         getmytask();
+         getproject();
+	}
+    myScroll.refresh();
+    
+	getprojectlist();
+	loadprojects_select();
+
+
 	 //writejsonfile();
     
 });
@@ -291,6 +294,7 @@ if (checkConnection() >2){
 					
 	                 
 				     window.localStorage["latestnewsfeed"]= appendHTML;
+                     window.localStorage["nextpagedate"]= nextpagedate;
                      document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
                      call_emoticons('streamlist');
 			
@@ -307,16 +311,20 @@ delete getnewsfeed;
 }
 function nextnewsfeed()
 {
+    
 	var appendHTML = '';
 if (checkConnection() >2){
 	 $.ajax({ 
 			type: 'post', 
-			async : true,     
+			async : false,     
 			global :false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/newsfeed', 
 			data: { sid: ses_id, mypost: 0,startdate:nextpagedate, itemperpage:2 },
+         beforeSend: function () {
+				 preloading2();
+				},
 		success: function (data) {
 				nextpagedate=data.nextpage_date;
 			if(data.items > 0){
@@ -480,13 +488,7 @@ if (checkConnection() >2){
 									'</div>';
 
 				}
-							
-				/* else
-				{
-					$("#feednotif").show();
-					window.setTimeout("hideMessage()", 4000);
-					alert(window.localStorage.getItem('latestnewsfeed'));
-				} */			
+										
 			}
 			
 		
@@ -511,8 +513,7 @@ if (checkConnection() >2){
 					e.innerHTML = appendHTML;
 					document.getElementById("streamlist").appendChild(e);
                     call_emoticons('streamlist');
-				 //window.localStorage["latestnewsfeed"]= appendHTML;
-				 //window.localStorage["numoffeed"]= data.items-1;
+                   
 			
 				}  
 });   
@@ -558,7 +559,7 @@ function gettaskname(pid,tid)
 	  },
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
-		//alert(err.message);
+	
 		console.log(err.message);
     }
       	
@@ -648,10 +649,10 @@ function viewpostcomment(id,pstrid)
 	  },
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
-		//alert(err.message);
+		
          document.getElementById("commentlist").style.display="none";
 		console.log(err.message);
-        stoppreload();
+       
     }
       	
 }).done(function()  {
@@ -667,6 +668,11 @@ function viewpostcomment(id,pstrid)
         
     }
     stoppreload();
+}).fail(function(err)  {
+    
+    console.log(err.message);
+    stopload();
+    navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
 });   
 
 
