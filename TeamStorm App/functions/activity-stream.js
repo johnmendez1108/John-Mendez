@@ -9,9 +9,6 @@ var nextpagedate;
 var numoffeed = window.localStorage.getItem('numoffeed');
 
 document.addEventListener("deviceready", function(){
-    //mycode
-
-	
 	
 	load_myprofile();
 	document.getElementById("main_prof_fullname").innerHTML = window.localStorage.getItem('name');
@@ -21,9 +18,7 @@ document.addEventListener("deviceready", function(){
 	
 	loadaddress();
 	loadnewsfeed();		
-	 
 
-	
 	getmytask();
 	getproject();
 	getprojectlist();
@@ -254,12 +249,7 @@ if (checkConnection() >2){
 									'</div>';
 
 				}
-				if (appendHTML.length >0){
-					
-				 window.localStorage["latestnewsfeed"]= appendHTML;
-				 //window.localStorage["numoffeed"]= data.items-1;
-			
-				}			
+							
 				/* else
 				{
 					$("#feednotif").show();
@@ -283,6 +273,15 @@ if (checkConnection() >2){
 		
     }
       	
+}).done(function()  {
+  			
+                  if (appendHTML.length >0){
+					
+	                 document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
+				     window.localStorage["latestnewsfeed"]= appendHTML;
+                     call_emoticons('streamlist');
+			
+				}  
 });   
 
 }
@@ -305,10 +304,7 @@ if (checkConnection() >2){
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/newsfeed', 
 			data: { sid: ses_id, mypost: 0,startdate:nextpagedate, itemperpage:2 },
-			beforeSend: function () {
-				 preloading3();
-			},	
-			success: function (data) {
+		success: function (data) {
 				nextpagedate=data.nextpage_date;
 			if(data.items > 0){
 				
@@ -357,17 +353,7 @@ if (checkConnection() >2){
 						
 					appendHTML +=	'<div class="btn-group pull-right" ><span class="ico flaticon-arrow-bottom dropdown-toggle" data-toggle="modal" href="#postsettings" ontouchstart="postsettings('+postid+')"></span></div>';								 
 								
-								
-								
-								/* '<ul class="dropdown-menu" role="menu">'+
-								'<li><a href="javascript:void(0);" data-id="'+postid+'" data-type="edit class="lnk-edit-post">Edit</a></li>'+
-								'<li><a href="javascript:void(0);"  data-id='+postid+'"  class="lnk-remove-post">Remove</a></li>'+
-								'</ul></div>'; */
-						
-						
-						/* appendHTML += '<li><a href="javascript:void(0);" data-id="'+data[x].id+'" data-type="edit" class="lnk-edit-post">Edit</a></li>';
-						appendHTML += '<li><a href="javascript:void(0);" data-id="'+data[x].id+'" class="lnk-remove-post">Remove</a></li>'; */
-					}		
+	}		
 					
 																
 					appendHTML +='<h4 class="media-heading"><a data-toggle="modal" href="#userprof"  ontouchstart="userprofile('+poster_id+');" >'+poster_name+'</a>'+projname+' </h4>'+
@@ -446,9 +432,9 @@ if (checkConnection() >2){
 						appendHTML += '<div class="feed-content-post-attachment"><i>Attachments</i><ul>';
 						
 						for(var atto = 0; atto < attachment_others.length; atto++){
-							var fname = attachment_others[atto].filename;
+							//var fname = attachment_others[atto].filename;
 							var fsize = attachment_others[atto].size;
-							var fid = attachment_others[atto].id;
+							//var fid = attachment_others[atto].id;
 							var download_url = attachment_others[atto].download_url;
 							
 							appendHTML += '<li><a href="'+download_url+'"  target="_blank">'+fname+'</a> - '+fsize+' </li>';
@@ -517,7 +503,6 @@ if (checkConnection() >2){
 			
 				}  
 });   
-stopload();
 }
 else{
 
@@ -986,7 +971,6 @@ function loadnewsfeed()
 
 	 	
 	document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
-   
     call_emoticons('streamlist');
     myScroll.refresh();
      getnewsfeed();
