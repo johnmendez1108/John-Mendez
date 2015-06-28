@@ -29,7 +29,7 @@ document.addEventListener("deviceready", function(){
 	xmlhttp.open("GET","http://teamstormapps.net/",true);
 	xmlhttp.send();
     
-	loadaddress();
+	
 	if (window.localStorage.getItem('auto_signin')==1)
 	{
         document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
@@ -49,7 +49,7 @@ document.addEventListener("deviceready", function(){
     getproject();
 	getprojectlist();
 	loadprojects_select();
-
+    loadaddress();
 
 	 //writejsonfile();
     
@@ -65,7 +65,7 @@ function setCookie(cname,cvalue,exdays) {
 }
 function loadaddress()
 {
-	getaddressbookgetaddressbook();
+	getaddressbook();
 	document.getElementById("addressall").innerHTML=window.localStorage.getItem('latestcontacts');
     delete loadaddress;
 }
