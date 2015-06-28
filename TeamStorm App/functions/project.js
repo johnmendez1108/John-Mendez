@@ -1028,6 +1028,7 @@ function getprojectlist()
    stopload();
 }).fail(function(err)  {
    console.log(err.message);
+    stopload();
 });  
 //document.getElementById("projectlist").innerHTML=window.localStorage.getItem('getprojectlist');	
 }

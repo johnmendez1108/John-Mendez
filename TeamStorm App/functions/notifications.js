@@ -173,6 +173,7 @@ function getprojectnotiflist() {
 }
 
 function gettasknotiflist() {
+     var appendHTML = '';
     $.ajax({
         type: 'post',
         async: true,
@@ -188,7 +189,7 @@ function gettasknotiflist() {
                 prjnotif = data.length;
                 document.getElementById('notif_task_count').innerHTML =
                     data.length;
-                var appendHTML = '';
+               
                 for (var x = 0; x < data.length; x++) {
                     var profile_pic = getprofpic(data[x].actor_id);
                     var des = data[x].content.replace(data[x].actor_name,

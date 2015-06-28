@@ -10,6 +10,7 @@ var numoffeed = window.localStorage.getItem('numoffeed');
 
 document.addEventListener("deviceready", function(){
 	
+    
 	load_myprofile();
 	document.getElementById("main_prof_fullname").innerHTML = window.localStorage.getItem('name');
 	document.getElementById("user_menu_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
@@ -17,7 +18,21 @@ document.addEventListener("deviceready", function(){
 	window.localStorage["host"] = 'http://teamstormapps.net/';
 	
 	loadaddress();
-	loadnewsfeed();		
+	if (window.localStorage.getItem('auto_signin')==1)
+	{
+        document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
+        call_emoticons('streamlist');
+        
+	}
+	else
+	{
+		 getnewsfeed(false);
+        
+	}
+    myScroll.refresh();
+    
+    
+    
 
 	getmytask();
 	getproject();
@@ -25,9 +40,8 @@ document.addEventListener("deviceready", function(){
 	loadprojects_select();
 
 	
-	setCookie('PHPSESSID','eutg1jbdbi6uu6gnt506b57mv2',90);
-	setCookie('cc_loggedin','1',90);
 	
+	//TO LOGIN IN COMET CHAT
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
 	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
@@ -38,12 +52,10 @@ document.addEventListener("deviceready", function(){
 	xmlhttp.open("GET","http://teamstormapps.net/",true);
 	xmlhttp.send();
 	
-	 writejsonfile();
+	 //writejsonfile();
+    
 });
 	
-
-
-
 
 
 function setCookie(cname,cvalue,exdays) {
@@ -63,13 +75,13 @@ function hideMessagefeed() {
 document.getElementById("feednotif").style.display="none"; 
 }
 
-function getnewsfeed()
+function getnewsfeed(isasync)
 {
 	var appendHTML = '';
 if (checkConnection() >2){
 	 $.ajax({ 
 			type: 'post', 
-			async : true,     
+			async : isasync,     
 			global :false,
 			cache: false,
 			dataType : 'json',
@@ -277,8 +289,9 @@ if (checkConnection() >2){
   			
                   if (appendHTML.length >0){
 					
-	                 document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
+	                 
 				     window.localStorage["latestnewsfeed"]= appendHTML;
+                     document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
                      call_emoticons('streamlist');
 			
 				}  
@@ -576,14 +589,15 @@ function viewpostcomment(id,pstrid)
 	document.getElementById("commentlist").style.display="none";
 	  $.ajax({ 
 			type: 'post', 
-			async : false,     
+			async : true,     
 			global : false,
 			cache: false,
 			dataType : 'json',
 			url: 'http://teamstormapps.net/mobile/comment/get/'+id, 
 			data: { sid: ses_id }, 
 			beforeSend: function () {
-			 preloading2();
+             document.getElementById("commentlist").innerHTML="";   
+			 preloading3();
 			},
 			success: function (data) { 
 				
@@ -630,25 +644,29 @@ function viewpostcomment(id,pstrid)
 										
 				 }
                 
-                
-			if (data.length<=0){
-				document.getElementById("commentlist").style.display="none";
-				
-			}
-			else
-			{
-			document.getElementById("commentlist").style.display="block";
-			document.getElementById("commentlist").innerHTML=appendHTML;
-			call_emoticons('commentlist');
-			}
+          
 	  },
 	  error: function (err) {
         //navigator.notification.alert("Network Connection Error Kindly Check your Internet Connection", function() {}); 
 		//alert(err.message);
          document.getElementById("commentlist").style.display="none";
 		console.log(err.message);
+        stoppreload();
     }
       	
+}).done(function()  {
+   
+  if (appendHTML.length >0){
+				
+                 document.getElementById("commentlist").style.display="block";
+			     document.getElementById("commentlist").innerHTML=appendHTML;
+			     call_emoticons('commentlist');
+				}  
+    else{
+        document.getElementById("commentlist").style.display="none";
+        
+    }
+    stoppreload();
 });   
 
 
@@ -795,7 +813,6 @@ function delete_comment(buttonIndex) {
 function do_comment()
 {
 	var commentmsg = document.getElementById('inptcomment').value;
-	var issuccess;
 	  $.ajax({ 
 			type: 'post', 
 			async : true,  
@@ -815,7 +832,7 @@ function do_comment()
 				
 				viewpostcomment(cur_postid,cur_posterid);
 				document.getElementById('inptcomment').value="";
-				loadnewsfeed(); // Replace if additional api comes
+				getnewsfeed(true); // Replace if additional api comes
 				
 				
 				
@@ -828,7 +845,7 @@ function do_comment()
     }
       	
 });
-
+delete do_comment;
 }
 function postsettings(id)
 {
@@ -966,16 +983,7 @@ function call_emoticons(id)
 }
 
 
-function loadnewsfeed()
-{
 
-	 	
-	document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
-    call_emoticons('streamlist');
-    myScroll.refresh();
-     getnewsfeed();
-
-}
 
 
 
