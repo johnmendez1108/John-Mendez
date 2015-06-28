@@ -105,7 +105,7 @@ function getproject()
    
   if (appendHTML.length >0){
 				window.localStorage["getprojects"]=appendHTML;
-                window.localStorage["list_prj_count"]=list_prj_count;
+                window.localStorage["list_prj_count"]='('+list_prj_count+')';
                 document.getElementById("collapse-projects-lists").innerHTML=window.localStorage.getItem('getprojects');
                 document.getElementById("list_prj_cont").innerHTML=window.localStorage.getItem('list_prj_count');
       
@@ -167,7 +167,7 @@ function getmytask()
                   if (appendHTML.length >0){
 					
                      window.localStorage["getmytask"]=appendHTML;
-                     window.localStorage["list_mytsk_count"]=list_mytsk_count; 
+                     window.localStorage["list_mytsk_count"]= '('+list_mytsk_count+')'; 
 	                 document.getElementById("collapse-tasks").innerHTML=window.localStorage.getItem('getmytask');
                      document.getElementById("list_mytsk_count").innerHTML=window.localStorage.getItem('list_mytsk_count');
 			
