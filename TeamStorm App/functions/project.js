@@ -87,8 +87,7 @@ function getproject()
 				 }
 				 
 				appendHTML+= '<li><a data-toggle="modal" href="#project" ontouchstart="getprojectlist();"><i class="flaticon-folder-close-line"></i>See All</a>';	 				 
-				
-                if (appendHTML.length >0){
+				if (appendHTML.length >0){
 					
 					window.localStorage["getprojects"]=appendHTML;
 				}
@@ -101,22 +100,11 @@ function getproject()
 		console.log(err.message);
     }
       	
-}).done(function()  {
-   
-  if (appendHTML.length >0){
-				window.localStorage["getprojects"]=appendHTML;
-                window.localStorage["list_prj_count"]='('+list_prj_count+')';
-                document.getElementById("collapse-projects-lists").innerHTML=window.localStorage.getItem('getprojects');
-                document.getElementById("list_prj_cont").innerHTML=window.localStorage.getItem('list_prj_count');
-      
-				}  
-}).fail(function()  {
-   
-  
 });  
 	
 	
-
+document.getElementById("collapse-projects-lists").innerHTML=window.localStorage.getItem('getprojects');
+document.getElementById("list_prj_cont").innerHTML='('+list_prj_count+')';
 }
 function getmytask()
 {
@@ -152,7 +140,14 @@ function getmytask()
                      
 				}
 				 			 
-				
+				if (appendHTML.length >0){
+					
+					window.localStorage["getmytask"]=appendHTML;
+				}
+				else{
+					
+					window.localStorage["getmytask"]='';
+				}
 				
 			
 	  },
@@ -162,19 +157,6 @@ function getmytask()
 		console.log(err.message);
     }
       	
-}).done(function()  {
-  			
-                  if (appendHTML.length >0){
-					
-                     window.localStorage["getmytask"]=appendHTML;
-                     window.localStorage["list_mytsk_count"]= '('+list_mytsk_count+')'; 
-	                 document.getElementById("collapse-tasks").innerHTML=window.localStorage.getItem('getmytask');
-                     document.getElementById("list_mytsk_count").innerHTML=window.localStorage.getItem('list_mytsk_count');
-			
-				}  
-}).fail(function()  {
-    
-    
 });  
 	
 	
@@ -1045,9 +1027,7 @@ function getprojectlist()
    document.getElementById("projectlist").innerHTML=appendHTML;
    stopload();
 }).fail(function(err)  {
-    console.log(err.message);
-    stopload();
-    navigator.notification.alert('Network Connection Error Kindly Check your Internet Connection',alertDismissed,'TeamStorm App','Ok');
+   console.log(err.message);
 });  
 //document.getElementById("projectlist").innerHTML=window.localStorage.getItem('getprojectlist');	
 }

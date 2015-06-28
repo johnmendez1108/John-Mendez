@@ -30,27 +30,23 @@ document.addEventListener("deviceready", function(){
 	xmlhttp.send();
     
 	loadaddress();
-	if ((window.localStorage.getItem('auto_signin')==1) || (window.localStorage.getItem('isfrom_chat')==1))
+	if (window.localStorage.getItem('auto_signin')==1)
 	{
         document.getElementById("streamlist").innerHTML=window.localStorage.getItem('latestnewsfeed');
         call_emoticons('streamlist');
         nextpagedate= window.localStorage.getItem('nextpagedate');
         
-        document.getElementById("collapse-tasks").innerHTML=window.localStorage.getItem('getmytask');
-        document.getElementById("list_mytsk_count").innerHTML=window.localStorage.getItem('list_mytsk_count');
-			
-        document.getElementById("collapse-projects-lists").innerHTML=window.localStorage.getItem('getprojects');
-        document.getElementById("list_prj_cont").innerHTML=window.localStorage.getItem('list_prj_count');
+       
         
 	}
 	else
 	{
 		 getnewsfeed(false);
-         getmytask();
-         getproject();
+         
 	}
     myScroll.refresh();
-    
+    getmytask();
+    getproject();
 	getprojectlist();
 	loadprojects_select();
 
@@ -69,7 +65,7 @@ function setCookie(cname,cvalue,exdays) {
 }
 function loadaddress()
 {
-	getaddressbook();
+	getaddressbookgetaddressbook();
 	document.getElementById("addressall").innerHTML=window.localStorage.getItem('latestcontacts');
     delete loadaddress;
 }

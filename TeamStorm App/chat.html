@@ -453,7 +453,7 @@
 		var path = $(location).attr('href');
                 $('#buddyhome').css('display','block');
                 $('#lobbyhome').css('display','block');
-                $('#buddyhome').click(function() { preloading(); window.location.href = 'activity-stream.html'; window.localStorage["isfrom_chat"]=1;  });
+                $('#buddyhome').click(function() { preloading(); window.location.href = 'activity-stream.html';  });
                 $('#lobbyhome').click(function() { $('#buddyhome').click();});
                 var arr = path.split('/extensions/mobilewebapp/')[1];
 		var showdiv = arr;
