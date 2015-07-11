@@ -35,7 +35,7 @@ function getproject()
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/getlist', 
+			url: 'http://teamstormapps.host/mobile/project/getlist', 
 			data: { sid: ses_id }, 
 			success: function (data) { 
 				
@@ -116,7 +116,7 @@ function getmytask()
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/task/get_active', 
+			url: 'http://teamstormapps.host/mobile/task/get_active', 
 			data: { sid: ses_id }, 
 			success: function (data) { 
 				list_mytsk_count=data.length;
@@ -176,7 +176,7 @@ if (checkConnection() >2){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/tasklist/'+pid, 
+			url: 'http://teamstormapps.host/mobile/project/tasklist/'+pid, 
 			data: { sid: ses_id}, 
 			beforeSend: function () {
 			 preloading2();
@@ -351,7 +351,7 @@ function settaskcomplete(buttonIndex)
     				global : false,
     				cache: false,
     				dataType : 'json',
-    				url: 'http://teamstormapps.net/mobile/task/complete/'+cur_tid, 
+    				url: 'http://teamstormapps.host/mobile/task/complete/'+cur_tid, 
     				data: { sid: ses_id},
     				beforeSend: function () {
     				 preloading2();
@@ -425,7 +425,7 @@ function add_leave_task()
 				global : false,
 				cache: false,
 				dataType : 'json',
-				url: 'http://teamstormapps.net/mobile/task/join/'+onedit_id, 
+				url: 'http://teamstormapps.host/mobile/task/join/'+onedit_id, 
 				data: { sid: ses_id},
 				beforeSend: function () {
 				 preloading2();
@@ -468,7 +468,7 @@ function leave_task(buttonIndex)
 				global : false,
 				cache: false,
 				dataType : 'json',
-				url: 'http://teamstormapps.net/mobile/task/leave/'+onedit_id, 
+				url: 'http://teamstormapps.host/mobile/task/leave/'+onedit_id, 
 				data: { sid: ses_id},
 				beforeSend: function () {
 				 preloading2();
@@ -523,7 +523,7 @@ function delete_task(buttonIndex)
 				global : false,
 				cache: false,
 				dataType : 'json',
-				url: 'http://teamstormapps.net/mobile/task/delete/'+cur_tid, 
+				url: 'http://teamstormapps.host/mobile/task/delete/'+cur_tid, 
 				data: { sid: ses_id},
 				beforeSend: function () {
 				 preloading2();
@@ -565,7 +565,7 @@ if (checkConnection() >2){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/info/'+cur_pid, 
+			url: 'http://teamstormapps.host/mobile/project/info/'+cur_pid, 
 			data: { sid: ses_id}, 
 		    beforeSend: function () {
 				  preloading2();
@@ -660,7 +660,7 @@ function projectmembers(id)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/memberlist/'+id, 
+			url: 'http://teamstormapps.host/mobile/project/memberlist/'+id, 
 			data: { sid: ses_id}, 
 			/* beforeSend: function () {
 			 preloading2();
@@ -728,7 +728,7 @@ function archive_project(buttonIndex)
     				global : false,
     				cache: false,
     				dataType : 'json',
-    				url: 'http://teamstormapps.net/mobile/project/archive/'+cur_pid, 
+    				url: 'http://teamstormapps.host/mobile/project/archive/'+cur_pid, 
     				data: { sid: ses_id},
     				beforeSend: function () {
     				 preloading2();
@@ -771,7 +771,7 @@ var approval = document.getElementById('chk_editprj_taskapproval').checked;
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/edit/'+cur_pid, 
+			url: 'http://teamstormapps.host/mobile/project/edit/'+cur_pid, 
 			data: { sid: ses_id,
 					title:pname,
 					description:pdesc,
@@ -811,7 +811,7 @@ var pic="";
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user', 
+			url: 'http://teamstormapps.host/mobile/user', 
 			data: { sid: ses_id, id: tsid}, 
 			success: function (data) { 
 			
@@ -855,7 +855,7 @@ function delete_project(buttonIndex)
 				global : false,
 				cache: false,
 				dataType : 'json',
-				url: 'http://teamstormapps.net/mobile/project/delete/'+cur_pid, 
+				url: 'http://teamstormapps.host/mobile/project/delete/'+cur_pid, 
 				data: { sid: ses_id},
 				beforeSend: function () {
 				 preloading2();
@@ -892,7 +892,7 @@ function gettasklist(id)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/tasklist/'+id, 
+			url: 'http://teamstormapps.host/mobile/project/tasklist/'+id, 
 			data: { sid: ses_id}, 
 			success: function (data) { 
 			
@@ -928,7 +928,7 @@ function getprojectlist()
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/getlist', 
+			url: 'http://teamstormapps.host/mobile/project/getlist', 
 			data: { sid: ses_id },
 							
 			success: function (data) { 
@@ -1065,7 +1065,7 @@ $.ajax({
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/info/'+id, 
+			url: 'http://teamstormapps.host/mobile/project/info/'+id, 
 			data: { sid: ses_id}, 
 			/* beforeSend: function () {
 			 preloading2();
@@ -1101,7 +1101,7 @@ $.ajax({
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/info/'+id, 
+			url: 'http://teamstormapps.host/mobile/project/info/'+id, 
 			data: { sid: ses_id}, 
 			/* beforeSend: function () {
 			 preloading2();
@@ -1136,7 +1136,7 @@ function get_proj_member(id)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/memberlist/'+id, 
+			url: 'http://teamstormapps.host/mobile/project/memberlist/'+id, 
 			data: { sid: ses_id}, 
 			/* beforeSend: function () {
 			 preloading2();
@@ -1176,7 +1176,7 @@ function getprofpic(tsid)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user', 
+			url: 'http://teamstormapps.host/mobile/user', 
 			data: { sid: ses_id, id: tsid}, 
 			success: function (data) { 
 			
@@ -1214,7 +1214,7 @@ function getcounttask(id,type)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/tasklist/'+id, 
+			url: 'http://teamstormapps.host/mobile/project/tasklist/'+id, 
 			data: { sid: ses_id,
 					sort: type}, 
 			success: function (data) { 
@@ -1271,7 +1271,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/tasklist/'+cur_pid, 
+			url: 'http://teamstormapps.host/mobile/project/tasklist/'+cur_pid, 
 			data: { sid: ses_id,
 					sort: type}, 
 			 beforeSend: function () {
@@ -1394,7 +1394,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/tasklist/'+cur_pid, 
+			url: 'http://teamstormapps.host/mobile/project/tasklist/'+cur_pid, 
 			data: { sid: ses_id,
 					sort: type}, 
 			 beforeSend: function () {
@@ -1511,7 +1511,7 @@ document.getElementById(""+type+"-task").innerHTML="";
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/tasklist/'+cur_pid, 
+			url: 'http://teamstormapps.host/mobile/project/tasklist/'+cur_pid, 
 			data: { sid: ses_id,
 					sort: type}, 
 			 beforeSend: function () {
@@ -1625,7 +1625,7 @@ function gettaskmemberspic(tid)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/task/members/'+tid, 
+			url: 'http://teamstormapps.host/mobile/task/members/'+tid, 
 			data: { sid: ses_id}, 
 			success: function (data) { 
 			
@@ -1668,7 +1668,7 @@ function getrequesttask(tid)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/task/member_requests/'+tid, 
+			url: 'http://teamstormapps.host/mobile/task/member_requests/'+tid, 
 			data: { sid: ses_id}, 
 			success: function (data) { 
 			
@@ -1732,7 +1732,7 @@ function acceptmembertask(buttonIndex)
 		{
             $.ajax({ 
     		type: 'get', 
-    		url: 'http://teamstormapps.net/tasks/accept_member/'+req_tid+'/'+req_uid, 
+    		url: 'http://teamstormapps.host/tasks/accept_member/'+req_tid+'/'+req_uid, 
     		data: { }, 
     		success: function (data) { 
     			if(data.success == 1){ 
@@ -1773,7 +1773,7 @@ function declinemembertask(buttonIndex)
 		{
              $.ajax({ 
     		type: 'get', 
-    		url: 'http://teamstormapps.net/tasks/decline_member/'+req_tid+'/'+req_uid, 
+    		url: 'http://teamstormapps.host/tasks/decline_member/'+req_tid+'/'+req_uid, 
     		data: { }, 
     		success: function (data) { 
     			if(data.success == 1){ 
@@ -1804,7 +1804,7 @@ function gettaskmembers(tid)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/task/members/'+tid, 
+			url: 'http://teamstormapps.host/mobile/task/members/'+tid, 
 			data: { sid: ses_id}, 
 			success: function (data) { 
 			
@@ -1868,7 +1868,7 @@ function delete_taskmember(buttonIndex)
 			type: 'post', 
 			async : true,  
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/task/remove_member/'+del_tid+'/'+del_uid, 
+			url: 'http://teamstormapps.host/mobile/task/remove_member/'+del_tid+'/'+del_uid, 
 			data: { sid: ses_id
 					}, 
 			beforeSend: function () {
@@ -1904,7 +1904,7 @@ function gettaskprofpic(tsid)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user', 
+			url: 'http://teamstormapps.host/mobile/user', 
 			data: { sid: ses_id, id: tsid}, 
 			success: function (data) { 
 			
@@ -1935,7 +1935,7 @@ var members=document.getElementById("txtmember").value;
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/create', 
+			url: 'http://teamstormapps.host/mobile/project/create', 
 			data: { sid: ses_id,
 					name:pname,
 					description:pdesc,
@@ -1985,7 +1985,7 @@ function dependanttask_select(){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/tasklist/'+cur_pid, 
+			url: 'http://teamstormapps.host/mobile/project/tasklist/'+cur_pid, 
 			data: { sid: ses_id,
 					sort: 'active'}, 
 			success: function (data) { 
@@ -2020,7 +2020,7 @@ function get_proj_mem_for_task()
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/memberlist/'+cur_pid, 
+			url: 'http://teamstormapps.host/mobile/project/memberlist/'+cur_pid, 
 			data: { sid: ses_id}, 
 			success: function (data) { 
 			
@@ -2068,7 +2068,7 @@ function getmemprofpic(tsid)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user', 
+			url: 'http://teamstormapps.host/mobile/user', 
 			data: { sid: ses_id, id: tsid}, 
 			success: function (data) { 
 			
@@ -2123,7 +2123,7 @@ function create_task()
 					global : false,
 					cache: false,
 					dataType : 'json',
-					url: 'http://teamstormapps.net/mobile/task/create', 
+					url: 'http://teamstormapps.host/mobile/task/create', 
 					data: { sid: ses_id,
 							project_id: cur_pid,
 							title: title,
@@ -2160,7 +2160,7 @@ function create_task()
 					global : false,
 					cache: false,
 					dataType : 'json',
-					url: 'http://teamstormapps.net/mobile/task/edit/'+onedit_id, 
+					url: 'http://teamstormapps.host/mobile/task/edit/'+onedit_id, 
 					data: { sid: ses_id,
 							project_id: cur_pid,
 							title: title,
@@ -2249,7 +2249,7 @@ function member_search()
 		});
 	}); */
 	
-	var site_url = 'http://teamstormapps.net/';
+	var site_url = 'http://teamstormapps.host/';
 
 	/* autocomplete search for header */
 	$("#txt_prj_emailadd").autocomplete({

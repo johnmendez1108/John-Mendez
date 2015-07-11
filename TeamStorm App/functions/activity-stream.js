@@ -15,7 +15,7 @@ document.addEventListener("deviceready", function(){
 	document.getElementById("main_prof_fullname").innerHTML = window.localStorage.getItem('name');
 	document.getElementById("user_menu_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
 	document.getElementById("user_comment_profpic").src = "data:image/gif;base64,"+ window.localStorage.getItem('ts_myprofpic') ;
-	window.localStorage["host"] = 'http://teamstormapps.net/';
+	window.localStorage["host"] = 'http://teamstormapps.host/';
 	
     
     //TO LOGIN IN COMET CHAT
@@ -26,7 +26,7 @@ document.addEventListener("deviceready", function(){
 		}
 	}
 
-	xmlhttp.open("GET","http://teamstormapps.net/",true);
+	xmlhttp.open("GET","http://teamstormapps.host/",true);
 	xmlhttp.send();
     
 	
@@ -84,7 +84,7 @@ if (checkConnection() >2){
 			global :false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/newsfeed', 
+			url: 'http://teamstormapps.host/mobile/newsfeed', 
 			data: { sid: ses_id, mypost: 0,itemperpage:7 },
 				
 			success: function (data) {
@@ -316,7 +316,7 @@ if (checkConnection() >2){
 			global :false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/newsfeed', 
+			url: 'http://teamstormapps.host/mobile/newsfeed', 
 			data: { sid: ses_id, mypost: 0,startdate:nextpagedate, itemperpage:2 },
          beforeSend: function () {
 				 preloading2();
@@ -535,7 +535,7 @@ function gettaskname(pid,tid)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/tasklist/'+pid, 
+			url: 'http://teamstormapps.host/mobile/project/tasklist/'+pid, 
 			data: { sid: ses_id}, 
 			
 			success: function (data) { 
@@ -590,7 +590,7 @@ function viewpostcomment(id,pstrid)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/comment/get/'+id, 
+			url: 'http://teamstormapps.host/mobile/comment/get/'+id, 
 			data: { sid: ses_id }, 
 			beforeSend: function () {
              document.getElementById("commentlist").innerHTML="";   
@@ -685,7 +685,7 @@ var pic="img/user/thumb-user-medium.jpg";
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user', 
+			url: 'http://teamstormapps.host/mobile/user', 
 			data: { sid: ses_id, id: tsid}, 
 			success: function (data) { 
 			
@@ -733,7 +733,7 @@ function do_editcomment(id)
 			type: 'post', 
 			async : false,  
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/comment/update', 
+			url: 'http://teamstormapps.host/mobile/comment/update', 
 			data: { sid: ses_id,
 					id: id,
 					comment: commentmsg
@@ -786,7 +786,7 @@ function delete_comment(buttonIndex) {
 			type: 'post', 
 			async : true,  
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/comment/delete/'+cur_commentid, 
+			url: 'http://teamstormapps.host/mobile/comment/delete/'+cur_commentid, 
 			data: { sid: ses_id
 					}, 
 			beforeSend: function () {
@@ -819,7 +819,7 @@ function do_comment()
 			type: 'post', 
 			async : true,  
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/comment/new', 
+			url: 'http://teamstormapps.host/mobile/comment/new', 
 			data: { sid: ses_id,
 					post_id: cur_postid,
 					comment: commentmsg
@@ -879,7 +879,7 @@ function delete_post(buttonIndex) {
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/post/delete/'+cur_set_postid, 
+			url: 'http://teamstormapps.host/mobile/post/delete/'+cur_set_postid, 
 			data: { sid: ses_id},
 			beforeSend: function () {
 			 preloading2();
@@ -922,7 +922,7 @@ function postagree(id) {
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/post/agree/'+id, 
+			url: 'http://teamstormapps.host/mobile/post/agree/'+id, 
 			data: { sid: ses_id
 					},
 			beforeSend: function () {
@@ -1011,7 +1011,7 @@ function getnfeeduserinfo(tsid){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user', 
+			url: 'http://teamstormapps.host/mobile/user', 
 			data: { sid: ses_id, id: tsid}, 
 			success: function (data) { 
 			
@@ -1037,7 +1037,7 @@ function getposterpic(tsid){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user', 
+			url: 'http://teamstormapps.host/mobile/user', 
 			data: { sid: ses_id, id: tsid}, 
 			success: function (data) { 
 			
@@ -1067,7 +1067,7 @@ function getposterpic(tsid){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user', 
+			url: 'http://teamstormapps.host/mobile/user', 
 			data: { sid: ses_id },
 			
 			success: function (data) { 
@@ -1116,7 +1116,7 @@ function getaddressbook(){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/addressbook', 
+			url: 'http://teamstormapps.host/mobile/addressbook', 
 			data: { sid: ses_id }, 
 			success: function (data) { 
 				
@@ -1179,7 +1179,7 @@ function getaddressbookperletter(){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/addressbook', 
+			url: 'http://teamstormapps.host/mobile/addressbook', 
 			data: { sid: ses_id },
 			
 			success: function (data) { 
@@ -1252,7 +1252,7 @@ function signout(buttonIndex)
 				global : false,
 				cache: false,
 				dataType : 'json',
-				url: 'http://teamstormapps.net/mobile/auth/logout', 
+				url: 'http://teamstormapps.host/mobile/auth/logout', 
 		  data: { sid:ses_id }, 
 		
 		  success: function (data, textStatus,XMLHttpRequest) { 

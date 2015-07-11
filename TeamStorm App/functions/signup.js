@@ -37,7 +37,7 @@ function signup(){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/signup', 
+			url: 'http://teamstormapps.host/mobile/signup', 
 			data: { firstname:fname,
 				lastname:lname,
 				email :email,

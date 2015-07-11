@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cordova>
-    <access origin="http://teamstormapps.net/"/> <!-- allow local pages -->
+    <access origin="http://teamstormapps.host/"/> <!-- allow local pages -->
     <access origin="*"/>
 
     <content src="index.html" />

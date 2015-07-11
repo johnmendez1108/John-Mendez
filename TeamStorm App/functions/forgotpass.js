@@ -18,7 +18,7 @@ function forgotpass(){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/fpw?send=' + document.getElementById('txt_sendemail').value, 
+			url: 'http://teamstormapps.host/fpw?send=' + document.getElementById('txt_sendemail').value, 
 			data: { }, 
       success: function (data) { 
         if(data.success ==0) {

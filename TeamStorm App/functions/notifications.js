@@ -20,7 +20,7 @@ function notification_refresh() {
         global: false,
         cache: false,
         dataType: 'json',
-        url: 'http://teamstormapps.net/mobile/notification',
+        url: 'http://teamstormapps.host/mobile/notification',
         data: {
             sid: ses_id
         },
@@ -71,7 +71,7 @@ function notification_refresh() {
         global: false,
         cache: false,
         dataType: 'json',
-        url: 'http://teamstormapps.net/mobile/notification/notif_count',
+        url: 'http://teamstormapps.host/mobile/notification/notif_count',
         data: {
             sid: ses_id
         },
@@ -112,7 +112,7 @@ function getprojectnotiflist() {
         global: false,
         cache: false,
         dataType: 'json',
-        url: 'http://teamstormapps.net/mobile/notification/projects',
+        url: 'http://teamstormapps.host/mobile/notification/projects',
         data: {
             sid: ses_id
         },
@@ -180,7 +180,7 @@ function gettasknotiflist() {
         global: false,
         cache: false,
         dataType: 'json',
-        url: 'http://teamstormapps.net/mobile/notification/tasks',
+        url: 'http://teamstormapps.host/mobile/notification/tasks',
         data: {
             sid: ses_id
         },
@@ -246,7 +246,7 @@ function notif_click(id) {
         global: false,
         cache: false,
         dataType: 'json',
-        url: 'http://teamstormapps.net/mobile/notification/notif_click/' +
+        url: 'http://teamstormapps.host/mobile/notification/notif_click/' +
             id,
         data: {
             sid: ses_id
@@ -271,7 +271,7 @@ function notification_remove_count() {
                 global: false,
                 cache: false,
                 dataType: 'json',
-                url: 'http://teamstormapps.net/mobile/notification/notif_remove_count',
+                url: 'http://teamstormapps.host/mobile/notification/notif_remove_count',
                 data: {
                     sid: ses_id
                 },
@@ -293,7 +293,7 @@ function n_task_accept(tid) {
             global: false,
             cache: false,
             dataType: 'json',
-            url: 'http://teamstormapps.net/mobile/task/accept_member/' +
+            url: 'http://teamstormapps.host/mobile/task/accept_member/' +
                 tid,
             data: {
                 sid: ses_id
@@ -319,7 +319,7 @@ function n_project_accept(pid) {
         global: false,
         cache: false,
         dataType: 'json',
-        url: 'http://teamstormapps.net/mobile/project/accept_member/' +
+        url: 'http://teamstormapps.host/mobile/project/accept_member/' +
             pid,
         data: {
             sid: ses_id
@@ -345,7 +345,7 @@ function getprofpic(tsid) {
         global: false,
         cache: false,
         dataType: 'json',
-        url: 'http://teamstormapps.net/mobile/user',
+        url: 'http://teamstormapps.host/mobile/user',
         data: {
             sid: ses_id,
             id: tsid
@@ -375,7 +375,7 @@ function pushnotification() {
         global: false,
         cache: false,
         dataType: 'json',
-        url: 'http://teamstormapps.net/mobile/notification',
+        url: 'http://teamstormapps.host/mobile/notification',
         data: {
             sid: ses_id
         },

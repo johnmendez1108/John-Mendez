@@ -47,7 +47,7 @@ var ses_id = window.localStorage.getItem('session_id');
 			async : false,     
 			global : false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user/update_info', 
+			url: 'http://teamstormapps.host/mobile/user/update_info', 
 			data: { sid: ses_id, 
 					firstname: document.getElementById("txt_myproffirstname").value,
 					lastname:  document.getElementById("txt_myproflastname").value,
@@ -117,7 +117,7 @@ if (pass1.length>=6){
 					async : false,     
 					global : false,
 					dataType : 'json',
-					url: 'http://teamstormapps.net/mobile/user/update_pass', 
+					url: 'http://teamstormapps.host/mobile/user/update_pass', 
 					data: { sid: ses_id ,
 							old_password: document.getElementById("txt_myprofoldpass").value,
 							new_password: pass1

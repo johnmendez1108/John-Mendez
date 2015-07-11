@@ -17,7 +17,7 @@ function load_todo()
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/todo', 
+			url: 'http://teamstormapps.host/mobile/todo', 
 			data: { sid: ses_id}, 
 			success: function (data) { 
 			
@@ -124,7 +124,7 @@ function do_todo()
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/todo/create', 
+			url: 'http://teamstormapps.host/mobile/todo/create', 
 			data: { sid: ses_id,
 					title: title,
 					description: desc,
@@ -176,7 +176,7 @@ if (buttonIndex==1)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/todo/delete/'+cur_todoid, 
+			url: 'http://teamstormapps.host/mobile/todo/delete/'+cur_todoid, 
 			data: { sid: ses_id
 					}, 
 			success: function (data) { 

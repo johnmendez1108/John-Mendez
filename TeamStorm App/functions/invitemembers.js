@@ -8,7 +8,7 @@ function getprojectsinvite()
 		global : false,
 		cache: false,
 		dataType : 'json',
-		url: 'http://teamstormapps.net/mobile/project/getlist', 
+		url: 'http://teamstormapps.host/mobile/project/getlist', 
 		data: { sid: ses_id }, 
 		success: function (data) {
             
@@ -68,7 +68,7 @@ function inviteproject_select(id)
 		global : false,
 		cache: false,
 		dataType : 'json',
-		url: 'http://teamstormapps.net/mobile/project/addmembers_post/'+id, 
+		url: 'http://teamstormapps.host/mobile/project/addmembers_post/'+id, 
 		data: { sid: ses_id, 
                 emails:chk_members}, 
 		success: function (data) {

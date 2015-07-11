@@ -36,7 +36,7 @@ if (checkConnection() >2){
 			async : false, 
 			dataType: 'json',
             //contentType: 'application/json charset=utf-8',
-			url: 'http://teamstormapps.net/mobile/user', 
+			url: 'http://teamstormapps.host/mobile/user', 
 			data: { sid: ses_id, id: cur_uid},
 			 beforeSend: function () {
 			 preloading2();
@@ -170,7 +170,7 @@ function do_follow()
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/user/follow/'+ cur_uid,
+			url: 'http://teamstormapps.host/mobile/user/follow/'+ cur_uid,
 			data: { sid: ses_id}, 
 			success: function (data) {
 				if (data.status==1)
@@ -204,7 +204,7 @@ function do_unfollow(buttonIndex)
 					global : false,
 					cache: false,
 					dataType : 'json',
-					url: 'http://teamstormapps.net/mobile/user/unfollow/'+ cur_uid,
+					url: 'http://teamstormapps.host/mobile/user/unfollow/'+ cur_uid,
 					data: { sid: ses_id}, 
 					success: function (data) {
 						if (data.status==1)

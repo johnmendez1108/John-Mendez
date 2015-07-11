@@ -58,7 +58,7 @@ function onPhotoDataSuccess(imageData) {
 		}
 	}
 
-	xmlhttp.open("GET","http://teamstormapps.net/",true);
+	xmlhttp.open("GET","http://teamstormapps.host/",true);
 	xmlhttp.send();
     
   var based64img = "";
@@ -106,7 +106,7 @@ function onPhotoDataSuccess(imageData) {
       
     preloading3();
       
-    ft.upload(imageData, encodeURI("http://teamstormapps.net/upload/"), upwin, upfail,
+    ft.upload(imageData, encodeURI("http://teamstormapps.host/upload/"), upwin, upfail,
         options,true); 
            	
    }

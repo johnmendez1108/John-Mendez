@@ -49,5 +49,5 @@
                 <param name="onload" value="true" />
       </feature>
 
-    <access origin="http://teamstormapps.net/" />
+    <access origin="http://teamstormapps.host/" />
 </widget>

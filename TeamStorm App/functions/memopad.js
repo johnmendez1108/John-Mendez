@@ -16,7 +16,7 @@ function load_memo()
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/memopad', 
+			url: 'http://teamstormapps.host/mobile/memopad', 
 			data: { sid: ses_id}, 
 			success: function (data) { 
 			
@@ -120,7 +120,7 @@ function do_memo()
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/memopad/create', 
+			url: 'http://teamstormapps.host/mobile/memopad/create', 
 			data: { sid: ses_id,
 					content: content
 					}, 
@@ -170,7 +170,7 @@ function delete_memo(buttonIndex)
 				global : false,
 				cache: false,
 				dataType : 'json',
-				url: 'http://teamstormapps.net/mobile/memopad/delete/'+curmemoid, 
+				url: 'http://teamstormapps.host/mobile/memopad/delete/'+curmemoid, 
 				data: { sid: ses_id
 						}, 
 				success: function (data) { 

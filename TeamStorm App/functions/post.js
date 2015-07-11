@@ -91,7 +91,7 @@ function loadprojects_select(){
 			global : false,
 			cache: false, */
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/project/getlist', 
+			url: 'http://teamstormapps.host/mobile/project/getlist', 
 			data: { sid: ses_id}, 
 			success: function (data) {
 
@@ -168,7 +168,7 @@ function do_post(){
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/mobile/post/dopost', 
+			url: 'http://teamstormapps.host/mobile/post/dopost', 
 			data: { sid: ses_id,
 			post_type :ptype,
 			message : postmsg,
@@ -237,11 +237,11 @@ function uploadfile(src)
 	params.sid=ses_id;
     options.params = params;
     var ft = new FileTransfer();
-    ft.upload(imageURI, "http://teamstormapps.net/upload", upwin, upfail,
+    ft.upload(imageURI, "http://teamstormapps.host/upload", upwin, upfail,
         options);
 	alert(imageURI);	 */
 		
-	/* var url = 'http://teamstormapps.net/upload';
+	/* var url = 'http://teamstormapps.host/upload';
 	var params = { sid: ses_id,files: src};
 		
 		
@@ -257,7 +257,7 @@ function uploadfile(src)
 			enctype: 'multipart/form-data',
 			processData: false,  // tell jQuery not to process the data
 			contentType: false ,  // tell jQuery not to set contentType
-			url: 'http://teamstormapps.net/upload', 
+			url: 'http://teamstormapps.host/upload', 
 			data: { sid: ses_id,files: src}, 
 			beforeSend: function () {
 			 preloading2();
@@ -273,7 +273,7 @@ function uploadfile(src)
 			global : false,
 			cache: false,
 			dataType : 'json',
-			url: 'http://teamstormapps.net/upload', 
+			url: 'http://teamstormapps.host/upload', 
 			data: { sid: ses_id,files: src}, 
 			success: function (data) {
 				alert(data.files[0].url);			
@@ -299,7 +299,7 @@ function upwin(r) {
 
 function deleteuploadimage(id)
 {
-    $.get("http://teamstormapps.net/upload/remove_temp?id="+id, function(data, status){
+    $.get("http://teamstormapps.host/upload/remove_temp?id="+id, function(data, status){
        if(data.success == 1){
            console.log("Image deleted");
           }
@@ -330,7 +330,7 @@ function postmember_search()
 		});
 	}); */
 	
-	var site_url = 'http://teamstormapps.net/';
+	var site_url = 'http://teamstormapps.host/';
 
 	/* autocomplete search for header */
 	$("#search-contacts").autocomplete({

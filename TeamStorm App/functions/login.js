@@ -28,7 +28,7 @@ function login() {
             global: false,
             cache: false,
             dataType: 'json',
-            url: 'http://teamstormapps.net/mobile/auth/login',
+            url: 'http://teamstormapps.host/mobile/auth/login',
             data: {
                 username: username,
                 password: password
@@ -89,7 +89,7 @@ function forcc_login() {
         global: false,
         cache: false,
         dataType: 'json',
-        url: 'http://teamstormapps.net/login',
+        url: 'http://teamstormapps.host/login',
         data: {
             username: document.getElementById('username').value,
             password: document.getElementById('password').value
